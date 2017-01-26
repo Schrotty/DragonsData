@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use Auth;
+
 class HomeController extends Controller
 {
     /**
@@ -21,6 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $realms = User::find(Auth::user()->id)->realms;
+
+        return view('home', ['realms' => $realms]);
     }
 }

@@ -9,6 +9,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $dates = ['created_at', 'updated_at'];
+
     /**
      * The table associated with the model.
      *
@@ -22,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'password',
+        'name', 'password','isAdmin',
     ];
 
     /**
@@ -33,4 +35,17 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function realms()
+    {
+        return $this->belongsToMany('App\Realm', 'assignedRealms', 'fk_user', 'fk_realm');
+    }
+
+    public function username()
+    {
+        return "name";
+    }
 }

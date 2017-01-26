@@ -1,0 +1,33 @@
+.default-avatar {
+    background-color: #1f648b;
+    width: 80px;
+    height: 80px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    -moz-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.big-avatar {
+    width: 120px;
+    height: 120px;
+}
+
+.user-table, .realm-table {
+    width: 100%;
+}
+
+.profile-contact-data {
+    margin-bottom: 15px;
+}
+
+.profile-contact-data div:first-of-type,
+.profile-genral-data div:first-of-type,
+.profile-realms div:first-of-type {
+    text-decoration: underline;
+}
+
+.btn-empty {
+    border: 0px;
+    background-color: transparent;
+}
