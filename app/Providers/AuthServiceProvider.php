@@ -25,6 +25,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('view-realms', function($user){
+            return $user->rank->id <= 2; //admin and mods can see realms
+        });
+
+        Gate::define('view-users', function($user){
+            return $user->rank->id <= 2; //admin and mods can see users
+        });
     }
 }

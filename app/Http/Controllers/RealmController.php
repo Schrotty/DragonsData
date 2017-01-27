@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Realm;
+use Illuminate\Support\Facades\Gate;
 
 class RealmController extends Controller
 {
@@ -17,9 +18,17 @@ class RealmController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        return view('realms', ['realms' => Realm::all()]);
+        if (Gate::allows('view-realms'))
+        {
+            return view('realms', ['realms' => Realm::all()]);
+        }
+
+        return view('errors.503'); //TODO: create access denied view
     }
 
     public function single($realmId)

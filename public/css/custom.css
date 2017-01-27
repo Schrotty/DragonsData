@@ -23,11 +23,21 @@
 
 .profile-contact-data div:first-of-type,
 .profile-genral-data div:first-of-type,
-.profile-realms div:first-of-type {
+.profile-description div:first-of-type {
     text-decoration: underline;
 }
 
 .btn-empty {
     border: 0px;
     background-color: transparent;
+}
+
+.realm-gamemaster div:first-of-type,
+.realm-description div:first-of-type,
+.realm-player div:first-of-type {
+    text-decoration: underline;
+}
+
+.realm-description {
+    margin-bottom: 15px;
 }

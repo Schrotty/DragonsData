@@ -10,18 +10,14 @@
                     @if( count($realms) != 0 )
                         <table class="realm-table">
                             <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Player</th>
-                                <th>Gamemaster</th>
+                                <th>{{ trans('general.name') }}</th>
+                                <th>{{ trans('general.description') }}</th>
                             </tr>
 
                             @foreach($realms as $realm)
                                 <tr>
                                     <td><a href="{{ '/realm/' . $realm->id }}">{{ $realm->name }}</a></td>
                                     <td>{{ $realm->shortDescription }}</td>
-                                    <td>{{ count($realm->users) }}</td>
-                                    <td><a href="{{ '/user/' . $realm->gamemaster->id }}">{{ $realm->gamemaster->name }}</a></td>
                                 </tr>
                             @endforeach
                         </table>

@@ -11,26 +11,14 @@
                 <div class="panel-body">
                     <table class="user-table">
                         <tr>
-                            <th>Username</th>
-                            <th>Rank</th>
-                            <th>Created at</th>
-                            <th>Updated at</th>
-                            <th>Delete</th>
+                            <th>{{ trans('user.name') }}</th>
+                            <th>{{ trans('user.rank') }}</th>
                         </tr>
 
                         @foreach($users as $user)
                             <tr>
                                 <td><a href="{{ url('user/' . $user->id) }}">{{$user->name}}</a></td>
-                                <td>
-                                    @if($user->isAdmin)
-                                        Admin
-                                    @else
-                                        Member
-                                    @endif
-                                </td>
-                                <td>{{ $user->created_at->format('d.m.Y') }}</td>
-                                <td>{{ $user->updated_at->format('d.m.Y') }}</td>
-                                <td><a href="{{ url('/user/' . $user->id . '/delete') }}">Delete User</a></td>
+                                <td>{{ $user->rank->name }}</td>
                             </tr>
                         @endforeach
                     </table>

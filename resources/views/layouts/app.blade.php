@@ -51,14 +51,14 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
+                            <li><a href="{{ url('/login') }}">{{ trans('general.login') }}</a></li>
+                            <li><a href="{{ url('/register') }}">{{ trans('general.register') }}</a></li>
                         @else
+                            <li><a href="{{ url('/') }}">{{ trans('general.dashboard') }}</a></li>
                             @if(Auth::user()->isAdmin)
-                                <li><a href="{{ url('/') }}">Dashboard</a></li>
-                                <li><a href="{{ url('/realms') }}">Realms</a></li>
-                                <li><a href="{{ url('/users') }}">User</a></li>
-                                <li><a href="#">Settings</a></li>
+                                <li><a href="{{ url('/realms') }}">{{ trans('realm.realms') }}</a></li>
+                                <li><a href="{{ url('/users') }}">{{ trans('user.users') }}</a></li>
+                                <li><a href="#">{{ trans('general.settings') }}</a></li>
                             @endif
 
                             <li class="dropdown">
@@ -71,7 +71,7 @@
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Sign Out
+                                            {{ trans('general.logout') }}
                                         </a>
 
                                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">

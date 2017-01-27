@@ -37,6 +37,14 @@ class User extends Authenticatable
     ];
 
     /**
+     * @return bool
+     */
+    public function hasRealms()
+    {
+        return count($this->realms) >= 1 ? true : false;
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function realms()
@@ -44,6 +52,17 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Realm', 'assignedRealms', 'fk_user', 'fk_realm');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function rank()
+    {
+        return $this->hasOne('App\Rank', 'id', 'fk_rank');
+    }
+
+    /**
+     * @return string
+     */
     public function username()
     {
         return "name";

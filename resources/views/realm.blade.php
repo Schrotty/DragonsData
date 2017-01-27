@@ -13,19 +13,40 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">{{ $realm->name }}</div>
                         <div class="panel-body">
-                            {{ $realm->description }}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="realm-description">
+                                        <div>{{ trans('general.description') }}</div>
+                                        <span>{{ $realm->description }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="realm-gamemaster">
+                                        <div>{{ trans('realms.gamemaster') }}</div>
+                                        <span>{{ $realm->gamemaster->name }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="realm-player">
+                                        <div>{{ trans('general.player_count') }}</div>
+                                        <span>{{ count($realm->users) }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="panel panel-default">
-                        <div class="panel-heading">Player</div>
+                        <div class="panel-heading">{{ trans('general.player') }}</div>
                         <div class="panel-body">
                             <table class="user-table">
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Character</th>
-                                    <th>Class</th>
-                                    <th>Level</th>
+                                    <th>{{ trans('general.name') }}</th>
+                                    <th>{{ trans('general.character') }}</th>
+                                    <th>{{ trans('general.class') }}</th>
+                                    <th>{{ trans('general.level') }}</th>
                                 </tr>
 
                                 @foreach($realm->users as $user)

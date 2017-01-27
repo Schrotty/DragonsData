@@ -4,12 +4,12 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-8">
-                    <p>Ruben Maurer</p>
-                    <span>{{Auth::user()->name}} - @if(Auth::user()->isAdmin) Admin @else Member @endif</span>
+                    <p>{{ Auth::user()->forename }} {{ Auth::user()->surname }}</p>
+                    <span>{{ Auth::user()->name }} - {{ Auth::user()->rank->name }}</span>
                 </div>
 
                 <div class="col-md-4">
-                    <img src="{{ URL::to('/img') }}/{{ strtolower(Auth::user()->avatar) }}" class="default-avatar">
+                    <a href="{{ url('user/'. Auth::user()->id) }}"><img src="{{ URL::to('/img') }}/{{ strtolower(Auth::user()->avatar) }}" class="default-avatar"></a>
                 </div>
             </div>
         </div>

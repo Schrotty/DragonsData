@@ -23,7 +23,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="profile-genral-data">
-                                            <div>Name: </div>
+                                            <div>{{ trans('general.name_double_dot') }}</div>
                                             <span>
                                                 @if($user->forename == null & $user->surname == null)
                                                     -
@@ -36,7 +36,7 @@
 
                                     <div class="col-md-6">
                                         <div class="profile-contact-data">
-                                            <div>Mail: </div>
+                                            <div>{{ trans('general.mail_double_dot') }}</div>
                                             <span>
                                                 @if($user->mail == null)
                                                     -
@@ -48,16 +48,9 @@
                                     </div>
                                 </div>
 
-                                <div class="profile-realms">
-                                    <div>Assigned Realms</div>
-                                    @if(count($user->realms) == 0) - @endif
-                                    @foreach($user->realms as $realm)
-                                        <a href="{{ '/realm/' . $realm->id }}">{{ $realm->name }}</a>
-
-                                        @if( !$loop->last )
-                                            ,
-                                        @endif
-                                    @endforeach
+                                <div class="profile-description">
+                                    <div>{{ trans('general.description_double_dot') }}</div>
+                                    {{ $user->description }}
                                 </div>
                             </div>
                         </div>
@@ -66,11 +59,15 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Description
+                        {{ trans('realm.assigned_reaalms') }}
                     </div>
 
                     <div class="panel-body">
-                        {{ $user->description }}
+                        @if( count($user->realms) > 0 )
+                            @include('widgets.realms', ['realms' => $user->realms])
+                        @else
+                            {{ trans('realms/realms.no_realms_for_user', ['user' => $user->name]) }}
+                        @endif
                     </div>
                 </div>
             </div>
