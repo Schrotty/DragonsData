@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use Illuminate\Support\Facades\Auth;
 use App\Realm;
 use Illuminate\Support\Facades\Gate;
 
@@ -36,9 +36,9 @@ class RealmController extends Controller
         return view('realm', ['realm' => Realm::find($realmId)]);
     }
 
-    public function assignUser($realmId, $userId)
+    public function assignUser($realmId)
     {
-        Realm::find($realmId)->users()->attach(User::find($userId)->id);
+        Realm::find($realmId)->users()->attach(Auth::user()->id);
 
         return redirect('realm/' . $realmId);
     }

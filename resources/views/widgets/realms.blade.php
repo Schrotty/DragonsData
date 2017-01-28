@@ -2,7 +2,7 @@
     <tr>
         <th>{{ trans('general.name') }}</th>
         <th>{{ trans('general.description') }}</th>
-        <th>{{ trans('general.gamemaster') }}</th>
+        <th>{{ trans('realm.dungeon_master') }}</th>
     </tr>
     @foreach($realms as $realm)
         <tr>

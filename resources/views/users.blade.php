@@ -6,12 +6,12 @@
         <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{trans('user.users')}}
+                    {{ trans_choice('user.users', 2) }}
                 </div>
                 <div class="panel-body">
                     <table class="user-table">
                         <tr>
-                            <th>{{ trans('user.name') }}</th>
+                            <th>{{ trans('general.name') }}</th>
                             <th>{{ trans('user.rank') }}</th>
                         </tr>
 

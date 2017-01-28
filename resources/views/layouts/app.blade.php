@@ -39,7 +39,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ config('app.name', 'DragonsData') }}
                     </a>
                 </div>
 
@@ -57,8 +57,8 @@
                             <li><a href="{{ url('/') }}">{{ trans('general.dashboard') }}</a></li>
                             @if(Auth::user()->isAdmin)
                                 <li><a href="{{ url('/realms') }}">{{ trans('realm.realms') }}</a></li>
-                                <li><a href="{{ url('/users') }}">{{ trans('user.users') }}</a></li>
-                                <li><a href="#">{{ trans('general.settings') }}</a></li>
+                                <li><a href="{{ url('/users') }}">{{ trans_choice('user.users', 2) }}</a></li>
+                                <!--<li><a href="#">{{ trans('general.settings') }}</a></li>-->
                             @endif
 
                             <li class="dropdown">

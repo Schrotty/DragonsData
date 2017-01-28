@@ -21,5 +21,5 @@ Route::get('/user/{id}/delete', 'UserController@delete', ['user' => '{id}']);
 
 Route::get('/realms', 'RealmController@index');
 Route::get('/realm/{id}', 'RealmController@single', ['realm' => '{id}']);
-Route::get('/realm/{realm}/enter/{id}', 'RealmController@assignUser', ['user' => '{realm}', 'realm' => '{user}']);
+Route::get('/realm/{realm}/enter/', 'RealmController@assignUser', ['realm' => '{realm}']);
 

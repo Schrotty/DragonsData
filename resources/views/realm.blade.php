@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8">
 
-                @if($realm->isPrivate)
+                @if($realm->isPrivate & !($realm->hasUser(Auth::user()->id)->id == Auth::user()->id))
                     @include('realm.private')
                 @elseif(count($realm->hasUser(Auth::user())) == 0)
                     @include('realm.enter')
@@ -23,8 +23,10 @@
 
                                 <div class="col-md-6">
                                     <div class="realm-gamemaster">
-                                        <div>{{ trans('realms.gamemaster') }}</div>
-                                        <span>{{ $realm->gamemaster->name }}</span>
+                                        <div>{{ trans('realm.dungeon_master') }}</div>
+                                        <span>
+                                            <a href="{{ url('user/' . $realm->gamemaster->id) }}">{{ $realm->gamemaster->name }}</a>
+                                        </span>
                                     </div>
                                 </div>
 

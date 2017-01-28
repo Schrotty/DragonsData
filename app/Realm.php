@@ -47,6 +47,12 @@ class Realm extends Model
 
     public function hasUser($user)
     {
-        return $this->users->find($user);
+        $oUser = $this->users->find($user);
+        if($oUser == null)
+        {
+            return new User();
+        }
+
+        return $oUser;
     }
 }

@@ -59,14 +59,14 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        {{ trans('realm.assigned_reaalms') }}
+                        {{ trans('user.assigned_realms') }}
                     </div>
 
                     <div class="panel-body">
                         @if( count($user->realms) > 0 )
                             @include('widgets.realms', ['realms' => $user->realms])
                         @else
-                            {{ trans('realms/realms.no_realms_for_user', ['user' => $user->name]) }}
+                            {{ trans('user.no_assigned_realms_for_user', ['user' => $user->name]) }}
                         @endif
                     </div>
                 </div>

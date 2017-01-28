@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="panel panel-default">
-                <div class="panel-heading">{{trans('dashboard.realms')}}</div>
+                <div class="panel-heading">{{trans('realm.realms')}}</div>
                 <div class="panel-body">
                     @if( count($realms) != 0 )
                         <table class="realm-table">
@@ -22,8 +22,16 @@
                             @endforeach
                         </table>
                     @else
-                        {{ trans('dashboard.no_realms_found') }}
+                        {{ trans('user.no_assigned_realms') }}
                     @endif
+                </div>
+            </div>
+
+            <!-- Open realms for everybody -->
+            <div class="panel panel-default">
+                <div class="panel-heading">{{trans('realm.open_realms')}}</div>
+                <div class="panel-body">
+                    @include('widgets.openRealms', ['realms' => \App\Realm::all()])
                 </div>
             </div>
         </div>

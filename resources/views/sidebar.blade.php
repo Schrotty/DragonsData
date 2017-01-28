@@ -1,6 +1,6 @@
 <div class="col-md-4">
     <div class="panel panel-default">
-        <div class="panel-heading">{{trans('sidebar.profile')}}</div>
+        <div class="panel-heading">{{trans('general.profile')}}</div>
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-8">
@@ -16,16 +16,16 @@
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading">{{trans('sidebar.characters')}}</div>
+        <div class="panel-heading">{{trans_choice('character.characters', 2)}}</div>
         <div class="panel-body">
-            <span>{{ trans('sidebar.no_characters_found') }}</span>
+            <span>{{ trans('character.no_characters_found') }}</span>
         </div>
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading">{{trans('sidebar.feed')}}</div>
+        <div class="panel-heading">{{trans('general.feed')}}</div>
             <div class="panel-body">
-                {{ trans('sidebar.no_news_found') }}
+                {{ trans('general.no_feed') }}
             </div>
         </div>
     </div>
