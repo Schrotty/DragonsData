@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use App\Realm;
 use Illuminate\Support\Facades\Gate;
 
@@ -31,15 +30,38 @@ class RealmController extends Controller
         return view('errors.503'); //TODO: create access denied view
     }
 
+    /**
+     * @param $realmId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function single($realmId)
     {
-        return view('realm', ['realm' => Realm::find($realmId)]);
+        return view('realm', [
+            'realm' => Realm::find($realmId),
+            'object' => Realm::find($realmId)
+        ]);
     }
 
-    public function assignUser($realmId)
+    /**
+     * @param $realmId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editor($realmId)
     {
-        Realm::find($realmId)->users()->attach(Auth::user()->id);
+        $oRealm = Realm::find($realmId);
+        if (Gate::allows('edit-realm', $oRealm)) {
+            return view('edit.realm', [
+                'realm' => $oRealm,
+                'object' => $oRealm
+            ]);
+        }
 
-        return redirect('realm/' . $realmId);
+        return view('errors.503'); //TODO: create access denied view
+    }
+
+    public function save()
+    {
+        print_r($_GET);
+        return new Realm();
     }
 }

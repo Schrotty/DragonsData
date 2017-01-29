@@ -15,12 +15,14 @@
         </div>
     </div>
 
+<!--
     <div class="panel panel-default">
         <div class="panel-heading">{{trans_choice('character.characters', 2)}}</div>
         <div class="panel-body">
             <span>{{ trans('character.no_characters_found') }}</span>
         </div>
     </div>
+-->
 
     <div class="panel panel-default">
         <div class="panel-heading">{{trans('general.feed')}}</div>

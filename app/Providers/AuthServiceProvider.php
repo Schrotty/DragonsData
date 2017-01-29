@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -14,6 +14,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Realm' => 'App\Policies\RealmPolicy',
+        'App\Continent' => 'App\Policies\ContinentPolicy',
     ];
 
     /**
@@ -27,6 +29,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('view-realms', function($user){
             return $user->rank->id <= 2; //admin and mods can see realms
+        });
+
+        Gate::define('edit-realm', function ($user, $realm) {
+            return $user->id == $realm[0]->gamemaster->id || $user->isAdmin;
         });
 
         Gate::define('view-users', function($user){

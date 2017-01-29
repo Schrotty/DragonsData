@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -45,14 +45,6 @@ class User extends Authenticatable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function realms()
-    {
-        return $this->belongsToMany('App\Realm', 'assignedRealms', 'fk_user', 'fk_realm');
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function rank()
@@ -66,5 +58,13 @@ class User extends Authenticatable
     public function username()
     {
         return "name";
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function knownRealms()
+    {
+        return $this->belongsToMany('App\Realm', 'knownRealm', 'fk_user', 'fk_realm');
     }
 }

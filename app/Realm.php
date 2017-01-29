@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property mixed users
+ * @property mixed gamemaster
  */
 class Realm extends Model
 {
@@ -35,24 +36,35 @@ class Realm extends Model
         return $this->hasOne('App\User', 'id', 'fk_creator');
     }
 
-    public function users()
+    public function knownByUser($user)
     {
-        return $this->belongsToMany('App\User', 'assignedRealms', 'fk_realm', 'fk_user');
-    }
-
-    public function gamemaster()
-    {
-        return $this->hasOne('App\User', 'id', 'fk_gamemaster');
-    }
-
-    public function hasUser($user)
-    {
-        $oUser = $this->users->find($user);
-        if($oUser == null)
+        $oUser = $this->knownBy()->find($user->id);
+        if ($oUser == null)
         {
             return new User();
         }
 
         return $oUser;
+    }
+
+    public function knownBy()
+    {
+        return $this->belongsToMany('App\User', 'knownRealm', 'fk_realm', 'fk_user');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function continents()
+    {
+        return $this->hasMany('App\Continent', 'fk_realm', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function gamemaster()
+    {
+        return $this->hasOne('App\User', 'id', 'fk_gamemaster');
     }
 }

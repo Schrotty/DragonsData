@@ -13,5 +13,11 @@ return [
     'player_count'              =>  'Players',
     'feed'                      =>  'Feed',
     'no_feed'                   =>  'Nothing to see here',
-    'logout'                    =>  'Sign Out'
+    'logout' => 'Sign Out',
+    'open' => 'Open',
+    'known_by' => 'Knwon by',
+    'no_access' => 'No access to this information',
+    'request_access' => 'Ask the Dungeon Master for access',
+    'save' => 'Save changes',
+    'abort' => 'Abort'
 ];
