@@ -2,6 +2,7 @@
 
 namespace App;
 
+use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -39,8 +40,7 @@ class Realm extends Model
     public function knownByUser($user)
     {
         $oUser = $this->knownBy()->find($user->id);
-        if ($oUser == null)
-        {
+        if ($oUser == null) {
             return new User();
         }
 
@@ -66,5 +66,13 @@ class Realm extends Model
     public function gamemaster()
     {
         return $this->hasOne('App\User', 'id', 'fk_gamemaster');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function formatDescription()
+    {
+        return Markdown::convertToHtml($this->description); // <p>foo</p>
     }
 }

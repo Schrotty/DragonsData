@@ -15,14 +15,25 @@
         </div>
     </div>
 
-<!--
-    <div class="panel panel-default">
-        <div class="panel-heading">{{trans_choice('character.characters', 2)}}</div>
-        <div class="panel-body">
-            <span>{{ trans('character.no_characters_found') }}</span>
+    @can('isDM', Auth::user())
+        <div class="panel panel-default object-control-panel">
+            <div class="panel-heading">{{trans('general.controls')}}</div>
+            <div class="panel-body">
+                @include('widgets.elements.objects_dropdown')
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-default btn-block"
+                                value="{{ trans('general.create') }}">{{ trans('general.create') }}</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-default btn-block"
+                                value="{{ trans('general.create') }}">{{ trans('general.delete') }}</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
--->
+    @endcan
 
     <div class="panel panel-default">
         <div class="panel-heading">{{trans('general.feed')}}</div>

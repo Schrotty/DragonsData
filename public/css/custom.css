@@ -41,3 +41,11 @@
 .realm-description {
     margin-bottom: 15px;
 }
+
+.form-control.edit-block {
+    height: 300px;
+}
+
+.object-control-panel .row {
+    padding-top: 15px;
+}

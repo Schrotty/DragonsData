@@ -59,9 +59,21 @@ class RealmController extends Controller
         return view('errors.503'); //TODO: create access denied view
     }
 
-    public function save()
+    /**
+     * @param $realmID
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function save($realmID)
     {
-        print_r($_GET);
-        return new Realm();
+        $aPostUser = array();
+        if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
+
+        $oRealm = Realm::find($realmID);
+        $oRealm->description = $_POST['description'];
+        $oRealm->fk_gamemaster = $_POST['dungeon-master'];
+        $oRealm->knownBy()->sync($aPostUser);
+        $oRealm->save();
+
+        return redirect()->route('realm', $realmID);
     }
 }

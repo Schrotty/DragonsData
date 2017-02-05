@@ -17,7 +17,7 @@
                 <div class="col-md-12">
                     <div class="realm-description">
                         <div>{{ trans('general.description') }}</div>
-                        <span>{{ $realm->description }}</span>
+                        <span>{!!html_entity_decode($realm->formatDescription())!!}</span>
                     </div>
                 </div>
 

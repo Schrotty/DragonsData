@@ -1,14 +1,15 @@
 @extends('layouts.restricted')
 
 @section('restricted')
-    <form class="form-horizontal" role="form" method="POST" action="{{ url('/realm/' . $realm->id . '/save') }}">
+    <form class="form-horizontal" role="form" method="POST"
+          action="{{ url('/continent/' . $oContinent->id . '/save') }}">
         {{ csrf_field() }}
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span>{{ $realm->name }}</span>
+                <span>{{ $oContinent->name }}</span>
 
                 <div class="pull-right">
-                    <a href="{{ url('realm/' . $realm->id) }}">
+                    <a href="{{ url('continent/' . $oContinent->id) }}">
                         {{ trans('general.abort') }}
                     </a>
                 </div>
@@ -20,23 +21,25 @@
                         <div class="realm-description">
                             <div>{{ trans('general.description') }}</div>
                             <textarea id="name" type="text" class="form-control edit-block" name="description" required
-                                      autofocus>{!!trim(html_entity_decode($realm->description))!!}</textarea>
+                                      autofocus>{!!trim(html_entity_decode($oContinent->description))!!}</textarea>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="realm-gamemaster">
-                            <div>{{ trans('realm.dungeon_master') }}</div>
+                            <div>{{ trans('realm.realm') }}</div>
                             <span>
-                            @include('widgets.elements.user_dropdown', ['user' => $realm->gamemaster])
-                        </span>
+                        <a href="{{ url('realm/' . $oContinent->realm->id) }}">
+                            {{ $oContinent->realm->name }}
+                        </a>
+                    </span>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="realm-player">
                             <div>{{ trans('general.known_by') }}</div>
-                            @include('widgets.elements.user_dropdown_multi', ['obj' => $realm])
+                            @include('widgets.elements.user_dropdown_multi', ['obj' => $oContinent])
                         </div>
                     </div>
                 </div>

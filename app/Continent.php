@@ -9,6 +9,7 @@
 namespace App;
 
 
+use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
 
 class Continent extends Model
@@ -49,8 +50,19 @@ class Continent extends Model
         return $oUser;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function knownBy()
     {
         return $this->belongsToMany('App\User', 'knownContinent', 'fk_continent', 'fk_user');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function formatDescription()
+    {
+        return Markdown::convertToHtml($this->description); // <p>foo</p>
     }
 }
