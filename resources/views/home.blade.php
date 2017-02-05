@@ -7,14 +7,14 @@
             <div class="panel panel-default">
                 <div class="panel-heading">{{trans('realm.realms')}}</div>
                 <div class="panel-body">
-                    @if( count(Auth::user()->knownRealms) != 0 )
+                    @if( count(Auth::user()->knownRealms()) != 0 )
                         <table class="realm-table">
                             <tr>
                                 <th>{{ trans('general.name') }}</th>
                                 <th>{{ trans('general.description') }}</th>
                             </tr>
 
-                            @foreach(Auth::user()->knownRealms as $oRealm)
+                            @foreach(Auth::user()->knownRealms() as $oRealm)
                                 <tr>
                                     <td><a href="{{ '/realm/' . $oRealm->id }}">{{ $oRealm->name }}</a></td>
                                     <td>{{ $oRealm->shortDescription }}</td>

@@ -61,10 +61,26 @@ class User extends Authenticatable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function knownRealms()
     {
-        return $this->belongsToMany('App\Realm', 'knownRealm', 'fk_user', 'fk_realm');
+        return $this->belongsToMany('App\Realm', 'knownRealm', 'fk_user', 'fk_realm')->get();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function knownContinents()
+    {
+        return $this->belongsToMany('App\Continent', 'knownContinent', 'fk_user', 'fk_continent')->get();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function knownLandscape()
+    {
+        return $this->belongsToMany('App\Landscape', 'knownLandscape', 'fk_user', 'fk_landscape')->get();
     }
 }

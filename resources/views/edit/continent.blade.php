@@ -29,10 +29,8 @@
                         <div class="realm-gamemaster">
                             <div>{{ trans('realm.realm') }}</div>
                             <span>
-                        <a href="{{ url('realm/' . $oContinent->realm->id) }}">
-                            {{ $oContinent->realm->name }}
-                        </a>
-                    </span>
+                                @include('widgets.elements.realms_with_access', ['realm' => $oContinent->realm])
+                            </span>
                         </div>
                     </div>
 

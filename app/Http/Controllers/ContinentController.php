@@ -22,6 +22,10 @@ class ContinentController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * @param $oContinentId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function single($oContinentId)
     {
         return view('continent', [
@@ -30,6 +34,10 @@ class ContinentController extends Controller
         ]);
     }
 
+    /**
+     * @param $continendID
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function editor($continendID)
     {
         $oContinent = Continent::find($continendID);
@@ -54,7 +62,7 @@ class ContinentController extends Controller
 
         $oContinent = Continent::find($iContinentID);
         $oContinent->description = $_POST['description'];
-        //$oContinent->fk_realm = $_POST['realm'];
+        $oContinent->fk_realm = $_POST['realm'];
         $oContinent->knownBy()->sync($aPostUser);
         $oContinent->save();
 

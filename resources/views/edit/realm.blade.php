@@ -28,8 +28,8 @@
                         <div class="realm-gamemaster">
                             <div>{{ trans('realm.dungeon_master') }}</div>
                             <span>
-                            @include('widgets.elements.user_dropdown', ['user' => $realm->gamemaster])
-                        </span>
+                                @include('widgets.elements.user_dropdown', ['user' => $realm->gamemaster])
+                            </span>
                         </div>
                     </div>
 

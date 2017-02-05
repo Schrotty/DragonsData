@@ -44,7 +44,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">{{ trans('realm.assigned_continents') }}</div>
         <div class="panel-body">
-            @include('widgets.continents', ['realm' => $realm])
+            @include('widgets.continents', ['oContinents' => Auth::user()->knownContinents()])
         </div>
     </div>
 @endsection

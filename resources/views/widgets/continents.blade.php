@@ -4,10 +4,17 @@
         <th>{{ trans('general.description') }}</th>
     </tr>
 
-    @foreach($realm->continents as $oContinent)
+    @if(count($oContinents) > 0)
+        @foreach($oContinents as $oContinent)
+            <tr>
+                <td><a href="{{ url('continent/' . $oContinent->id) }}">{{ $oContinent->name }}</a></td>
+                <td>{{ $oContinent->short_description }}</td>
+            </tr>
+        @endforeach
+    @else
         <tr>
-            <td><a href="{{ url('continent/' . $oContinent->id) }}">{{ $oContinent->name }}</a></td>
-            <td>{{ $oContinent->description }}</td>
+            <td>-</td>
+            <td>-</td>
         </tr>
-    @endforeach
+    @endif
 </table>

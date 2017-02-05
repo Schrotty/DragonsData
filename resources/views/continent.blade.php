@@ -47,7 +47,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">{{ trans('realm.assigned_landscapes') }}</div>
         <div class="panel-body">
-            @include('widgets.landscapes')
+            @include('widgets.landscapes', ['oLandscapes' => Auth::user()->knownLandscape()])
         </div>
     </div>
 @endsection
