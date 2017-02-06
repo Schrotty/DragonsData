@@ -6,13 +6,16 @@
  * Time: 16:00
  */
 
-namespace App;
+namespace App\Models;
 
-
+use App\Models\Interfaces\IModel;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
 
-class Continent extends Model
+/**
+ * @property mixed realm
+ */
+class Continent extends Model implements IModel
 {
     /**
      * The table associated with the model.
@@ -30,16 +33,26 @@ class Continent extends Model
         'name', 'description'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function landscapes()
     {
-        return $this->hasMany('App\Landscape', 'fk_continent', 'id');
+        return $this->hasMany('App\Models\Landscape', 'fk_continent', 'id')->get();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function realm()
     {
-        return $this->hasOne('App\Realm', 'id', 'fk_realm');
+        return $this->hasOne('App\Models\Realm', 'id', 'fk_realm');
     }
 
+    /**
+     * @param $user
+     * @return User|\Illuminate\Database\Eloquent\Collection|Model|null
+     */
     public function knownByUser($user)
     {
         $oUser = $this->knownBy()->find($user->id);
@@ -55,7 +68,7 @@ class Continent extends Model
      */
     public function knownBy()
     {
-        return $this->belongsToMany('App\User', 'knownContinent', 'fk_continent', 'fk_user');
+        return $this->belongsToMany('App\Models\User', 'knownContinent', 'fk_continent', 'fk_user');
     }
 
     /**

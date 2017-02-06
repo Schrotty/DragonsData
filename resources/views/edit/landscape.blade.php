@@ -1,14 +1,15 @@
 @extends('layouts.restricted')
 
 @section('restricted')
-    <form class="form-horizontal" role="form" method="POST" action="{{ url('/realm/' . $realm->id . '/save') }}">
+    <form class="form-horizontal" role="form" method="POST"
+          action="{{ url('/landscape/' . $oLandscape->id . '/save') }}">
         {{ csrf_field() }}
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span>{{ $realm->name }}</span>
+                <span>{{ $oLandscape->name }}</span>
 
                 <div class="pull-right">
-                    <a href="{{ url('realm/' . $realm->id) }}">
+                    <a href="{{ url('landscape/' . $oLandscape->id) }}">
                         {{ trans('general.abort') }}
                     </a>
                 </div>
@@ -16,13 +17,12 @@
 
             <div class="panel-body">
                 <div class="row">
-                    @include('widgets.edit.description', ['oObject' => $realm])
-
+                    @include('widgets.edit.description', ['oObject' => $oLandscape])
                     <div class="col-md-6">
                         <div class="realm-gamemaster">
-                            <div>{{ trans('realm.dungeon_master') }}</div>
+                            <div>{{ trans('realm.continent') }}</div>
                             <span>
-                                @include('widgets.elements.user_dropdown', ['user' => $realm->gamemaster])
+                                @include('widgets.elements.continents_with_access', ['continent' => $oLandscape->continent])
                             </span>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                     <div class="col-md-6">
                         <div class="realm-player">
                             <div>{{ trans('general.known_by') }}</div>
-                            @include('widgets.elements.user_dropdown_multi', ['obj' => $realm])
+                            @include('widgets.elements.user_dropdown_multi', ['obj' => $oLandscape])
                         </div>
                     </div>
                 </div>

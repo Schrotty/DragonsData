@@ -38,12 +38,16 @@
     text-decoration: underline;
 }
 
-.realm-description {
+.object-description, .object-description-short {
     margin-bottom: 15px;
 }
 
-.form-control.edit-block {
+.form-control.default-edit-block {
     height: 300px;
+}
+
+.form-control.small-edit-block {
+    height: 100px;
 }
 
 .object-control-panel .row {

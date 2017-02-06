@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * HomeController constructor.
      */
     public function __construct()
     {

@@ -8,7 +8,7 @@
         @foreach($oContinents as $oContinent)
             <tr>
                 <td><a href="{{ url('continent/' . $oContinent->id) }}">{{ $oContinent->name }}</a></td>
-                <td>{{ $oContinent->short_description }}</td>
+                <td>{{ $oContinent->shortDescription }}</td>
             </tr>
         @endforeach
     @else

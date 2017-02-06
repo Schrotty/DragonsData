@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
@@ -34,7 +34,7 @@ class Realm extends Model
      */
     public function creator()
     {
-        return $this->hasOne('App\User', 'id', 'fk_creator');
+        return $this->hasOne('App\Models\User', 'id', 'fk_creator');
     }
 
     public function knownByUser($user)
@@ -49,7 +49,7 @@ class Realm extends Model
 
     public function knownBy()
     {
-        return $this->belongsToMany('App\User', 'knownRealm', 'fk_realm', 'fk_user');
+        return $this->belongsToMany('App\Models\User', 'knownRealm', 'fk_realm', 'fk_user');
     }
 
     /**
@@ -57,7 +57,7 @@ class Realm extends Model
      */
     public function continents()
     {
-        return $this->hasMany('App\Continent', 'fk_realm', 'id');
+        return $this->hasMany('App\Models\Continent', 'fk_realm', 'id')->get();
     }
 
     /**
@@ -65,7 +65,7 @@ class Realm extends Model
      */
     public function gamemaster()
     {
-        return $this->hasOne('App\User', 'id', 'fk_gamemaster');
+        return $this->hasOne('App\Models\User', 'id', 'fk_gamemaster');
     }
 
     /**

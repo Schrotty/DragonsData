@@ -8,10 +8,14 @@
 
 namespace App\Policies;
 
-use App\User;
+use App\Models\User;
 
 class Policy
 {
+    /**
+     * @param User $oUser
+     * @return bool
+     */
     public function before(User $oUser)
     {
         if ($oUser->isAdmin) return true;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Realm;
+use App\Models\Realm;
 use Illuminate\Support\Facades\Gate;
 
 class RealmController extends Controller
@@ -70,6 +70,7 @@ class RealmController extends Controller
 
         $oRealm = Realm::find($realmID);
         $oRealm->description = $_POST['description'];
+        $oRealm->shortDescription = $_POST['short-description'];
         $oRealm->fk_gamemaster = $_POST['dungeon-master'];
         $oRealm->knownBy()->sync($aPostUser);
         $oRealm->save();

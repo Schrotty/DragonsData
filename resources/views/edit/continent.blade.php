@@ -17,14 +17,7 @@
 
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="realm-description">
-                            <div>{{ trans('general.description') }}</div>
-                            <textarea id="name" type="text" class="form-control edit-block" name="description" required
-                                      autofocus>{!!trim(html_entity_decode($oContinent->description))!!}</textarea>
-                        </div>
-                    </div>
-
+                    @include('widgets.edit.description', ['oObject' => $oContinent])
                     <div class="col-md-6">
                         <div class="realm-gamemaster">
                             <div>{{ trans('realm.realm') }}</div>

@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Realm;
-use App\User;
+use App\Models\Realm;
+use App\Models\User;
 
 /**
  * Class RealmPolicy

@@ -1,6 +1,6 @@
 <select name="known-by[]" class="selectpicker" multiple>
     {{ $users = $obj->knownBy }}
-    @foreach(App\User::all() as $oUser)
+    @foreach(App\Models\User::all() as $oUser)
         @if($users->find($oUser->id) == null)
             <option value="{{ $oUser->id }}">{{ $oUser->name }}</option>
         @else

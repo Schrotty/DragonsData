@@ -8,7 +8,7 @@
         @foreach($oLandscapes as $oLandscape)
             <tr>
                 <td><a href="{{ url('landscape/' . $oLandscape->id) }}">{{ $oLandscape->name }}</a></td>
-                <td>{{ $oLandscape->description }}</td>
+                <td>{{ $oLandscape->shortDescription }}</td>
             </tr>
         @endforeach
     @else

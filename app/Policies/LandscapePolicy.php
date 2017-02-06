@@ -8,16 +8,26 @@
 
 namespace App\Policies;
 
-use App\Landscape;
-use App\User;
+use App\Models\Landscape;
+use App\Models\User;
 
 class LandscapePolicy extends Policy
 {
+    /**
+     * @param User $oUser
+     * @param Landscape $oLandscape
+     * @return bool
+     */
     public function edit(User $oUser, Landscape $oLandscape)
     {
         return $oUser->id == $oLandscape->continent->realm->gamemaster->id;
     }
 
+    /**
+     * @param User $oUser
+     * @param Landscape $oLandscape
+     * @return bool
+     */
     public function known(User $oUser, Landscape $oLandscape)
     {
         if ($oUser->id == $oLandscape->continent->realm->gamemaster->id) {

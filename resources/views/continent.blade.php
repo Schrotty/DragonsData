@@ -15,12 +15,7 @@
 
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="realm-description">
-                        <div>{{ trans('general.description') }}</div>
-                        <span>{!!html_entity_decode($oContinent->formatDescription())!!}</span>
-                    </div>
-                </div>
+                @include('widgets.description', ['oObject' => $oContinent])
 
                 <div class="col-md-6">
                     <div class="realm-gamemaster">
@@ -47,7 +42,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">{{ trans('realm.assigned_landscapes') }}</div>
         <div class="panel-body">
-            @include('widgets.landscapes', ['oLandscapes' => Auth::user()->knownLandscape()])
+            @include('widgets.landscapes', ['oLandscapes' => Auth::user()->knownLandscape($oContinent)])
         </div>
     </div>
 @endsection

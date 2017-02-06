@@ -14,12 +14,7 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="realm-description">
-                        <div>{{ trans('general.description') }}</div>
-                        <span>{!!html_entity_decode($realm->formatDescription())!!}</span>
-                    </div>
-                </div>
+                @include('widgets.description', ['oObject' => $realm])
 
                 <div class="col-md-6">
                     <div class="realm-gamemaster">
@@ -42,9 +37,18 @@
 
     <!-- assigned continents -->
     <div class="panel panel-default">
-        <div class="panel-heading">{{ trans('realm.assigned_continents') }}</div>
+        <div class="panel-heading">
+            <span>{{ trans('realm.assigned_continents') }}</span>
+            @can('edit', $realm)
+                <div class="pull-right">
+                    <a href="{{ url('continent/' . $realm->id . '/add') }}">
+                        {{ trans('realm.add_continent') }}
+                    </a>
+                </div>
+            @endcan
+        </div>
         <div class="panel-body">
-            @include('widgets.continents', ['oContinents' => Auth::user()->knownContinents()])
+            @include('widgets.continents', ['oContinents' => Auth::user()->knownContinents($realm)])
         </div>
     </div>
 @endsection

@@ -8,10 +8,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Continent;
+use App\Http\Controllers\Interfaces\IController;
+use App\Models\Continent;
 use Illuminate\Support\Facades\Gate;
 
-class ContinentController extends Controller
+class ContinentController extends Controller implements IController
 {
     /**
      * Create a new controller instance.
@@ -62,6 +63,7 @@ class ContinentController extends Controller
 
         $oContinent = Continent::find($iContinentID);
         $oContinent->description = $_POST['description'];
+        $oContinent->shortDescription = $_POST['short-description'];
         $oContinent->fk_realm = $_POST['realm'];
         $oContinent->knownBy()->sync($aPostUser);
         $oContinent->save();

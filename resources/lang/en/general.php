@@ -7,6 +7,7 @@ return [
     'mail'                      =>  'Mail',
     'mail_double_dot'           =>  'Mail:',
     'description'               =>  'Description',
+    'description-short' => 'Short Description',
     'description_double_dot'    =>  'Description:',
     'dashboard'                 =>  'Dashboard',
     'player'                    =>  'Player',
@@ -15,9 +16,15 @@ return [
     'no_feed'                   =>  'Nothing to see here',
     'logout' => 'Sign Out',
     'open' => 'Open',
-    'known_by' => 'Knwon by',
+    'known_by' => 'Known by',
     'no_access' => 'No access to this information',
     'request_access' => 'Ask the Dungeon Master for access',
     'save' => 'Save changes',
-    'abort' => 'Abort'
+    'abort' => 'Abort',
+    'controls' => 'Object Control',
+    'delete' => 'Delete',
+    'create' => 'Create',
+    'actions' => 'Actions',
+    'login' => 'Login',
+    'register' => 'Register'
 ];

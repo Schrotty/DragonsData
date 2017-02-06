@@ -8,7 +8,7 @@
 
 namespace App\Policies;
 
-use App\User;
+use App\Models\User;
 
 class UserPolicy extends Policy
 {
