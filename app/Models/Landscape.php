@@ -8,14 +8,13 @@
 
 namespace App\Models;
 
+use App\Models\Base\BaseModel;
 use App\Models\Interfaces\IModel;
-use GrahamCampbell\Markdown\Facades\Markdown;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property mixed continent
  */
-class Landscape extends Model implements IModel
+class Landscape extends BaseModel implements IModel
 {
     /**
      * The table associated with the model.
@@ -46,7 +45,7 @@ class Landscape extends Model implements IModel
      */
     public function mediumCities()
     {
-        return array();
+        return $this->hasMany('App\Models\MediumCity', 'fk_landscape', 'id')->get();
     }
 
     /**
@@ -54,7 +53,7 @@ class Landscape extends Model implements IModel
      */
     public function smallCities()
     {
-        return array();
+        return $this->hasMany('App\Models\SmallCity', 'fk_landscape', 'id')->get();
     }
 
     /**
@@ -62,7 +61,7 @@ class Landscape extends Model implements IModel
      */
     public function places()
     {
-        return array();
+        return $this->hasMany('App\Models\Place', 'fk_landscape', 'id')->get();
     }
 
     /**
@@ -74,20 +73,6 @@ class Landscape extends Model implements IModel
     }
 
     /**
-     * @param $user
-     * @return User|\Illuminate\Database\Eloquent\Collection|Model|null
-     */
-    public function knownByUser($user)
-    {
-        $oUser = $this->knownBy()->find($user->id);
-        if ($oUser == null) {
-            return new User();
-        }
-
-        return $oUser;
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function knownBy()
@@ -96,10 +81,11 @@ class Landscape extends Model implements IModel
     }
 
     /**
-     * @return mixed
+     * @param User $oUser
+     * @return bool
      */
-    public function formatDescription()
+    public function isRealmMaster(User $oUser)
     {
-        return Markdown::convertToHtml($this->description);
+        return $this->continent->realm->dungeonMaster->id == $oUser->id;
     }
 }

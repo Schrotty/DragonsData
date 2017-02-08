@@ -18,5 +18,8 @@ return [
     'assigned_medium_cities' => 'Assigned cities',
     'assigned_small_cities' => 'Assigned villages',
     'assigned_places' => 'Assigned places',
-    'add_continent' => 'Add continent'
+    'add_continent' => 'Add continent',
+    'edit_place' => 'Edit place',
+    'edit_city' => 'Edit city',
+    'create_realm' => 'Create realm'
 ];

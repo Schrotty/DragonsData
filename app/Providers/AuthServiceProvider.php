@@ -18,6 +18,10 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\Continent' => 'App\Policies\ContinentPolicy',
         'App\Models\User' => 'App\Policies\UserPolicy',
         'App\Models\Landscape' => 'App\Policies\LandscapePolicy',
+        'App\Models\LargeCity' => 'App\Policies\LargeCityPolicy',
+        'App\Models\MediumCity' => 'App\Policies\MediumCityPolicy',
+        'App\Models\SmallCity' => 'App\Policies\SmallCityPolicy',
+        'App\Models\Place' => 'App\Policies\PlacePolicy',
     ];
 
     /**

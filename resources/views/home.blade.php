@@ -5,7 +5,16 @@
     <div class="row">
         <div class="col-md-8">
             <div class="panel panel-default">
-                <div class="panel-heading">{{trans('realm.realms')}}</div>
+                <div class="panel-heading">
+                    <span>{{trans('realm.realms')}}</span>
+                    @can('isDungeonMaster', Auth::user())
+                        <div class="pull-right">
+                            <a href="{{ url('realm-create/') }}">
+                                {{ trans('realm.create_realm') }}
+                            </a>
+                        </div>
+                    @endcan
+                </div>
                 <div class="panel-body">
                     @if( count(Auth::user()->knownRealms()) != 0 )
                         <table class="realm-table">

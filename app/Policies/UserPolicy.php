@@ -16,8 +16,8 @@ class UserPolicy extends Policy
      * @param User $oUser
      * @return mixed
      */
-    public function isDM(User $oUser)
+    public function isDungeonMaster(User $oUser)
     {
-        return $oUser->is_dungeonmaster;
+        return $oUser->isDungeonMaster;
     }
 }

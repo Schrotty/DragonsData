@@ -26,5 +26,6 @@ return [
     'create' => 'Create',
     'actions' => 'Actions',
     'login' => 'Login',
-    'register' => 'Register'
+    'register' => 'Register',
+    'settings' => 'Settings'
 ];

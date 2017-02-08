@@ -6,7 +6,7 @@
             <span>{{ $oContinent->name }}</span>
             @can('edit', $oContinent)
                 <div class="pull-right">
-                    <a href="{{ url('continent/' . $oContinent->id . '/edit') }}">
+                    <a href="{{ url('continent-edit/' . $oContinent->id) }}">
                         {{ trans('realm.edit_continent') }}
                     </a>
                 </div>

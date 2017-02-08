@@ -11,6 +11,8 @@ use Illuminate\Notifications\Notifiable;
  * @property mixed isRootAdmin
  * @property mixed realms
  * @property mixed isAdmin
+ * @property mixed isDungeonMaster
+ * @property mixed isGameMaster
  * @package App
  */
 class User extends Authenticatable
@@ -98,7 +100,7 @@ class User extends Authenticatable
         $aUserContinents = $this->belongsToMany('App\Models\Continent', 'knownContinent', 'fk_user', 'fk_continent')->get();
         $aRealmContinents = $oRealm->continents();
 
-        if ($this->isRootAdmin) return $aRealmContinents;
+        if ($this->isRootAdmin || $oRealm->isRealmMaster($this)) return $aRealmContinents;
         foreach ($aRealmContinents as $oContinent) {
             foreach ($aUserContinents as $oUserContinent) {
                 if ($oContinent->id == $oUserContinent->id) $aResult[] = $oContinent;

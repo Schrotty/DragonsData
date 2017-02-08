@@ -11,7 +11,7 @@
 
             <tr>
                 <td>
-                    <a href="{{ url('mediumCity/' . $oMediumCity->id) }}">{{ $oMediumCity->name }}</a>
+                    <a href="{{ url('medium-city/' . $oMediumCity->id) }}">{{ $oMediumCity->name }}</a>
                 </td>
                 <td>
                     {{ $oMediumCity->shortDescription }}

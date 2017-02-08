@@ -20,7 +20,7 @@
                     <div class="realm-gamemaster">
                         <div>{{ trans('realm.dungeon_master') }}</div>
                         <span>
-                        <a href="{{ url('user/' . $realm->gamemaster->id) }}">{{ $realm->gamemaster->name }}</a>
+                        <a href="{{ url('user/' . $realm->dungeonMaster->id) }}">{{ $realm->dungeonMaster->name }}</a>
                     </span>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
             <span>{{ trans('realm.assigned_continents') }}</span>
             @can('edit', $realm)
                 <div class="pull-right">
-                    <a href="{{ url('continent/' . $realm->id . '/add') }}">
+                    <a href="{{ url('continent-create/' . $realm->id) }}">
                         {{ trans('realm.add_continent') }}
                     </a>
                 </div>

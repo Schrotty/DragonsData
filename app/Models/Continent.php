@@ -8,14 +8,13 @@
 
 namespace App\Models;
 
+use App\Models\Base\BaseModel;
 use App\Models\Interfaces\IModel;
-use GrahamCampbell\Markdown\Facades\Markdown;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property mixed realm
  */
-class Continent extends Model implements IModel
+class Continent extends BaseModel implements IModel
 {
     /**
      * The table associated with the model.
@@ -30,7 +29,7 @@ class Continent extends Model implements IModel
      * @var array
      */
     protected $fillable = [
-        'name', 'description'
+        'name', 'description', 'fk_realm', 'shortDescription', 'description'
     ];
 
     /**
@@ -50,20 +49,6 @@ class Continent extends Model implements IModel
     }
 
     /**
-     * @param $user
-     * @return User|\Illuminate\Database\Eloquent\Collection|Model|null
-     */
-    public function knownByUser($user)
-    {
-        $oUser = $this->knownBy()->find($user->id);
-        if ($oUser == null) {
-            return new User();
-        }
-
-        return $oUser;
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function knownBy()
@@ -72,10 +57,11 @@ class Continent extends Model implements IModel
     }
 
     /**
-     * @return mixed
+     * @param User $oUser
+     * @return bool
      */
-    public function formatDescription()
+    public function isRealmMaster(User $oUser)
     {
-        return Markdown::convertToHtml($this->description); // <p>foo</p>
+        return $this->realm->gamemaster->id == $oUser->id;
     }
 }

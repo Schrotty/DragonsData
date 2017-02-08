@@ -9,7 +9,7 @@
 
             <tr>
                 <td>
-                    <a href="{{ url('smallCity/' . $oSmallCity->id) }}">{{ $oSmallCity->name }}</a>
+                    <a href="{{ url('small-city/' . $oSmallCity->id) }}">{{ $oSmallCity->name }}</a>
                 </td>
                 <td>
                     {{ $oSmallCity->shortDescription }}

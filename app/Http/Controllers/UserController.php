@@ -29,12 +29,12 @@ class UserController extends Controller
     }
 
     /**
-     * @param $singleUser
+     * @param $iUserID
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function single($singleUser)
+    public function single($iUserID)
     {
-        return view('user', ['user' => User::find($singleUser)]);
+        return view('user', ['user' => User::find($iUserID)]);
     }
 
     /**

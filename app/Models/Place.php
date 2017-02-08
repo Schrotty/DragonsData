@@ -12,18 +12,19 @@ use App\Models\Base\BaseModel;
 use App\Models\Interfaces\IModel;
 
 /**
+ * Class Place
  * @property mixed landscape
- * @property mixed description
+ * @package App\Models
  */
-class LargeCity extends BaseModel implements IModel
+class Place extends BaseModel implements IModel
 {
     /**
      * @var string
      */
-    protected $table = "largeCity";
+    protected $table = "place";
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return mixed
      */
     public function landscape()
     {
@@ -35,6 +36,6 @@ class LargeCity extends BaseModel implements IModel
      */
     public function knownBy()
     {
-        return $this->belongsToMany('App\Models\User', 'knownLargeCity', 'fk_largeCity', 'fk_user');
+        return $this->belongsToMany('App\Models\User', 'knownPlace', 'fk_place', 'fk_user');
     }
 }

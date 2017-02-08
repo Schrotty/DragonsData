@@ -58,6 +58,7 @@ class LandscapeController extends Controller implements IController
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
 
         $oLandscape = Landscape::find($iLandscapeID);
+        $oLandscape->name = $_POST['title'];
         $oLandscape->description = $_POST['description'];
         $oLandscape->shortDescription = $_POST['short-description'];
         $oLandscape->fk_continent = $_POST['continent'];

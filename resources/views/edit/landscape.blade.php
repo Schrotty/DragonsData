@@ -6,13 +6,7 @@
         {{ csrf_field() }}
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span>{{ $oLandscape->name }}</span>
-
-                <div class="pull-right">
-                    <a href="{{ url('landscape/' . $oLandscape->id) }}">
-                        {{ trans('general.abort') }}
-                    </a>
-                </div>
+                @include('widgets.edit.title', ['oObject' => $oLandscape, 'sType' => 'landscape'])
             </div>
 
             <div class="panel-body">
@@ -37,11 +31,6 @@
             </div>
         </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">{{ trans('general.actions') }}</div>
-            <div class="panel-body">
-                <button class="btn btn-default" type="submit">{{ trans('general.save') }}</button>
-            </div>
-        </div>
+        @include('widgets.edit.submit')
     </form>
 @endsection

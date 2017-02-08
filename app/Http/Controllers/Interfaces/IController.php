@@ -22,6 +22,11 @@ interface IController
     public function save($iObjectID);
 
     /**
+     * @return mixed
+     */
+    public function create();
+
+    /**
      * @param $iObjectID
      * @return mixed
      */

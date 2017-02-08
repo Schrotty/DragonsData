@@ -28,12 +28,12 @@ class LandscapePolicy extends Policy
      * @param Landscape $oLandscape
      * @return bool
      */
-    public function known(User $oUser, Landscape $oLandscape)
+    public function see(User $oUser, Landscape $oLandscape)
     {
         if ($oUser->id == $oLandscape->continent->realm->gamemaster->id) {
             return true;
         }
 
-        return $oUser->id == $oLandscape->knownByUser($oUser)->id;
+        return $oLandscape->knownByUser($oUser);
     }
 }

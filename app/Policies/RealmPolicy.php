@@ -16,9 +16,9 @@ class RealmPolicy extends Policy
      * @param Realm $oRealm
      * @return bool
      */
-    public function edit(User $oUser, Realm $oRealm)
+    public function see(User $oUser, Realm $oRealm)
     {
-        return $oUser->id === $oRealm->gamemaster->id;
+        return $oRealm->knownByUser($oUser);
     }
 
     /**
@@ -26,8 +26,8 @@ class RealmPolicy extends Policy
      * @param Realm $oRealm
      * @return bool
      */
-    public function known(User $oUser, Realm $oRealm)
+    public function edit(User $oUser, Realm $oRealm)
     {
-        return $oUser->id == $oRealm->knownByUser($oUser)->id;
+        return $oUser->id === $oRealm->dungeonMaster->id;
     }
 }

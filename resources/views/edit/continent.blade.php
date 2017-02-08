@@ -6,13 +6,7 @@
         {{ csrf_field() }}
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span>{{ $oContinent->name }}</span>
-
-                <div class="pull-right">
-                    <a href="{{ url('continent/' . $oContinent->id) }}">
-                        {{ trans('general.abort') }}
-                    </a>
-                </div>
+                @include('widgets.edit.title', ['oObject' => $oContinent, 'sType' => 'continent'])
             </div>
 
             <div class="panel-body">
@@ -37,11 +31,6 @@
             </div>
         </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">{{ trans('general.actions') }}</div>
-            <div class="panel-body">
-                <button class="btn btn-default" type="submit">{{ trans('general.save') }}</button>
-            </div>
-        </div>
+        @include('widgets.edit.submit')
     </form>
 @endsection

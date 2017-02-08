@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
-use GrahamCampbell\Markdown\Facades\Markdown;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Base\BaseModel;
 
 /**
  * @property mixed users
- * @property mixed gamemaster
+ * @property mixed description
+ * @property mixed dungeonMaster
  */
-class Realm extends Model
+class Realm extends BaseModel
 {
+    /**
+     * @var array
+     */
     protected $dates = ['created_at', 'updated_at'];
 
     /**
@@ -37,16 +40,9 @@ class Realm extends Model
         return $this->hasOne('App\Models\User', 'id', 'fk_creator');
     }
 
-    public function knownByUser($user)
-    {
-        $oUser = $this->knownBy()->find($user->id);
-        if ($oUser == null) {
-            return new User();
-        }
-
-        return $oUser;
-    }
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function knownBy()
     {
         return $this->belongsToMany('App\Models\User', 'knownRealm', 'fk_realm', 'fk_user');
@@ -63,16 +59,17 @@ class Realm extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function gamemaster()
+    public function dungeonMaster()
     {
         return $this->hasOne('App\Models\User', 'id', 'fk_gamemaster');
     }
 
     /**
-     * @return mixed
+     * @param User $oUser
+     * @return bool
      */
-    public function formatDescription()
+    public function isRealmMaster(User $oUser)
     {
-        return Markdown::convertToHtml($this->description); // <p>foo</p>
+        return $this->dungeonMaster->id == $oUser->id;
     }
 }

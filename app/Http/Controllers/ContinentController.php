@@ -36,6 +36,14 @@ class ContinentController extends Controller implements IController
     }
 
     /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function creator($iRealmID = null)
+    {
+        return view('create.continent', ['object' => new Continent(), 'iRealmID' => $iRealmID]);
+    }
+
+    /**
      * @param $continendID
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -53,6 +61,27 @@ class ContinentController extends Controller implements IController
     }
 
     /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function create()
+    {
+        $aPostUser = array();
+        if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
+
+        Continent::create([
+            'name' => $_POST['title'],
+            'fk_realm' => $_POST['realm'],
+            'shortDescription' => $_POST['short-description'],
+            'description' => $_POST['description']
+        ]);
+
+        $oContinent = Continent::all()->last();
+        $oContinent->knownBy()->sync($aPostUser);
+
+        return redirect()->route('continent', $oContinent->id);
+    }
+
+    /**
      * @param $iContinentID
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -62,12 +91,13 @@ class ContinentController extends Controller implements IController
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
 
         $oContinent = Continent::find($iContinentID);
+        $oContinent->name = $_POST['title'];
         $oContinent->description = $_POST['description'];
         $oContinent->shortDescription = $_POST['short-description'];
         $oContinent->fk_realm = $_POST['realm'];
         $oContinent->knownBy()->sync($aPostUser);
         $oContinent->save();
 
-        return redirect()->route('continent', $iContinentID);
+        return redirect()->route('continent', $oContinent->id);
     }
 }

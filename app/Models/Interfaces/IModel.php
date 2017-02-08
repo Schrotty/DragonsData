@@ -8,21 +8,18 @@
 
 namespace App\Models\Interfaces;
 
+use App\Models\User;
+
 interface IModel
 {
-    /**
-     * @param $oUser
-     * @return mixed
-     */
-    public function knownByUser($oUser);
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function knownBy();
 
     /**
+     * @param User $oUser
      * @return mixed
      */
-    public function formatDescription();
+    public function isRealmMaster(User $oUser);
 }

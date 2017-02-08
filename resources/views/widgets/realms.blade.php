@@ -8,7 +8,7 @@
         <tr>
             <td><a href="{{ url('realm/' . $realm->id) }}">{{ $realm->name }}</a></td>
             <td>{{ $realm->shortDescription }}</td>
-            <td><a href="{{ url('user/' . $realm->gamemaster->id) }}">{{ $realm->gamemaster->name }}</a></td>
+            <td><a href="{{ url('user/' . $realm->dungeonMaster->id) }}">{{ $realm->dungeonMaster->name }}</a></td>
         </tr>
     @endforeach
 </table>

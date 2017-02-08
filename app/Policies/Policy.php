@@ -18,6 +18,6 @@ class Policy
      */
     public function before(User $oUser)
     {
-        if ($oUser->isAdmin) return true;
+        if ($oUser->isRootAdmin) return true;
     }
 }

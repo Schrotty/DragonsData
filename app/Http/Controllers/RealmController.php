@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Realm;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class RealmController extends Controller
 {
@@ -15,19 +15,6 @@ class RealmController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index()
-    {
-        if (Gate::allows('view-realms'))
-        {
-            return view('realms', ['realms' => Realm::all()]);
-        }
-
-        return view('errors.503'); //TODO: create access denied view
     }
 
     /**
@@ -43,20 +30,45 @@ class RealmController extends Controller
     }
 
     /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function creator()
+    {
+        return view('create.realm', ['object' => new Realm()]);
+    }
+
+    /**
      * @param $realmId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function editor($realmId)
     {
         $oRealm = Realm::find($realmId);
-        if (Gate::allows('edit-realm', $oRealm)) {
-            return view('edit.realm', [
-                'realm' => $oRealm,
-                'object' => $oRealm
-            ]);
-        }
+        return view('edit.realm', [
+            'realm' => $oRealm, 'object' => $oRealm
+        ]);
+    }
 
-        return view('errors.503'); //TODO: create access denied view
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function create()
+    {
+        $aPostUser = array();
+        if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
+
+        Realm::create([
+            'name' => $_POST['title'],
+            'shortDescription' => $_POST['short-description'],
+            'description' => $_POST['description'],
+            'fk_creator' => Auth::user()->id,
+            'fk_gamemaster' => $_POST['dungeon-master']
+        ]);
+
+        $oRealm = Realm::all()->last();
+        $oRealm->knownBy()->sync($aPostUser);
+
+        return redirect()->route('realm', $oRealm->id);
     }
 
     /**
@@ -69,6 +81,7 @@ class RealmController extends Controller
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
 
         $oRealm = Realm::find($realmID);
+        $oRealm->name = $_POST['title'];
         $oRealm->description = $_POST['description'];
         $oRealm->shortDescription = $_POST['short-description'];
         $oRealm->fk_gamemaster = $_POST['dungeon-master'];

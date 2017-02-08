@@ -13,12 +13,11 @@ class ContinentPolicy extends Policy
 {
     /**
      * @param User $oUser
-     * @param Continent $oContinent
      * @return bool
      */
-    public function edit(User $oUser, Continent $oContinent)
+    public function create(User $oUser)
     {
-        return $oUser->id == $oContinent->realm->gamemaster->id;
+        return $oUser->isDungeonMaster || $oUser->isAdmin || $oUser->isRootAdmin;
     }
 
     /**
@@ -26,12 +25,22 @@ class ContinentPolicy extends Policy
      * @param Continent $oContinent
      * @return bool
      */
-    public function known(User $oUser, Continent $oContinent)
+    public function edit(User $oUser, Continent $oContinent)
     {
-        if ($oUser->id == $oContinent->realm->gamemaster->id) {
+        return $oUser->id == $oContinent->realm->dungeonMaster->id;
+    }
+
+    /**
+     * @param User $oUser
+     * @param Continent $oContinent
+     * @return bool
+     */
+    public function see(User $oUser, Continent $oContinent)
+    {
+        if ($oUser->id == $oContinent->realm->dungeonMaster->id) {
             return true;
         }
 
-        return $oUser->id == $oContinent->knownByUser($oUser)->id;
+        return $oContinent->knownByUser($oUser);
     }
 }

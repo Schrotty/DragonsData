@@ -5,7 +5,6 @@
             <div class="row">
                 <div class="col-md-8">
                     <p>{{ Auth::user()->forename }} {{ Auth::user()->surname }}</p>
-                    <span>{{ Auth::user()->name }} - {{ Auth::user()->rank->name }}</span>
                 </div>
 
                 <div class="col-md-4">
@@ -15,7 +14,7 @@
         </div>
     </div>
 
-    @can('isDM', Auth::user())
+    @can('isDungeonMaster', Auth::user())
         <div class="panel panel-default object-control-panel">
             <div class="panel-heading">{{trans('general.controls')}}</div>
             <div class="panel-body">
