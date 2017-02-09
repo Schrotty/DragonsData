@@ -12,16 +12,24 @@ use App\Models\Base\BaseModel;
 use App\Models\Interfaces\IModel;
 
 /**
- * Class Place
+ * Class SmallCity
+ * @property mixed description
  * @property mixed landscape
  * @package App\Models
  */
-class Place extends BaseModel implements IModel
+class City extends BaseModel implements IModel
 {
     /**
      * @var string
      */
-    protected $table = "place";
+    protected $table = "city";
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'description', 'shortDescription', 'name', 'fk_landscape'
+    ];
 
     /**
      * @return mixed
@@ -36,6 +44,15 @@ class Place extends BaseModel implements IModel
      */
     public function knownBy()
     {
-        return $this->belongsToMany('App\Models\User', 'knownPlace', 'fk_place', 'fk_user');
+        return $this->belongsToMany('App\Models\User', 'knownCity', 'fk_city', 'fk_user');
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function isRealmMaster(User $oUser)
+    {
+        return $this->landscape->continent->realm->dungeonMaster->id == $oUser->id;
     }
 }

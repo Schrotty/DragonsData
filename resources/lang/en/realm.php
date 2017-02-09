@@ -14,13 +14,11 @@ return [
     'edit_continent' => 'Edit continent',
     'continent' => 'Continent',
     'edit_landscape' => 'Edit landscape',
-    'assigned_large_cities' => 'Assigned mayor cities',
-    'assigned_medium_cities' => 'Assigned cities',
-    'assigned_small_cities' => 'Assigned villages',
-    'assigned_places' => 'Assigned places',
+    'assigned_cities' => 'Assigned cities',
     'add_continent' => 'Add continent',
     'edit_place' => 'Edit place',
     'edit_city' => 'Edit city',
     'create_realm' => 'Create realm',
-    'add_landscape' => 'Add landscape'
+    'add_landscape' => 'Add landscape',
+    'add_city' => 'Add city'
 ];

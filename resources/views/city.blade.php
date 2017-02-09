@@ -3,10 +3,10 @@
 @section('restricted')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ $oMediumCity->name }}</span>
-            @can('edit', $oMediumCity)
+            <span>{{ $oCity->name }}</span>
+            @can('edit', $oCity)
                 <div class="pull-right">
-                    <a href="{{ url('medium-city/' . $oMediumCity->id . '/edit') }}">
+                    <a href="{{ url('city-edit/' . $oCity->id) }}">
                         {{ trans('realm.edit_city') }}
                     </a>
                 </div>
@@ -15,14 +15,14 @@
 
         <div class="panel-body">
             <div class="row">
-                @include('widgets.description', ['oObject' => $oMediumCity])
+                @include('widgets.description', ['oObject' => $oCity])
 
                 <div class="col-md-6">
                     <div class="realm-gamemaster">
                         <div>{{ trans('realm.landscape') }}</div>
                         <span>
-                        <a href="{{ url('landscape/' . $oMediumCity->landscape->id) }}">
-                            {{ $oMediumCity->landscape->name }}
+                        <a href="{{ url('landscape/' . $oCity->landscape->id) }}">
+                            {{ $oCity->landscape->name }}
                         </a>
                     </span>
                     </div>
@@ -31,7 +31,7 @@
                 <div class="col-md-6">
                     <div class="realm-player">
                         <div>{{ trans('general.known_by') }}</div>
-                        @include('widgets.knownBy', ['object' => $oMediumCity])
+                        @include('widgets.knownBy', ['object' => $oCity])
                     </div>
                 </div>
             </div>

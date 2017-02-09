@@ -6,7 +6,7 @@
             <span>{{ $oLandscape->name }}</span>
             @can('edit', $oLandscape)
                 <div class="pull-right">
-                    <a href="{{ url('landscape/' . $oLandscape->id . '/edit') }}">
+                    <a href="{{ url('landscape-edit/' . $oLandscape->id) }}">
                         {{ trans('realm.edit_landscape') }}
                     </a>
                 </div>
@@ -38,35 +38,18 @@
         </div>
     </div>
 
-    <!-- assigned large cities -->
-    <div class="panel panel-default">
-        <div class="panel-heading">{{ trans('realm.assigned_large_cities') }}</div>
-        <div class="panel-body">
-            @include('widgets.places.largeCities', ['aLargeCities' => $oLandscape->largeCities()])
-        </div>
-    </div>
-
-    <!-- assigned medium cities -->
-    <div class="panel panel-default">
-        <div class="panel-heading">{{ trans('realm.assigned_medium_cities') }}</div>
-        <div class="panel-body">
-            @include('widgets.places.mediumCities', ['aMediumCities' => $oLandscape->mediumCities()])
-        </div>
-    </div>
-
     <!-- assigned small cities -->
     <div class="panel panel-default">
-        <div class="panel-heading">{{ trans('realm.assigned_small_cities') }}</div>
+        <div class="panel-heading"><span>{{ trans('realm.assigned_cities') }}</span>
+            @can('edit', $oLandscape)
+                <div class="pull-right">
+                    <a href="{{ url('city-create/' . $oLandscape->id) }}">
+                        {{ trans('realm.add_city') }}
+                    </a>
+                </div>
+            @endcan</div>
         <div class="panel-body">
-            @include('widgets.places.smallCities', ['aSmallCities' => $oLandscape->smallCities()])
-        </div>
-    </div>
-
-    <!-- assigned places -->
-    <div class="panel panel-default">
-        <div class="panel-heading">{{ trans('realm.assigned_places') }}</div>
-        <div class="panel-body">
-            @include('widgets.places.places', ['aPlaces' => $oLandscape->places()])
+            @include('widgets.places.cities', ['aCities' => $oLandscape->cities()])
         </div>
     </div>
 @endsection

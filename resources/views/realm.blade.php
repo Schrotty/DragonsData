@@ -6,7 +6,7 @@
             <span>{{ $realm->name }}</span>
             @can('edit', $realm)
                 <div class="pull-right">
-                    <a href="{{ url('realm/' . $realm->id . '/edit') }}">
+                    <a href="{{ url('realm-edit/' . $realm->id) }}">
                         {{ trans('realm.edit_realm') }}
                     </a>
                 </div>

@@ -2,7 +2,7 @@
 
 @section('restricted')
     <form class="form-horizontal" role="form" method="POST"
-          action="{{ url('/landscape/' . $oLandscape->id . '/save') }}">
+          action="{{ url('/landscape-save/' . $oLandscape->id) }}">
         {{ csrf_field() }}
         <div class="panel panel-default">
             <div class="panel-heading">

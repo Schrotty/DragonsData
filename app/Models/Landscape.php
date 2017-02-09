@@ -32,36 +32,13 @@ class Landscape extends BaseModel implements IModel
         'name', 'shortDescription', 'description', 'fk_continent'
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function largeCities()
-    {
-        return $this->hasMany('App\Models\LargeCity', 'fk_landscape', 'id')->get();
-    }
 
     /**
      * @return array
      */
-    public function mediumCities()
+    public function cities()
     {
-        return $this->hasMany('App\Models\MediumCity', 'fk_landscape', 'id')->get();
-    }
-
-    /**
-     * @return array
-     */
-    public function smallCities()
-    {
-        return $this->hasMany('App\Models\SmallCity', 'fk_landscape', 'id')->get();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function places()
-    {
-        return $this->hasMany('App\Models\Place', 'fk_landscape', 'id')->get();
+        return $this->hasMany('App\Models\City', 'fk_landscape', 'id')->get();
     }
 
     /**

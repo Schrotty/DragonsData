@@ -2,7 +2,7 @@
 
 @section('restricted')
     <form class="form-horizontal" role="form" method="POST"
-          action="{{ url('/continent/' . $oContinent->id . '/save') }}">
+          action="{{ url('/continent-save/' . $oContinent->id) }}">
         {{ csrf_field() }}
         <div class="panel panel-default">
             <div class="panel-heading">
