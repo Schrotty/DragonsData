@@ -100,7 +100,7 @@ class User extends Authenticatable
         $aUserContinents = $this->belongsToMany('App\Models\Continent', 'knownContinent', 'fk_user', 'fk_continent')->get();
         $aRealmContinents = $oRealm->continents();
 
-        if ($this->isRootAdmin || $oRealm->isRealmMaster($this)) return $aRealmContinents;
+        if ($this->isRootAdmin || $oRealm->isRealmMaster($this) || $oRealm->isOpen) return $aRealmContinents;
         foreach ($aRealmContinents as $oContinent) {
             foreach ($aUserContinents as $oUserContinent) {
                 if ($oContinent->id == $oUserContinent->id) $aResult[] = $oContinent;
@@ -120,7 +120,7 @@ class User extends Authenticatable
         $aUserLandscapes = $this->belongsToMany('App\Models\Landscape', 'knownLandscape', 'fk_user', 'fk_landscape')->get();
         $aContinentLandscapes = $oContinent->landscapes();
 
-        if ($this->isRootAdmin) return $aContinentLandscapes;
+        if ($this->isRootAdmin || $oContinent->isRealmMaster($this) || $oContinent->isOpenRealm()) return $aContinentLandscapes;
         foreach ($aContinentLandscapes as $oLandscape) {
             foreach ($aUserLandscapes as $oUserLandscape) {
                 if ($oLandscape->id == $oUserLandscape->id) $aResult[] = $oLandscape;

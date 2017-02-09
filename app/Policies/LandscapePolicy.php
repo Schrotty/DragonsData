@@ -20,7 +20,7 @@ class LandscapePolicy extends Policy
      */
     public function edit(User $oUser, Landscape $oLandscape)
     {
-        return $oUser->id == $oLandscape->continent->realm->gamemaster->id;
+        return $oUser->id == $oLandscape->continent->realm->dungeonMaster->id;
     }
 
     /**
@@ -30,10 +30,10 @@ class LandscapePolicy extends Policy
      */
     public function see(User $oUser, Landscape $oLandscape)
     {
-        if ($oUser->id == $oLandscape->continent->realm->gamemaster->id) {
+        if ($oUser->id == $oLandscape->continent->realm->dungeonMaster->id) {
             return true;
         }
 
-        return $oLandscape->knownByUser($oUser);
+        return $oLandscape->knownByUser($oUser) || $oLandscape->isOpenRealm();
     }
 }

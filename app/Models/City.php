@@ -55,4 +55,12 @@ class City extends BaseModel implements IModel
     {
         return $this->landscape->continent->realm->dungeonMaster->id == $oUser->id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function isOpenRealm()
+    {
+        return $this->landscape->continent->realm->isOpen;
+    }
 }

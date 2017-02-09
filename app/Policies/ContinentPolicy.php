@@ -41,6 +41,6 @@ class ContinentPolicy extends Policy
             return true;
         }
 
-        return $oContinent->knownByUser($oUser);
+        return $oContinent->knownByUser($oUser) || $oContinent->isOpenRealm();
     }
 }

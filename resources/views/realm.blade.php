@@ -3,7 +3,12 @@
 @section('restricted')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ $realm->name }}</span>
+            <span>
+                {{ $realm->name }}
+                @if($realm->isOpen)
+                    {{ trans('realm.open_realm_title') }}
+                @endif
+            </span>
             @can('edit', $realm)
                 <div class="pull-right">
                     <a href="{{ url('realm-edit/' . $realm->id) }}">

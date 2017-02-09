@@ -30,11 +30,13 @@ class RealmController extends Controller
     }
 
     /**
+     * @param bool $bOpen
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function creator()
+    public function creator($bOpen = null)
     {
-        return view('create.realm', ['object' => new Realm()]);
+        App('debugbar')->info($bOpen);
+        return view('create.realm', ['object' => new Realm(), 'open' => $bOpen]);
     }
 
     /**
@@ -54,15 +56,18 @@ class RealmController extends Controller
      */
     public function create()
     {
+        $bOpen = false;
         $aPostUser = array();
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
+        if (isset($_POST['is-open'])) $bOpen = $_POST['is-open'];
 
         Realm::create([
             'name' => $_POST['title'],
             'shortDescription' => $_POST['short-description'],
             'description' => $_POST['description'],
             'fk_creator' => Auth::user()->id,
-            'fk_gamemaster' => $_POST['dungeon-master']
+            'fk_gamemaster' => $_POST['dungeon-master'],
+            'isOpen' => $bOpen == true ? 1 : 0
         ]);
 
         $oRealm = Realm::all()->last();
@@ -77,14 +82,18 @@ class RealmController extends Controller
      */
     public function save($realmID)
     {
+        $bOpen = false;
         $aPostUser = array();
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
+        if (isset($_POST['is-open'])) $bOpen = $_POST['is-open'];
 
         $oRealm = Realm::find($realmID);
         $oRealm->name = $_POST['title'];
         $oRealm->description = $_POST['description'];
         $oRealm->shortDescription = $_POST['short-description'];
         $oRealm->fk_gamemaster = $_POST['dungeon-master'];
+        $oRealm->isOpen = $bOpen == true ? 1 : 0;
+
         $oRealm->knownBy()->sync($aPostUser);
         $oRealm->save();
 

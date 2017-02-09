@@ -46,13 +46,4 @@ class UserController extends Controller
     {
         return $realm->users->find($userid);
     }
-
-    /**
-     * @param $id
-     * @return string
-     */
-    public function delete($id)
-    {
-        return $id . " : Done!";
-    }
 }

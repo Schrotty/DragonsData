@@ -8,6 +8,7 @@ use App\Models\Base\BaseModel;
  * @property mixed users
  * @property mixed description
  * @property mixed dungeonMaster
+ * @property mixed isOpen
  */
 class Realm extends BaseModel
 {
@@ -29,7 +30,7 @@ class Realm extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'shortDescription', 'isPrivate', 'fk_gamemaster', 'fk_creator',
+        'name', 'description', 'shortDescription', 'isPrivate', 'fk_gamemaster', 'fk_creator', 'isOpen'
     ];
 
     /**

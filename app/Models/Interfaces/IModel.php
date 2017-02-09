@@ -22,4 +22,9 @@ interface IModel
      * @return mixed
      */
     public function isRealmMaster(User $oUser);
+
+    /**
+     * @return mixed
+     */
+    public function isOpenRealm();
 }

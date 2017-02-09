@@ -20,5 +20,8 @@ return [
     'edit_city' => 'Edit city',
     'create_realm' => 'Create realm',
     'add_landscape' => 'Add landscape',
-    'add_city' => 'Add city'
+    'add_city' => 'Add city',
+    'is_open_realm' => 'Is open realm?',
+    'create_open_realm' => 'Create open realm',
+    'open_realm_title' => ' - Open Realm'
 ];

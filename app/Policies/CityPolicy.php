@@ -20,7 +20,7 @@ class CityPolicy extends Policy
      */
     public function edit(User $oUser, City $oCity)
     {
-        return $oUser->id == $oCity->landscape->continent->realm->gamemaster->id;
+        return $oUser->id == $oCity->landscape->continent->realm->dungeonMaster->id;
     }
 
     /**
@@ -30,10 +30,10 @@ class CityPolicy extends Policy
      */
     public function see(User $oUser, City $oCity)
     {
-        if ($oUser->id == $oCity->landscape->continent->realm->gamemaster->id) {
+        if ($oUser->id == $oCity->landscape->continent->realm->dungeonMaster->id) {
             return true;
         }
 
-        return $oCity->knownByUser($oUser);
+        return $oCity->knownByUser($oUser) || $oCity->isOpenRealm();
     }
 }

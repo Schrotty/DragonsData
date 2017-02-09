@@ -65,4 +65,12 @@ class Landscape extends BaseModel implements IModel
     {
         return $this->continent->realm->dungeonMaster->id == $oUser->id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function isOpenRealm()
+    {
+        return $this->continent->realm->isOpen;
+    }
 }

@@ -25,6 +25,7 @@ Route::get('/user/{id}/delete', 'UserController@delete', ['user' => '{id}']);
 Route::get('/realm/{id}', 'RealmController@single', ['realm' => '{id}'])->name('realm');
 Route::get('/realm-edit/{realm}', 'RealmController@editor', ['realm' => '{realm}']);
 Route::get('/realm-create', 'RealmController@creator');
+Route::get('/realm-create/{open}', 'RealmController@creator', ['open' => '{open}']);
 
 Route::post('/realm-save', 'RealmController@create');
 Route::POST('/realm-save/{id}', 'RealmController@save', ['realm' => '{id}']);

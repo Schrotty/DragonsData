@@ -62,6 +62,14 @@ class Continent extends BaseModel implements IModel
      */
     public function isRealmMaster(User $oUser)
     {
-        return $this->realm->gamemaster->id == $oUser->id;
+        return $this->realm->dungeonMaster->id == $oUser->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function isOpenRealm()
+    {
+        return $this->realm->isOpen;
     }
 }
