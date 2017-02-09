@@ -6,7 +6,7 @@
     <div class="col-md-6">
         <div class="pull-right">
             @if(isset($preset))
-                <a href="{{ url( 'realm/' . $preset) }}">
+                <a href="{{ url( $sType . '/' . $preset) }}">
                     @else
                         <a href="{{ url( $sType . '/' . $oObject->id) }}">
                             @endif

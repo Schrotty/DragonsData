@@ -32,6 +32,15 @@ class LandscapeController extends Controller implements IController
     }
 
     /**
+     * @param null $iContinentID
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function creator($iContinentID = null)
+    {
+        return view('create.landscape', ['object' => new Landscape(), 'iContinentID' => $iContinentID]);
+    }
+
+    /**
      * @param $iLandscapeID
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -46,6 +55,27 @@ class LandscapeController extends Controller implements IController
         }
 
         return view('errors.503'); //TODO: create access denied view
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function create()
+    {
+        $aPostUser = array();
+        if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
+
+        Landscape::create([
+            'name' => $_POST['title'],
+            'fk_continent' => $_POST['continent'],
+            'shortDescription' => $_POST['short-description'],
+            'description' => $_POST['description']
+        ]);
+
+        $oLandscape = Landscape::all()->last();
+        $oLandscape->knownBy()->sync($aPostUser);
+
+        return redirect()->route('landscape', $oLandscape->id);
     }
 
     /**

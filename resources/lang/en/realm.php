@@ -21,5 +21,6 @@ return [
     'add_continent' => 'Add continent',
     'edit_place' => 'Edit place',
     'edit_city' => 'Edit city',
-    'create_realm' => 'Create realm'
+    'create_realm' => 'Create realm',
+    'add_landscape' => 'Add landscape'
 ];

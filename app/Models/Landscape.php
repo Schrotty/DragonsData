@@ -29,7 +29,7 @@ class Landscape extends BaseModel implements IModel
      * @var array
      */
     protected $fillable = [
-        'name', 'description'
+        'name', 'shortDescription', 'description', 'fk_continent'
     ];
 
     /**

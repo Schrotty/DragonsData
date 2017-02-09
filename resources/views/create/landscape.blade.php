@@ -1,11 +1,11 @@
 @extends('layouts.restricted_create')
 
 @section('restricted')
-    <form class="form-horizontal" role="form" method="POST" action="{{ url('/continent-save') }}">
+    <form class="form-horizontal" role="form" method="POST" action="{{ url('/landscape-save') }}">
         {{ csrf_field() }}
         <div class="panel panel-default">
             <div class="panel-heading">
-                @include('widgets.edit.title', ['oObject' => new \App\Models\Continent(), 'sType' => 'realm', 'preset' => $iRealmID])
+                @include('widgets.edit.title', ['oObject' => new \App\Models\Landscape(), 'sType' => 'continent', 'preset' => $iContinentID])
             </div>
 
             <div class="panel-body">
@@ -13,9 +13,9 @@
                     @include('widgets.edit.description', ['oObject' => new \App\Models\Continent()])
                     <div class="col-md-6">
                         <div class="realm-gamemaster">
-                            <div>{{ trans('realm.realm') }}</div>
+                            <div>{{ trans('realm.continent') }}</div>
                             <span>
-                                @include('widgets.elements.realms_with_access', ['realm' => new \App\Models\Realm(), 'preset' => $iRealmID])
+                                @include('widgets.elements.continents_with_access', ['continent' => new \App\Models\Continent(), 'preset' => $iContinentID])
                             </span>
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                     <div class="col-md-6">
                         <div class="realm-player">
                             <div>{{ trans('general.known_by') }}</div>
-                            @include('widgets.elements.user_dropdown_multi', ['obj' => new \App\Models\Continent()])
+                            @include('widgets.elements.user_dropdown_multi', ['obj' => new \App\Models\Landscape()])
                         </div>
                     </div>
                 </div>

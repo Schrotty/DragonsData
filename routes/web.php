@@ -42,6 +42,11 @@ Route::post('/continent-save', 'ContinentController@create');
 Route::get('/landscape/{id}', 'LandscapeController@single', ['landscape' => '{id}'])->name('landscape');
 Route::get('/landscape/{id}/edit/', 'LandscapeController@editor', ['oContinent' => '{id}']);
 
+Route::get('/landscape-create', 'LandscapeController@creator');
+Route::get('/landscape-create/{id}', 'LandscapeController@creator', ['continentID' => '{id}']);
+
+Route::post('/landscape-save', 'LandscapeController@create');
+
 /* LARGE CITIES */
 Route::get('/large-city/{id}', 'LargeCityController@single', ['largeCity' => '{id}'])->name('large-city');
 

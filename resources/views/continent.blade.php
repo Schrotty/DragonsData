@@ -40,7 +40,16 @@
 
     <!-- assigned landscapes -->
     <div class="panel panel-default">
-        <div class="panel-heading">{{ trans('realm.assigned_landscapes') }}</div>
+        <div class="panel-heading">
+            <span>{{ trans('realm.assigned_landscapes') }}</span>
+            @can('edit', $oContinent)
+                <div class="pull-right">
+                    <a href="{{ url('landscape-create/' . $oContinent->id) }}">
+                        {{ trans('realm.add_landscape') }}
+                    </a>
+                </div>
+            @endcan
+        </div>
         <div class="panel-body">
             @include('widgets.landscapes', ['oLandscapes' => Auth::user()->knownLandscape($oContinent)])
         </div>
