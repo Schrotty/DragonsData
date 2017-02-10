@@ -12,7 +12,7 @@
             <div class="panel-body">
                 <div class="row">
                     @include('widgets.edit.description', ['oObject' => $oCity])
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="realm-gamemaster">
                             <div>{{ trans('realm.landscape') }}</div>
                             <span>
@@ -21,10 +21,17 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="realm-player">
                             <div>{{ trans('general.known_by') }}</div>
                             @include('widgets.elements.user_dropdown_multi', ['obj' => $oCity])
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="realm-player">
+                            <div>{{ trans('general.tags') }}</div>
+                            @include('widgets.elements.tags', ['obj' => $oCity])
                         </div>
                     </div>
                 </div>

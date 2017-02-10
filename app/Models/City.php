@@ -39,6 +39,11 @@ class City extends BaseModel implements IModel
         return $this->hasOne('App\Models\Landscape', 'id', 'fk_landscape');
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany('App\Models\Tag', 'cityTag', 'fk_city', 'fk_tag');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

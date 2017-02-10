@@ -17,7 +17,7 @@
             <div class="row">
                 @include('widgets.description', ['oObject' => $oCity])
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="realm-gamemaster">
                         <div>{{ trans('realm.landscape') }}</div>
                         <span>
@@ -28,10 +28,17 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="realm-player">
                         <div>{{ trans('general.known_by') }}</div>
                         @include('widgets.knownBy', ['object' => $oCity])
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="realm-player">
+                        <div>{{ trans('general.tags') }}</div>
+                        @include('widgets.tags', ['aTags' => $oCity->tags])
                     </div>
                 </div>
             </div>

@@ -60,7 +60,9 @@ class CityController extends Controller implements IController
      */
     public function create()
     {
+        $aTags = array();
         $aPostUser = array();
+        if (isset($_POST['tags'])) $aTags = $_POST['tags'];
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
 
         City::create([
@@ -72,6 +74,7 @@ class CityController extends Controller implements IController
 
         $oCity = City::all()->last();
         $oCity->knownBy()->sync($aPostUser);
+        $oCity->tags()->sync($aTags);
 
         return redirect()->route('city', $oCity->id);
     }
@@ -83,12 +86,15 @@ class CityController extends Controller implements IController
     public function save($iCityID)
     {
         $aPostUser = array();
+        $aTags = array();
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
+        if (isset($_POST['tags'])) $aTags = $_POST['tags'];
 
         $oCity = City::find($iCityID);
         $oCity->description = $_POST['description'];
         $oCity->shortDescription = $_POST['short-description'];
         $oCity->fk_landscape = $_POST['landscape'];
+        $oCity->tags()->sync($aTags);
 
         $oCity->knownBy()->sync($aPostUser);
         $oCity->save();

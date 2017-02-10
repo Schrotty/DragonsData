@@ -27,5 +27,6 @@ return [
     'actions' => 'Actions',
     'login' => 'Login',
     'register' => 'Register',
-    'settings' => 'Settings'
+    'settings' => 'Settings',
+    'tags' => 'Tags'
 ];
