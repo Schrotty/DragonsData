@@ -16,41 +16,23 @@
                     @endcan
                 </div>
                 <div class="panel-body">
-                    @if( count(Auth::user()->knownRealms()) != 0 )
-                        <table class="realm-table">
-                            <tr>
-                                <th>{{ trans('general.name') }}</th>
-                                <th>{{ trans('general.description') }}</th>
-                            </tr>
-
-                            @foreach(Auth::user()->knownRealms() as $oRealm)
-                                @if(!$oRealm->isOpen)
-                                    <tr>
-                                        <td><a href="{{ '/realm/' . $oRealm->id }}">{{ $oRealm->name }}</a></td>
-                                        <td>{{ $oRealm->shortDescription }}</td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </table>
-                    @else
-                        {{ trans('user.no_assigned_realms') }}
-                    @endif
+                    @include('widgets.realms', ['realms' => Auth::user()->knownRealms(), 'openRealmMode' => false])
                 </div>
             </div>
 
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span>{{trans('realm.open_realms')}}</span>
-                    @can('isDungeonMaster', Auth::user())
+                    @if(Auth::user()->isDungeonMaster)
                         <div class="pull-right">
                             <a href="{{ url('realm-create/1/') }}">
                                 {{ trans('realm.create_open_realm') }}
                             </a>
                         </div>
-                    @endcan
+                    @endif
                 </div>
                 <div class="panel-body">
-                    @include('widgets.openRealms', ['realms' => \App\Models\Realm::all()->where('isOpen', true)])
+                    @include('widgets.realms', ['realms' => \App\Models\Realm::all()->where('isOpen', true), 'openRealmMode' => true])
                 </div>
             </div>
         </div>

@@ -79,7 +79,7 @@ class User extends Authenticatable
             return Realm::all();
         }
 
-        return $this->belongsToMany('App\Models\Realm', 'knownRealm', 'fk_user', 'fk_realm')->get();
+        return $this->masterRealms()->merge($this->assignedRealms());
     }
 
     /**
@@ -88,6 +88,22 @@ class User extends Authenticatable
     public function isRootAdmin()
     {
         return $this->isRootAdmin;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function masterRealms()
+    {
+        return $this->hasMany('App\Models\Realm', 'fk_dungeonMaster', 'id')->getEager();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function assignedRealms()
+    {
+        return $this->belongsToMany('App\Models\Realm', 'knownRealm', 'fk_user', 'fk_realm')->get();
     }
 
     /**
@@ -123,6 +139,26 @@ class User extends Authenticatable
         if ($this->isRootAdmin || $oContinent->isRealmMaster($this) || $oContinent->isOpenRealm()) return $aContinentLandscapes;
         foreach ($aContinentLandscapes as $oLandscape) {
             foreach ($aUserLandscapes as $oUserLandscape) {
+                if ($oLandscape->id == $oUserLandscape->id) $aResult[] = $oLandscape;
+            }
+        }
+
+        return $aResult;
+    }
+
+    /**
+     * @param $oLandscape
+     * @return array
+     */
+    public function knownCities($oLandscape)
+    {
+        $aResult = array();
+        $aUserCities = $this->belongsToMany('App\Models\City', 'knownCity', 'fk_user', 'fk_city')->get();
+        $aLandscapeCities = $oLandscape->cities();
+
+        if ($this->isRootAdmin || $oLandscape->isRealmMaster($this) || $oLandscape->isOpenRealm()) return $aLandscapeCities;
+        foreach ($aLandscapeCities as $oLandscape) {
+            foreach ($aUserCities as $oUserLandscape) {
                 if ($oLandscape->id == $oUserLandscape->id) $aResult[] = $oLandscape;
             }
         }

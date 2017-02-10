@@ -10,7 +10,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Interfaces\IController;
 use App\Models\Landscape;
-use Illuminate\Support\Facades\Gate;
 
 class LandscapeController extends Controller implements IController
 {
@@ -47,14 +46,10 @@ class LandscapeController extends Controller implements IController
     public function editor($iLandscapeID)
     {
         $oLandscape = Landscape::find($iLandscapeID);
-        if (Gate::allows('edit-landscape', $oLandscape)) {
-            return view('edit.landscape', [
-                'oLandscape' => $oLandscape,
-                'object' => $oLandscape
-            ]);
-        }
-
-        return view('errors.503'); //TODO: create access denied view
+        return view('edit.landscape', [
+            'oLandscape' => $oLandscape,
+            'object' => $oLandscape
+        ]);
     }
 
     /**

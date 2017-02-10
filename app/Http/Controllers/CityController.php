@@ -10,7 +10,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Interfaces\IController;
 use App\Models\City;
-use Illuminate\Support\Facades\Gate;
 
 class CityController extends Controller implements IController
 {
@@ -50,14 +49,10 @@ class CityController extends Controller implements IController
     public function editor($iCityID)
     {
         $oCity = City::find($iCityID);
-        if (Gate::allows('edit-city', $oCity)) {
-            return view('edit.city', [
-                'oCity' => $oCity,
-                'object' => $oCity
-            ]);
-        }
-
-        return view('errors.503'); //TODO: create access denied view
+        return view('edit.city', [
+            'oCity' => $oCity,
+            'object' => $oCity
+        ]);
     }
 
     /**

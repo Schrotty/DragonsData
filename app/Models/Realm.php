@@ -30,7 +30,7 @@ class Realm extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'shortDescription', 'isPrivate', 'fk_gamemaster', 'fk_creator', 'isOpen'
+        'name', 'description', 'shortDescription', 'isPrivate', 'fk_dungeonMaster', 'fk_creator', 'isOpen'
     ];
 
     /**
@@ -62,7 +62,7 @@ class Realm extends BaseModel
      */
     public function dungeonMaster()
     {
-        return $this->hasOne('App\Models\User', 'id', 'fk_gamemaster');
+        return $this->hasOne('App\Models\User', 'id', 'fk_dungeonMaster');
     }
 
     /**

@@ -20,4 +20,13 @@ class Policy
     {
         if ($oUser->isRootAdmin) return true;
     }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function create(User $oUser)
+    {
+        return $oUser->isDungeonMaster || $oUser->isRootAdmin;
+    }
 }

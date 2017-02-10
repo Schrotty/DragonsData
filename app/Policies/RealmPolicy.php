@@ -18,7 +18,7 @@ class RealmPolicy extends Policy
      */
     public function see(User $oUser, Realm $oRealm)
     {
-        return $oRealm->knownByUser($oUser) || $oRealm->isOpen;
+        return $oRealm->knownByUser($oUser) || $oRealm->isOpen || $oRealm->isRealmMaster($oUser);
     }
 
     /**

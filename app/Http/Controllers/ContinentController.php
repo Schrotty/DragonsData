@@ -10,7 +10,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Interfaces\IController;
 use App\Models\Continent;
-use Illuminate\Support\Facades\Gate;
 
 class ContinentController extends Controller implements IController
 {
@@ -50,14 +49,10 @@ class ContinentController extends Controller implements IController
     public function editor($continendID)
     {
         $oContinent = Continent::find($continendID);
-        if (Gate::allows('edit-continent', $oContinent)) {
-            return view('edit.continent', [
-                'oContinent' => $oContinent,
-                'object' => $oContinent
-            ]);
-        }
-
-        return view('errors.503'); //TODO: create access denied view
+        return view('edit.continent', [
+            'oContinent' => $oContinent,
+            'object' => $oContinent
+        ]);
     }
 
     /**

@@ -49,7 +49,7 @@
                 </div>
             @endcan</div>
         <div class="panel-body">
-            @include('widgets.places.cities', ['aCities' => $oLandscape->cities()])
+            @include('widgets.places.cities', ['aCities' => Auth::user()->knownCities($oLandscape)])
         </div>
     </div>
 @endsection

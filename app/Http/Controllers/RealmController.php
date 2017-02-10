@@ -35,7 +35,6 @@ class RealmController extends Controller
      */
     public function creator($bOpen = null)
     {
-        App('debugbar')->info($bOpen);
         return view('create.realm', ['object' => new Realm(), 'open' => $bOpen]);
     }
 
@@ -91,7 +90,7 @@ class RealmController extends Controller
         $oRealm->name = $_POST['title'];
         $oRealm->description = $_POST['description'];
         $oRealm->shortDescription = $_POST['short-description'];
-        $oRealm->fk_gamemaster = $_POST['dungeon-master'];
+        $oRealm->fk_dungeonMaster = $_POST['dungeon-master'];
         $oRealm->isOpen = $bOpen == true ? 1 : 0;
 
         $oRealm->knownBy()->sync($aPostUser);

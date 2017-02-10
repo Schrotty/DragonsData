@@ -1,4 +1,4 @@
-@extends('layouts.restricted')
+@extends('layouts.restricted_edit')
 
 @section('restricted')
     <form class="form-horizontal" role="form" method="POST"

@@ -4,9 +4,8 @@
         <th>{{ trans('general.description') }}</th>
     </tr>
 
-    @if(count($oLandscape->cities()) > 0)
+    @if(count($aCities) > 0)
         @foreach($aCities as $oCity)
-
             <tr>
                 <td>
                     <a href="{{ url('city/' . $oCity->id) }}">{{ $oCity->name }}</a>

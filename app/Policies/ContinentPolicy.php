@@ -11,14 +11,6 @@ use App\Models\User;
  */
 class ContinentPolicy extends Policy
 {
-    /**
-     * @param User $oUser
-     * @return bool
-     */
-    public function create(User $oUser)
-    {
-        return $oUser->isDungeonMaster || $oUser->isAdmin || $oUser->isRootAdmin;
-    }
 
     /**
      * @param User $oUser
