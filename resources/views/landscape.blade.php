@@ -69,4 +69,20 @@
             @include('widgets.places.rivers', ['aRivers' => Auth::user()->knownRivers($oLandscape)])
         </div>
     </div>
+
+    <!-- assigned lakes -->
+    <div class="panel panel-default">
+        <div class="panel-heading"><span>{{ trans('realm.assigned_lakes') }}</span>
+            @can('edit', $oLandscape)
+                <div class="pull-right">
+                    <a href="{{ url('lake-create/' . $oLandscape->id) }}">
+                        {{ trans('realm.add_lake') }}
+                    </a>
+                </div>
+            @endcan</div>
+
+        <div class="panel-body">
+            @include('widgets.places.lakes', ['aLakes' => Auth::user()->knownLakes($oLandscape)])
+        </div>
+    </div>
 @endsection

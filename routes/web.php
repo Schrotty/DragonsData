@@ -69,3 +69,13 @@ Route::get('/river-create/{id}', 'RiverController@creator', ['iLandscapeID' => '
 
 Route::post('/river-save', 'RiverController@create');
 Route::POST('/river-save/{id}', 'RiverController@save', ['iLandscapeID' => '{id}']);
+
+/* RIVERS */
+Route::get('/lake/{id}', 'LakeController@single', ['river' => '{id}'])->name('lake');
+Route::get('/lake-edit/{lake}', 'LakeController@editor', ['oLandscape' => '{lake}'])->name('lake-edit');
+
+Route::get('/lake-create', 'LakeController@creator');
+Route::get('/lake-create/{id}', 'LakeController@creator', ['iLandscapeID' => '{id}']);
+
+Route::post('/lake-save', 'LakeController@create');
+Route::POST('/lake-save/{id}', 'LakeController@save', ['iLandscapeID' => '{id}']);

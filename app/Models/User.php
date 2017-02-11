@@ -185,4 +185,24 @@ class User extends Authenticatable
 
         return $aResult;
     }
+
+    /**
+     * @param $oLandscape
+     * @return array
+     */
+    public function knownLakes($oLandscape)
+    {
+        $aResult = array();
+        $aUserLakes = $this->belongsToMany('App\Models\River', 'knownRiver', 'fk_user', 'fk_river')->get();
+        $aLandscapeLakes = $oLandscape->lakes();
+
+        if ($this->isRootAdmin || $oLandscape->isRealmMaster($this) || $oLandscape->isOpenRealm()) return $aLandscapeLakes;
+        foreach ($aLandscapeLakes as $oLake) {
+            foreach ($aUserLakes as $oUserLake) {
+                if ($oLandscape->id == $oUserLake->id) $aResult[] = $oLake;
+            }
+        }
+
+        return $aResult;
+    }
 }

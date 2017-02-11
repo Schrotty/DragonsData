@@ -20,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\Landscape' => 'App\Policies\LandscapePolicy',
         'App\Models\City' => 'App\Policies\CityPolicy',
         'App\Models\River' => 'App\Policies\RiverPolicy',
+        'App\Models\Lake' => 'App\Policies\LakePolicy',
     ];
 
     /**

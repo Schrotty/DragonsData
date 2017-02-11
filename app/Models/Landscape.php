@@ -50,6 +50,14 @@ class Landscape extends BaseModel implements IModel
     }
 
     /**
+     * @return array
+     */
+    public function lakes()
+    {
+        return $this->hasMany('App\Models\Lake', 'fk_landscape', 'id')->get();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function continent()

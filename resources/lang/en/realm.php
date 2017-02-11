@@ -26,5 +26,8 @@ return [
     'open_realm_title' => ' - Open Realm',
     'edit_river' => 'Edit river',
     'assigned_rivers' => 'Assigned rivers',
-    'add_river' => 'Add river'
+    'add_river' => 'Add river',
+    'assigned_lakes' => 'Assigned lakes',
+    'add_lake' => 'Add lake',
+    'edit_lake' => 'Edit lake'
 ];
