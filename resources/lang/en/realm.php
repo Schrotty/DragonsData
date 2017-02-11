@@ -23,5 +23,8 @@ return [
     'add_city' => 'Add city',
     'is_open_realm' => 'Is open realm?',
     'create_open_realm' => 'Create open realm',
-    'open_realm_title' => ' - Open Realm'
+    'open_realm_title' => ' - Open Realm',
+    'edit_river' => 'Edit river',
+    'assigned_rivers' => 'Assigned rivers',
+    'add_river' => 'Add river'
 ];

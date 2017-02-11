@@ -13,15 +13,16 @@ use App\Models\Interfaces\IModel;
 
 /**
  * @property mixed continent
+ * @property mixed landscape
  */
-class Landscape extends BaseModel implements IModel
+class River extends BaseModel implements IModel
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'landscape';
+    protected $table = 'river';
 
     /**
      * The attributes that are mass assignable.
@@ -29,32 +30,15 @@ class Landscape extends BaseModel implements IModel
      * @var array
      */
     protected $fillable = [
-        'name', 'shortDescription', 'description', 'fk_continent'
+        'name', 'shortDescription', 'description', 'fk_landscape'
     ];
-
-
-    /**
-     * @return array
-     */
-    public function cities()
-    {
-        return $this->hasMany('App\Models\City', 'fk_landscape', 'id')->get();
-    }
-
-    /**
-     * @return array
-     */
-    public function rivers()
-    {
-        return $this->hasMany('App\Models\River', 'fk_landscape', 'id')->get();
-    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function continent()
+    public function landscape()
     {
-        return $this->hasOne('App\Models\Continent', 'id', 'fk_continent');
+        return $this->hasOne('App\Models\Landscape', 'id', 'fk_landscape');
     }
 
     /**
@@ -62,7 +46,7 @@ class Landscape extends BaseModel implements IModel
      */
     public function knownBy()
     {
-        return $this->belongsToMany('App\Models\User', 'knownLandscape', 'fk_landscape', 'fk_user');
+        return $this->belongsToMany('App\Models\User', 'knownRiver', 'fk_river', 'fk_user');
     }
 
     /**
@@ -71,7 +55,7 @@ class Landscape extends BaseModel implements IModel
      */
     public function isRealmMaster(User $oUser)
     {
-        return $this->continent->realm->dungeonMaster->id == $oUser->id;
+        return $this->landscape->continent->realm->dungeonMaster->id == $oUser->id;
     }
 
     /**
@@ -79,6 +63,6 @@ class Landscape extends BaseModel implements IModel
      */
     public function isOpenRealm()
     {
-        return $this->continent->realm->isOpen;
+        return $this->landscape->continent->realm->isOpen;
     }
 }
