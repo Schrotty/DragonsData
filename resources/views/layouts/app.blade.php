@@ -56,7 +56,6 @@
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ url('/login') }}">{{ trans('general.login') }}</a></li>
-                            <li><a href="{{ url('/register') }}">{{ trans('general.register') }}</a></li>
                         @else
                             <li><a href="{{ url('/') }}">{{ trans('general.dashboard') }}</a></li>
                             @if(Auth::user()->isAdmin)

@@ -8,8 +8,27 @@
 
 namespace App\Http\Controllers;
 
-
-class ObjectController
+/**
+ * Class ObjectController
+ * @package App\Http\Controllers
+ */
+class ObjectController extends Controller
 {
+    /**
+     * ObjectController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function create()
+    {
+        return redirect()->action(
+            $_POST['object-type'] . 'Controller@creator', ['id' => null]
+        );
+    }
 }

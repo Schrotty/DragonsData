@@ -31,8 +31,10 @@
                         <div class="open-realm">
                             <div name="is-open" class="checkbox pull-left">
                                 <label>
-                                    @if($open)
-                                        <input checked name="is-open" type="checkbox" value="false">
+                                    @if(isset($open))
+                                        @if($open)
+                                            <input checked name="is-open" type="checkbox" value="false">
+                                        @endif
                                     @else
                                         <input name="is-open" type="checkbox" value="false">
                                     @endif

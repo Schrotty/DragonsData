@@ -18,17 +18,18 @@
         <div class="panel panel-default object-control-panel">
             <div class="panel-heading">{{trans('general.controls')}}</div>
             <div class="panel-body">
-                @include('widgets.elements.objects_dropdown')
-
                 <div class="row">
-                    <div class="col-md-6">
-                        <button type="button" class="btn btn-default btn-block"
-                                value="{{ trans('general.create') }}">{{ trans('general.create') }}</button>
-                    </div>
-                    <div class="col-md-6">
-                        <button type="button" class="btn btn-default btn-block"
-                                value="{{ trans('general.create') }}">{{ trans('general.delete') }}</button>
-                    </div>
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/object-create') }}">
+                        {{ csrf_field() }}
+                        <div class="col-md-6">
+                            @include('widgets.elements.objects_dropdown')
+                        </div>
+
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-default btn-block"
+                                    value="{{ trans('general.create') }}">{{ trans('general.create') }}</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

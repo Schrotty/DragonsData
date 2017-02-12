@@ -7,11 +7,12 @@
         <div class="pull-right">
             @if(isset($preset))
                 <a href="{{ url( $sType . '/' . $preset) }}">
-                    @else
-                        <a href="{{ url( $sType . '/' . $oObject->id) }}">
-                            @endif
-                            {{ trans('general.abort') }}
-                        </a>
+            @else
+                <a href="{{ url('/') }}">
+            @endif
+
+            {{ trans('general.abort') }}
+            </a>
         </div>
     </div>
 </div>

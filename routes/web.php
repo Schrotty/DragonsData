@@ -99,3 +99,6 @@ Route::get('/landmark-create/{id}', 'LandmarkController@creator', ['iLandscapeID
 
 Route::post('/landmark-save', 'LandmarkController@create');
 Route::POST('/landmark-save/{id}', 'LandmarkController@save', ['iLandscapeID' => '{id}']);
+
+/* LANDMARKS */
+Route::post('/object-create', 'ObjectController@create');
