@@ -32,7 +32,6 @@ class Landscape extends BaseModel implements IModel
         'name', 'shortDescription', 'description', 'fk_continent'
     ];
 
-
     /**
      * @return array
      */
@@ -56,6 +55,15 @@ class Landscape extends BaseModel implements IModel
     {
         return $this->hasMany('App\Models\Lake', 'fk_landscape', 'id')->get();
     }
+
+    /**
+     * @return array
+     */
+    public function biomes()
+    {
+        return $this->hasMany('App\Models\Biome', 'fk_landscape', 'id')->get();
+    }
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

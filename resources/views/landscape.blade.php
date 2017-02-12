@@ -85,4 +85,20 @@
             @include('widgets.places.lakes', ['aLakes' => Auth::user()->knownLakes($oLandscape)])
         </div>
     </div>
+
+    <!-- assigned biome -->
+    <div class="panel panel-default">
+        <div class="panel-heading"><span>{{ trans('realm.assigned_biomes') }}</span>
+            @can('edit', $oLandscape)
+                <div class="pull-right">
+                    <a href="{{ url('biome-create/' . $oLandscape->id) }}">
+                        {{ trans('realm.add_biome') }}
+                    </a>
+                </div>
+            @endcan</div>
+
+        <div class="panel-body">
+            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownBiomes($oLandscape), 'sTarget' => 'biome'])
+        </div>
+    </div>
 @endsection

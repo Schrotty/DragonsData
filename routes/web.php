@@ -79,3 +79,13 @@ Route::get('/lake-create/{id}', 'LakeController@creator', ['iLandscapeID' => '{i
 
 Route::post('/lake-save', 'LakeController@create');
 Route::POST('/lake-save/{id}', 'LakeController@save', ['iLandscapeID' => '{id}']);
+
+/* BIOMES */
+Route::get('/biome/{id}', 'BiomeController@single', ['river' => '{id}'])->name('biome');
+Route::get('/biome-edit/{biome}', 'BiomeController@editor', ['oLandscape' => '{biome}'])->name('biome-edit');
+
+Route::get('/biome-create', 'BiomeController@creator');
+Route::get('/biome-create/{id}', 'BiomeController@creator', ['iLandscapeID' => '{id}']);
+
+Route::post('/biome-save', 'BiomeController@create');
+Route::POST('/biome-save/{id}', 'BiomeController@save', ['iLandscapeID' => '{id}']);

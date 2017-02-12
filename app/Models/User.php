@@ -205,4 +205,24 @@ class User extends Authenticatable
 
         return $aResult;
     }
+
+    /**
+     * @param $oLandscape
+     * @return array
+     */
+    public function knownBiomes($oLandscape)
+    {
+        $aResult = array();
+        $aUserBiomes = $this->belongsToMany('App\Models\Biome', 'knownBiome', 'fk_user', 'fk_biome')->get();
+        $aLandscapeBiomes = $oLandscape->biomes();
+
+        if ($this->isRootAdmin || $oLandscape->isRealmMaster($this) || $oLandscape->isOpenRealm()) return $aLandscapeBiomes;
+        foreach ($aLandscapeBiomes as $oBiome) {
+            foreach ($aUserBiomes as $oUserBiome) {
+                if ($oLandscape->id == $oUserBiome->id) $aResult[] = $oBiome;
+            }
+        }
+
+        return $aResult;
+    }
 }
