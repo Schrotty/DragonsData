@@ -64,6 +64,13 @@ class Landscape extends BaseModel implements IModel
         return $this->hasMany('App\Models\Biome', 'fk_landscape', 'id')->get();
     }
 
+    /**
+     * @return array
+     */
+    public function landmarks()
+    {
+        return $this->hasMany('App\Models\Landmark', 'fk_landscape', 'id')->get();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

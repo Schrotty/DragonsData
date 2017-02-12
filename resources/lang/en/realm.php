@@ -33,5 +33,9 @@ return [
     'assigned_biomes' => 'Assigned biomes',
     'add_biome' => 'Add biome',
     'edit_biome' => 'Edit biome',
-    'landscape' => 'Landscape'
+    'landscape' => 'Landscape',
+    'assigned_landmarks' => 'Assigned landmarks',
+    'add_landmark' => 'Add landmark',
+    'create_landmark' => 'Create landmark',
+    'edit_landmark' => 'Edit landmark'
 ];

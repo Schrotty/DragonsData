@@ -225,4 +225,24 @@ class User extends Authenticatable
 
         return $aResult;
     }
+
+    /**
+     * @param $oLandscape
+     * @return array
+     */
+    public function knownLandmarks($oLandscape)
+    {
+        $aResult = array();
+        $aUserLandmarks = $this->belongsToMany('App\Models\Landmark', 'knownLandmark', 'fk_user', 'fk_landmark')->get();
+        $aLandscapeLandmarks = $oLandscape->landmarks();
+
+        if ($this->isRootAdmin || $oLandscape->isRealmMaster($this) || $oLandscape->isOpenRealm()) return $aLandscapeLandmarks;
+        foreach ($aLandscapeLandmarks as $oLandmark) {
+            foreach ($aUserLandmarks as $oUserLandmark) {
+                if ($oLandscape->id == $oUserLandmark->id) $aResult[] = $oLandmark;
+            }
+        }
+
+        return $aResult;
+    }
 }

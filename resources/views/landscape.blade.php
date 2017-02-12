@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    <!-- assigned biome -->
+    <!-- assigned biomes -->
     <div class="panel panel-default">
         <div class="panel-heading"><span>{{ trans('realm.assigned_biomes') }}</span>
             @can('edit', $oLandscape)
@@ -99,6 +99,22 @@
 
         <div class="panel-body">
             @include('widgets.defaultList', ['aObjects' => Auth::user()->knownBiomes($oLandscape), 'sTarget' => 'biome'])
+        </div>
+    </div>
+
+    <!-- assigned landmarks -->
+    <div class="panel panel-default">
+        <div class="panel-heading"><span>{{ trans('realm.assigned_landmarks') }}</span>
+            @can('edit', $oLandscape)
+                <div class="pull-right">
+                    <a href="{{ url('landmark-create/' . $oLandscape->id) }}">
+                        {{ trans('realm.add_landmark') }}
+                    </a>
+                </div>
+            @endcan</div>
+
+        <div class="panel-body">
+            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownLandmarks($oLandscape), 'sTarget' => 'landmark'])
         </div>
     </div>
 @endsection
