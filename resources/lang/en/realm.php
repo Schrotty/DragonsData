@@ -29,5 +29,9 @@ return [
     'add_river' => 'Add river',
     'assigned_lakes' => 'Assigned lakes',
     'add_lake' => 'Add lake',
-    'edit_lake' => 'Edit lake'
+    'edit_lake' => 'Edit lake',
+    'assigned_biomes' => 'Assigned biomes',
+    'add_biome' => 'Add biome',
+    'edit_biome' => 'Edit biome',
+    'landscape' => 'Landscape'
 ];
