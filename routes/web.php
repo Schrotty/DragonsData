@@ -100,5 +100,15 @@ Route::get('/landmark-create/{id}', 'LandmarkController@creator', ['iLandscapeID
 Route::post('/landmark-save', 'LandmarkController@create');
 Route::POST('/landmark-save/{id}', 'LandmarkController@save', ['iLandscapeID' => '{id}']);
 
-/* LANDMARKS */
+/* MOUNTAINS */
+Route::get('/mountain/{id}', 'MountainController@single', ['mountain' => '{id}'])->name('mountain');
+Route::get('/mountain-edit/{mountain}', 'MountainController@editor', ['oLandscape' => '{mountain}'])->name('mountain-edit');
+
+Route::get('/mountain-create', 'MountainController@creator');
+Route::get('/mountain-create/{id}', 'MountainController@creator', ['iLandscapeID' => '{id}']);
+
+Route::post('/mountain-save', 'MountainController@create');
+Route::POST('/mountain-save/{id}', 'MountainController@save', ['iLandscapeID' => '{id}']);
+
+/* OBJECT MANAGER */
 Route::post('/object-create', 'ObjectController@create');

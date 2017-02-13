@@ -117,4 +117,20 @@
             @include('widgets.defaultList', ['aObjects' => Auth::user()->knownLandmarks($oLandscape), 'sTarget' => 'landmark'])
         </div>
     </div>
+
+    <!-- assigned mountains -->
+    <div class="panel panel-default">
+        <div class="panel-heading"><span>{{ trans('realm.assigned_mountains') }}</span>
+            @can('edit', $oLandscape)
+                <div class="pull-right">
+                    <a href="{{ url('mountain-create/' . $oLandscape->id) }}">
+                        {{ trans('realm.add_mountain') }}
+                    </a>
+                </div>
+            @endcan</div>
+
+        <div class="panel-body">
+            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownMountains($oLandscape), 'sTarget' => 'mountain'])
+        </div>
+    </div>
 @endsection

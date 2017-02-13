@@ -23,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\Lake' => 'App\Policies\LakePolicy',
         'App\Models\Biome' => 'App\Policies\BiomePolicy',
         'App\Models\Landmark' => 'App\Policies\LandmarkPolicy',
+        'App\Models\Mountain' => 'App\Policies\MountainPolicy',
     ];
 
     /**

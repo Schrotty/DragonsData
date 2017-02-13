@@ -37,5 +37,9 @@ return [
     'assigned_landmarks' => 'Assigned landmarks',
     'add_landmark' => 'Add landmark',
     'create_landmark' => 'Create landmark',
-    'edit_landmark' => 'Edit landmark'
+    'edit_landmark' => 'Edit landmark',
+    'edit_mountain' => 'Edit mountain',
+    'assigned_mountains' => 'Assigned mountains',
+    'create_mountain' => 'Create mountain',
+    'add_mountain' => 'Add mountain'
 ];
