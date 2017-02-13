@@ -90,15 +90,16 @@ class LandmarkController extends Controller implements IController
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
         if (isset($_POST['tags'])) $aTags = $_POST['tags'];
 
-        $oLandmarkID = Landmark::find($iLandmarkID);
-        $oLandmarkID->description = $_POST['description'];
-        $oLandmarkID->shortDescription = $_POST['short-description'];
-        $oLandmarkID->fk_landscape = $_POST['landscape'];
-        $oLandmarkID->tags()->sync($aTags);
+        $oLandmark = Landmark::find($iLandmarkID);
+        $oLandmark->name = $_POST['title'];
+        $oLandmark->description = $_POST['description'];
+        $oLandmark->shortDescription = $_POST['short-description'];
+        $oLandmark->fk_landscape = $_POST['landscape'];
 
-        $oLandmarkID->knownBy()->sync($aPostUser);
-        $oLandmarkID->save();
+        $oLandmark->knownBy()->sync($aPostUser);
+        $oLandmark->tags()->sync($aTags);
+        $oLandmark->save();
 
-        return redirect()->route('landmark', $oLandmarkID->id);
+        return redirect()->route('landmark', $oLandmark->id);
     }
 }
