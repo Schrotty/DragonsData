@@ -6,7 +6,7 @@
         {{ csrf_field() }}
         <div class="panel panel-default">
             <div class="panel-heading">
-                @include('widgets.edit.title', ['oObject' => $oMountain, 'sType' => 'mountain'])
+                @include('widgets.edit.title', ['oObject' => $oMountain, 'sType' => 'mountain', 'preset' => $oMountain->id])
             </div>
 
             <div class="panel-body">

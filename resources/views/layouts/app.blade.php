@@ -59,7 +59,7 @@
                         @else
                             <li><a href="{{ url('/') }}">{{ trans('general.dashboard') }}</a></li>
                             @if(Auth::user()->isAdmin)
-                                <li><a href="#">{{ trans('general.settings') }}</a></li>
+                                <li><a disabled href="#">{{ trans('general.settings') }}</a></li>
                             @endif
 
                             <li class="dropdown">

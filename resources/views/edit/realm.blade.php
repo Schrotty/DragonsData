@@ -5,7 +5,7 @@
         {{ csrf_field() }}
         <div class="panel panel-default">
             <div class="panel-heading">
-                @include('widgets.edit.title', ['oObject' => $realm, 'sType' => 'realm'])
+                @include('widgets.edit.title', ['oObject' => $realm, 'sType' => 'realm', 'preset' => $realm->id])
             </div>
 
             <div class="panel-body">
