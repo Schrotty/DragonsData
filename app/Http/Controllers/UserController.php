@@ -29,12 +29,13 @@ class UserController extends Controller
     }
 
     /**
-     * @param $iUserID
+     * @param $sUsername
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function single($iUserID)
+    public function single($sUsername)
     {
-        return view('user', ['user' => User::find($iUserID)]);
+        $oUser = User::where('name', $sUsername)->get()->first();
+        return view('user', ['user' => $oUser]);
     }
 
     /**

@@ -13,6 +13,7 @@ use Illuminate\Notifications\Notifiable;
  * @property mixed isAdmin
  * @property mixed isDungeonMaster
  * @property mixed isGameMaster
+ * @property mixed name
  * @package App
  */
 class User extends Authenticatable
@@ -67,7 +68,7 @@ class User extends Authenticatable
      */
     public function username()
     {
-        return "name";
+        return strtolower($this->name);
     }
 
     /**

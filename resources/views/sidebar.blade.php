@@ -8,7 +8,9 @@
                 </div>
 
                 <div class="col-md-4">
-                    <a href="{{ url('user/'. Auth::user()->id) }}"><img src="{{ URL::to('/img') }}/{{ strtolower(Auth::user()->avatar) }}" class="default-avatar"></a>
+                    <a href="{{ url('user/'. Auth::user()->username()) }}"><img
+                                src="{{ URL::to('/img') }}/{{ strtolower(Auth::user()->avatar) }}"
+                                class="default-avatar"></a>
                 </div>
             </div>
         </div>

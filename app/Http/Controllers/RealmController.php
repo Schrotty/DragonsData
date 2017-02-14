@@ -23,9 +23,9 @@ class RealmController extends Controller
      */
     public function single($realmId)
     {
+        $oRealm = Realm::find($realmId);
         return view('realm', [
-            'realm' => Realm::find($realmId),
-            'object' => Realm::find($realmId)
+            'realm' => $oRealm, 'object' => $oRealm
         ]);
     }
 
