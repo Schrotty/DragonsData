@@ -33,7 +33,7 @@
     background-color: transparent;
 }
 
-.realm-gamemaster div:first-of-type,
+.object-parent div:first-of-type,
 .realm-description div:first-of-type,
 .realm-player div:first-of-type,
 .open-realm div:first-of-type {

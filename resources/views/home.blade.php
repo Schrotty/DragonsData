@@ -9,7 +9,7 @@
                     <span>{{trans('realm.realms')}}</span>
                     @can('isDungeonMaster', Auth::user())
                         <div class="pull-right">
-                            <a href="{{ url('realm-create/') }}">
+                            <a href="{{ url('realm/creator/false') }}">
                                 {{ trans('realm.create_realm') }}
                             </a>
                         </div>
@@ -25,7 +25,7 @@
                     <span>{{trans('realm.open_realms')}}</span>
                     @if(Auth::user()->isDungeonMaster)
                         <div class="pull-right">
-                            <a href="{{ url('realm-create/1/') }}">
+                            <a href="{{ url('realm/creator/true') }}">
                                 {{ trans('realm.create_open_realm') }}
                             </a>
                         </div>

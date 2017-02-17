@@ -8,58 +8,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Interfaces\IController;
 use App\Models\Continent;
 
-class ContinentController extends Controller implements IController
+class ContinentController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * @param $oContinentId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function single($oContinentId)
-    {
-        return view('continent', [
-            'oContinent' => Continent::find($oContinentId),
-            'object' => Continent::find($oContinentId)
-        ]);
-    }
-
-    /**
-     * @param null $iRealmID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function creator($iRealmID = null)
-    {
-        return view('create.continent', ['object' => new Continent(), 'iRealmID' => $iRealmID]);
-    }
-
-    /**
-     * @param $continendID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function editor($continendID)
-    {
-        $oContinent = Continent::find($continendID);
-        return view('edit.continent', [
-            'oContinent' => $oContinent,
-            'object' => $oContinent
-        ]);
-    }
-
-    /**
+     * @param $sModel
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function create()
+    public static function create($sModel)
     {
         $aPostUser = array();
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
@@ -68,32 +25,35 @@ class ContinentController extends Controller implements IController
             'name' => $_POST['title'],
             'fk_realm' => $_POST['realm'],
             'shortDescription' => $_POST['short-description'],
-            'description' => $_POST['description']
+            'description' => $_POST['description'],
+            'url' => Controller::createURL('App\Models\Continent', $_POST['title'])
         ]);
 
         $oContinent = Continent::all()->last();
         $oContinent->knownBy()->sync($aPostUser);
 
-        return redirect()->route('continent', $oContinent->id);
+        return redirect()->route('single', [$sModel, $oContinent->url]);
     }
 
     /**
-     * @param $iContinentID
+     * @param $sModel
+     * @param $sName
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function save($iContinentID)
+    public static function save($sModel, $sName)
     {
         $aPostUser = array();
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
 
-        $oContinent = Continent::find($iContinentID);
+        $oContinent = Continent::where('url', $sName)->get()->first();
         $oContinent->name = $_POST['title'];
         $oContinent->description = $_POST['description'];
         $oContinent->shortDescription = $_POST['short-description'];
         $oContinent->fk_realm = $_POST['realm'];
+
         $oContinent->knownBy()->sync($aPostUser);
         $oContinent->save();
 
-        return redirect()->route('continent', $oContinent->id);
+        return redirect()->route('single', [$sModel, $oContinent->url]);
     }
 }

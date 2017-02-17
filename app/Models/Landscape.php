@@ -29,8 +29,24 @@ class Landscape extends BaseModel implements IModel
      * @var array
      */
     protected $fillable = [
-        'name', 'shortDescription', 'description', 'fk_continent'
+        'name', 'shortDescription', 'description', 'fk_continent', 'url'
     ];
+
+    /**
+     * @return mixed
+     */
+    public function parent()
+    {
+        return $this->continent();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function continent()
+    {
+        return $this->hasOne('App\Models\Continent', 'id', 'fk_continent');
+    }
 
     /**
      * @return array
@@ -78,14 +94,6 @@ class Landscape extends BaseModel implements IModel
     public function mountains()
     {
         return $this->hasMany('App\Models\Mountain', 'fk_landscape', 'id')->get();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function continent()
-    {
-        return $this->hasOne('App\Models\Continent', 'id', 'fk_continent');
     }
 
     /**

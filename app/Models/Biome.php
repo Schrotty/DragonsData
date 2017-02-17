@@ -28,8 +28,16 @@ class Biome extends BaseModel implements IModel
      * @var array
      */
     protected $fillable = [
-        'description', 'shortDescription', 'name', 'fk_landscape'
+        'description', 'shortDescription', 'name', 'fk_landscape', 'url'
     ];
+
+    /**
+     * @return mixed
+     */
+    public function parent()
+    {
+        return $this->landscape();
+    }
 
     /**
      * @return mixed
@@ -39,6 +47,9 @@ class Biome extends BaseModel implements IModel
         return $this->hasOne('App\Models\Landscape', 'id', 'fk_landscape');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function tags()
     {
         return $this->belongsToMany('App\Models\Tag', 'biomeTag', 'fk_biome', 'fk_tag');

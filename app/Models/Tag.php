@@ -21,6 +21,11 @@ class Tag extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'fk_type', 'usedModel'
+        'name', 'fk_type', 'fk_model'
     ];
+
+    public function model()
+    {
+        return $this->hasOne('App\Models\TagModel', 'fk_model', 'id');
+    }
 }

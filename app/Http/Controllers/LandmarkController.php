@@ -8,57 +8,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Interfaces\IController;
 use App\Models\Landmark;
 
-class LandmarkController extends Controller implements IController
+class LandmarkController extends Controller
 {
     /**
-     * SmallCityController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * @param $iLandmarkID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function single($iLandmarkID)
-    {
-        return view('landmark', [
-            'oLandmark' => Landmark::find($iLandmarkID),
-            'object' => Landmark::find($iLandmarkID)
-        ]);
-    }
-
-    /**
-     * @param null $iLandscapeID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function creator($iLandscapeID = null)
-    {
-        return view('create.landmark', ['object' => new Landmark(), 'iLandscapeID' => $iLandscapeID]);
-    }
-
-    /**
-     * @param $iLandmarkID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function editor($iLandmarkID)
-    {
-        $oLandmark = Landmark::find($iLandmarkID);
-        return view('edit.landmark', [
-            'oLandmark' => $oLandmark,
-            'object' => $oLandmark
-        ]);
-    }
-
-    /**
+     * @param $sModel
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function create()
+    public static function create($sModel)
     {
         $aTags = array();
         $aPostUser = array();
@@ -69,28 +27,30 @@ class LandmarkController extends Controller implements IController
             'name' => $_POST['title'],
             'fk_landscape' => $_POST['landscape'],
             'shortDescription' => $_POST['short-description'],
-            'description' => $_POST['description']
+            'description' => $_POST['description'],
+            'url' => Controller::createURL('App\Models\Landmark', $_POST['title'])
         ]);
 
         $oLandmark = Landmark::all()->last();
         $oLandmark->knownBy()->sync($aPostUser);
         $oLandmark->tags()->sync($aTags);
 
-        return redirect()->route('landmark', $oLandmark->id);
+        return redirect()->route('single', [$sModel, $oLandmark->url]);
     }
 
     /**
-     * @param $iLandmarkID
+     * @param $sModel
+     * @param $sName
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function save($iLandmarkID)
+    public static function save($sModel, $sName)
     {
         $aPostUser = array();
         $aTags = array();
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
         if (isset($_POST['tags'])) $aTags = $_POST['tags'];
 
-        $oLandmark = Landmark::find($iLandmarkID);
+        $oLandmark = Landmark::where('url', $sName)->get()->first();
         $oLandmark->name = $_POST['title'];
         $oLandmark->description = $_POST['description'];
         $oLandmark->shortDescription = $_POST['short-description'];
@@ -100,6 +60,6 @@ class LandmarkController extends Controller implements IController
         $oLandmark->tags()->sync($aTags);
         $oLandmark->save();
 
-        return redirect()->route('landmark', $oLandmark->id);
+        return redirect()->route('single', [$sModel, $oLandmark->url]);
     }
 }

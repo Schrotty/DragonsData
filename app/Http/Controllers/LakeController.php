@@ -8,54 +8,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Interfaces\IController;
 use App\Models\Lake;
 
-class LakeController extends Controller implements IController
+class LakeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
-     * @param $iLakeID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function single($iLakeID)
-    {
-        return view('lake', [
-            'oLake' => Lake::find($iLakeID),
-            'object' => Lake::find($iLakeID)
-        ]);
-    }
-
-    /**
-     * @param null $iLandscapeID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function creator($iLandscapeID = null)
-    {
-        return view('create.lake', ['object' => new Lake(), 'iLandscapeID' => $iLandscapeID]);
-    }
-
-    /**
-     * @param $iLakeID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function editor($iLakeID)
-    {
-        $oLake = Lake::find($iLakeID);
-        return view('edit.lake', [
-            'oLake' => $oLake,
-            'object' => $oLake
-        ]);
-    }
-
-    /**
+     * @param $sModel
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function create()
+    public static function create($sModel)
     {
         $aPostUser = array();
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
@@ -64,25 +25,27 @@ class LakeController extends Controller implements IController
             'name' => $_POST['title'],
             'fk_landscape' => $_POST['landscape'],
             'shortDescription' => $_POST['short-description'],
-            'description' => $_POST['description']
+            'description' => $_POST['description'],
+            'url' => Controller::createURL('App\Models\Lake', $_POST['title'])
         ]);
 
         $oLake = Lake::all()->last();
         $oLake->knownBy()->sync($aPostUser);
 
-        return redirect()->route('lake', $oLake->id);
+        return redirect()->route('single', [$sModel, $oLake->url]);
     }
 
     /**
-     * @param $iLakeID
+     * @param $sModel
+     * @param $sName
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function save($iLakeID)
+    public static function save($sModel, $sName)
     {
         $aPostUser = array();
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
 
-        $oLake = Lake::find($iLakeID);
+        $oLake = Lake::where('url', $sName)->get()->first();
         $oLake->name = $_POST['title'];
         $oLake->description = $_POST['description'];
         $oLake->shortDescription = $_POST['short-description'];
@@ -91,6 +54,6 @@ class LakeController extends Controller implements IController
         $oLake->knownBy()->sync($aPostUser);
         $oLake->save();
 
-        return redirect()->route('lake', $iLakeID);
+        return redirect()->route('single', [$sModel, $oLake->url]);
     }
 }

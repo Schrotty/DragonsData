@@ -1,47 +1,10 @@
-@extends('layouts.restricted')
+@extends('layouts.view')
 
-@section('restricted')
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <span>{{ $oBiome->name }}</span>
-            @can('edit', $oBiome)
-                <div class="pull-right">
-                    <a href="{{ url('biome-edit/' . $oBiome->id) }}">
-                        {{ trans('realm.edit_biome') }}
-                    </a>
-                </div>
-            @endcan
-        </div>
-
-        <div class="panel-body">
-            <div class="row">
-                @include('widgets.description', ['oObject' => $oBiome])
-
-                <div class="col-md-4">
-                    <div class="realm-gamemaster">
-                        <div>{{ trans('realm.landscape') }}</div>
-                        <span>
-                        <a href="{{ url('landscape/' . $oBiome->landscape->id) }}">
-                            {{ $oBiome->landscape->name }}
-                        </a>
-                    </span>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="realm-player">
-                        <div>{{ trans('general.known_by') }}</div>
-                        @include('widgets.knownBy', ['object' => $oBiome])
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="realm-player">
-                        <div>{{ trans('general.tags') }}</div>
-                        @include('widgets.tags', ['oObject' => $oBiome])
-                    </div>
-                </div>
-            </div>
-        </div>
+@section('parent')
+    <div class="object-parent">
+        <div>{{ trans('realm.landscape') }}</div>
+        <span>
+            <a href="{{ url('landscape/' . $oObject->landscape->url) }}">{{ $oObject->landscape->name }}</a>
+        </span>
     </div>
 @endsection

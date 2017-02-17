@@ -5,13 +5,8 @@
 
     <div class="col-md-6">
         <div class="pull-right">
-            @if(isset($preset))
-                <a href="{{ url( $sType . '/' . $preset) }}">
-            @else
-                <a href="{{ url('/') }}">
-            @endif
-
-            {{ trans('general.abort') }}
+            <a href="{{ url('/' . $sParentModel . '/' . $sParentURL) }}">
+                {{ trans('general.abort') }}
             </a>
         </div>
     </div>

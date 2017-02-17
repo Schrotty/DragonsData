@@ -17,27 +17,32 @@ use App\Models\Interfaces\IModel;
 class Continent extends BaseModel implements IModel
 {
     /**
+     * @var string
+     */
+    public $aParent = [
+        'realm', 'realm'
+    ];
+    /**
      * The table associated with the model.
      *
      * @var string
      */
     protected $table = 'continent';
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'fk_realm', 'shortDescription', 'description'
+        'name', 'description', 'fk_realm', 'shortDescription', 'description', 'url'
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return mixed
      */
-    public function landscapes()
+    public function parent()
     {
-        return $this->hasMany('App\Models\Landscape', 'fk_continent', 'id')->get();
+        return $this->realm();
     }
 
     /**
@@ -46,6 +51,14 @@ class Continent extends BaseModel implements IModel
     public function realm()
     {
         return $this->hasOne('App\Models\Realm', 'id', 'fk_realm');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function landscapes()
+    {
+        return $this->hasMany('App\Models\Landscape', 'fk_continent', 'id')->get();
     }
 
     /**

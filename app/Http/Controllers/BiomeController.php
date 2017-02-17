@@ -8,57 +8,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Interfaces\IController;
 use App\Models\Biome;
 
-class BiomeController extends Controller implements IController
+class BiomeController extends Controller
 {
     /**
-     * SmallCityController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * @param $iBiomeID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function single($iBiomeID)
-    {
-        return view('biome', [
-            'oBiome' => Biome::find($iBiomeID),
-            'object' => Biome::find($iBiomeID)
-        ]);
-    }
-
-    /**
-     * @param null $iLandscapeID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function creator($iLandscapeID = null)
-    {
-        return view('create.biome', ['object' => new Biome(), 'iLandscapeID' => $iLandscapeID]);
-    }
-
-    /**
-     * @param $iBiomeID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function editor($iBiomeID)
-    {
-        $oBiome = Biome::find($iBiomeID);
-        return view('edit.biome', [
-            'oBiome' => $oBiome,
-            'object' => $oBiome
-        ]);
-    }
-
-    /**
+     * @param $sModel
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function create()
+    public static function create($sModel)
     {
         $aTags = array();
         $aPostUser = array();
@@ -69,28 +27,31 @@ class BiomeController extends Controller implements IController
             'name' => $_POST['title'],
             'fk_landscape' => $_POST['landscape'],
             'shortDescription' => $_POST['short-description'],
-            'description' => $_POST['description']
+            'description' => $_POST['description'],
+            'url' => Controller::createURL('App\Models\Biome', $_POST['title'])
         ]);
 
         $oBiome = Biome::all()->last();
         $oBiome->knownBy()->sync($aPostUser);
         $oBiome->tags()->sync($aTags);
 
-        return redirect()->route('biome', $oBiome->id);
+        return redirect()->route('single', [$sModel, $oBiome->url]);
     }
 
     /**
-     * @param $iBiomeID
+     * @param $sModel
+     * @param $sName
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function save($iBiomeID)
+    public static function save($sModel, $sName)
     {
         $aPostUser = array();
         $aTags = array();
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
         if (isset($_POST['tags'])) $aTags = $_POST['tags'];
 
-        $oBiome = Biome::find($iBiomeID);
+        $oBiome = Biome::where('url', $sName)->get()->first();
+        $oBiome->name = $_POST['title'];
         $oBiome->description = $_POST['description'];
         $oBiome->shortDescription = $_POST['short-description'];
         $oBiome->fk_landscape = $_POST['landscape'];
@@ -99,6 +60,6 @@ class BiomeController extends Controller implements IController
         $oBiome->knownBy()->sync($aPostUser);
         $oBiome->save();
 
-        return redirect()->route('biome', $oBiome->id);
+        return redirect()->route('single', [$sModel, $oBiome->url]);
     }
 }

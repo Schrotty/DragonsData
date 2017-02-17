@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                @can('create', $object)
+                @can('create', \Illuminate\Support\Facades\Auth::user())
                     @yield('restricted')
                 @else
                     @include('widgets.noAccess')

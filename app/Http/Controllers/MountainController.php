@@ -8,54 +8,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Interfaces\IController;
 use App\Models\Mountain;
 
-class MountainController extends Controller implements IController
+class MountainController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
-     * @param $iMountainID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function single($iMountainID)
-    {
-        return view('mountain', [
-            'oMountain' => Mountain::find($iMountainID),
-            'object' => Mountain::find($iMountainID)
-        ]);
-    }
-
-    /**
-     * @param null $iLandscapeID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function creator($iLandscapeID = null)
-    {
-        return view('create.mountain', ['object' => new Mountain(), 'iLandscapeID' => $iLandscapeID]);
-    }
-
-    /**
-     * @param $iMountainID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function editor($iMountainID)
-    {
-        $oMountain = Mountain::find($iMountainID);
-        return view('edit.mountain', [
-            'oMountain' => $oMountain,
-            'object' => $oMountain
-        ]);
-    }
-
-    /**
+     * @param $sModel
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function create()
+    public static function create($sModel)
     {
         $aPostUser = array();
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
@@ -64,25 +25,27 @@ class MountainController extends Controller implements IController
             'name' => $_POST['title'],
             'fk_landscape' => $_POST['landscape'],
             'shortDescription' => $_POST['short-description'],
-            'description' => $_POST['description']
+            'description' => $_POST['description'],
+            'url' => Controller::createURL('App\Models\Mountain', $_POST['title'])
         ]);
 
         $oMountain = Mountain::all()->last();
         $oMountain->knownBy()->sync($aPostUser);
 
-        return redirect()->route('mountain', $oMountain->id);
+        return redirect()->route('single', [$sModel, $oMountain->url]);
     }
 
     /**
-     * @param $iMountainID
+     * @param $sModel
+     * @param $sName
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function save($iMountainID)
+    public static function save($sModel, $sName)
     {
         $aPostUser = array();
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
 
-        $oMountain = Mountain::find($iMountainID);
+        $oMountain = Mountain::where('url', $sName)->get()->first();
         $oMountain->name = $_POST['title'];
         $oMountain->description = $_POST['description'];
         $oMountain->shortDescription = $_POST['short-description'];
@@ -91,6 +54,6 @@ class MountainController extends Controller implements IController
         $oMountain->knownBy()->sync($aPostUser);
         $oMountain->save();
 
-        return redirect()->route('mountain', $oMountain->id);
+        return redirect()->route('single', [$sModel, $oMountain->url]);
     }
 }

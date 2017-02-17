@@ -1,59 +1,29 @@
-@extends('layouts.restricted')
+@extends('layouts.view')
 
-@section('restricted')
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <span>
-                {{ $realm->name }}
-                @if($realm->isOpen)
-                    {{ trans('realm.open_realm_title') }}
-                @endif
-            </span>
-            @can('edit', $realm)
-                <div class="pull-right">
-                    <a href="{{ url('realm-edit/' . $realm->id) }}">
-                        {{ trans('realm.edit_realm') }}
-                    </a>
-                </div>
-            @endcan
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                @include('widgets.description', ['oObject' => $realm])
-
-                <div class="col-md-6">
-                    <div class="realm-gamemaster">
-                        <div>{{ trans('realm.dungeon_master') }}</div>
-                        <span>
-                        <a href="{{ url('user/' . $realm->dungeonMaster->id) }}">{{ $realm->dungeonMaster->name }}</a>
-                    </span>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="realm-player">
-                        <div>{{ trans('general.known_by') }}</div>
-                        @include('widgets.knownBy', ['object' => $realm])
-                    </div>
-                </div>
-            </div>
-        </div>
+@section('parent')
+    <div class="object-parent">
+        <div>{{ trans('realm.dungeon_master') }}</div>
+        <span>
+            <a href="{{ url('user/' . $oObject->dungeonMaster->url) }}">{{ $oObject->dungeonMaster->name }}</a>
+        </span>
     </div>
+@endsection
 
-    <!-- assigned continents -->
+@section('child-elements')
     <div class="panel panel-default">
         <div class="panel-heading">
             <span>{{ trans('realm.assigned_continents') }}</span>
-            @can('edit', $realm)
+            @can('edit', $oObject)
                 <div class="pull-right">
-                    <a href="{{ url('continent-create/' . $realm->id) }}">
+                    <a href="{{ url('continent/creator/' . $oObject->url) }}">
                         {{ trans('realm.add_continent') }}
                     </a>
                 </div>
             @endcan
         </div>
+
         <div class="panel-body">
-            @include('widgets.continents', ['oContinents' => Auth::user()->knownContinents($realm)])
+            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownContinents($oObject), 'sTarget' => 'continent'])
         </div>
     </div>
 @endsection

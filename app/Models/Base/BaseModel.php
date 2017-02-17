@@ -11,6 +11,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 abstract class BaseModel extends Model
 {
+
+    /**
+     * @return string
+     */
+    public function getModel()
+    {
+        return strtolower(substr(get_class($this), 11));
+    }
+
     /**
      * Does a specific user know this object?
      *

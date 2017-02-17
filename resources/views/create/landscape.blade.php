@@ -1,35 +1,25 @@
-@extends('layouts.restricted_create')
+@extends('layouts.create')
 
-@section('restricted')
-    <form class="form-horizontal" role="form" method="POST" action="{{ url('/landscape-save') }}">
-        {{ csrf_field() }}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                @include('widgets.edit.title', ['oObject' => new \App\Models\Landscape(), 'sType' => 'continent', 'preset' => $iContinentID])
-            </div>
-
-            <div class="panel-body">
-                <div class="row">
-                    @include('widgets.edit.description', ['oObject' => new \App\Models\Continent()])
-                    <div class="col-md-6">
-                        <div class="realm-gamemaster">
-                            <div>{{ trans('realm.continent') }}</div>
-                            <span>
-                                @include('widgets.elements.continents_with_access', ['continent' => new \App\Models\Continent(), 'preset' => $iContinentID])
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="realm-player">
-                            <div>{{ trans('general.known_by') }}</div>
-                            @include('widgets.elements.user_dropdown_multi', ['obj' => new \App\Models\Landscape()])
-                        </div>
-                    </div>
-                </div>
-            </div>
+@section('left-block')
+    <div class="col-md-4">
+        <div class="realm-gamemaster">
+            <div>{{ trans('realm.continent') }}</div>
+            <span>
+                @include('widgets.elements.continents_with_access')
+            </span>
         </div>
+    </div>
+@endsection
 
-        @include('widgets.edit.submit')
-    </form>
+@section('middle-block')
+    <div class="col-md-4"></div>
+@endsection
+
+@section('right-block')
+    <div class="col-md-4">
+        <div class="realm-player">
+            <div>{{ trans('general.known_by') }}</div>
+            @include('widgets.elements.user_dropdown_multi', ['obj' => new \App\Models\Landscape()])
+        </div>
+    </div>
 @endsection

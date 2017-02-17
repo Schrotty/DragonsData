@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                @can('edit', $object)
+                @can('edit', $oObject)
                     @yield('restricted')
                 @else
                     @include('widgets.noAccess')

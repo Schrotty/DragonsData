@@ -1,13 +1,10 @@
-<select name="continent" class="selectpicker">
-
-    @if(isset($iContinentID))
-        <option value="{{ $iContinentID }}">{{ \App\Models\Continent::find($iContinentID)->name }}</option>
-    @else
-        <option value="{{ $continent->id }}">{{ $continent->name }}</option>
+<select name="continent" class="selectpicker" required>
+        @if(isset($oObject))
+                <option value="{{ $oObject->continent->id }}">{{ $oObject->continent->name }}</option>
     @endif
+
     @foreach(App\Models\Continent::all() as $oContinent)
-        @if($continent->id != $oContinent->id)
-            <option value="{{ $oContinent->id }}">{{ $oContinent->name }}</option>
-        @endif
+                @if(isset($oObject)) @if($oObject->continent->id == $oContinent->id) @continue @endif @endif
+                <option value="{{ $oContinent->id }}">{{ $oContinent->name }}</option>
     @endforeach
 </select>

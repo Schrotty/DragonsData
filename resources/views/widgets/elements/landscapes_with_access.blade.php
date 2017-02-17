@@ -1,13 +1,10 @@
-<select name="landscape" class="selectpicker">
-
-    @if(isset($iLandscapeID))
-        <option value="{{ $iLandscapeID }}">{{ \App\Models\Landscape::find($iLandscapeID)->name }}</option>
-    @else
-        <option value="{{ $landscape->id }}">{{ $landscape->name }}</option>
+<select name="landscape" class="selectpicker" required>
+        @if(isset($oObject))
+                <option value="{{ $oObject->landscape->id }}">{{ $oObject->landscape->name }}</option>
     @endif
+
     @foreach(App\Models\Landscape::all() as $oLandscape)
-        @if($landscape->id != $oLandscape->id)
-            <option value="{{ $oLandscape->id }}">{{ $oLandscape->name }}</option>
-        @endif
+                @if(isset($oObject)) @if($oObject->landscape->id == $oLandscape->id) @continue @endif @endif
+                <option value="{{ $oLandscape->id }}">{{ $oLandscape->name }}</option>
     @endforeach
 </select>

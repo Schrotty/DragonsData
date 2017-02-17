@@ -7,10 +7,8 @@ use Illuminate\Support\Facades\Auth;
 
 class RealmController extends Controller
 {
-
     /**
-     * Create a new controller instance.
-     *
+     * RealmController constructor.
      */
     public function __construct()
     {
@@ -18,42 +16,10 @@ class RealmController extends Controller
     }
 
     /**
-     * @param $realmId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function single($realmId)
-    {
-        $oRealm = Realm::find($realmId);
-        return view('realm', [
-            'realm' => $oRealm, 'object' => $oRealm
-        ]);
-    }
-
-    /**
-     * @param bool $bOpen
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function creator($bOpen = null)
-    {
-        return view('create.realm', ['object' => new Realm(), 'open' => $bOpen]);
-    }
-
-    /**
-     * @param $realmId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function editor($realmId)
-    {
-        $oRealm = Realm::find($realmId);
-        return view('edit.realm', [
-            'realm' => $oRealm, 'object' => $oRealm
-        ]);
-    }
-
-    /**
+     * @param $sModel
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function create()
+    public static function create($sModel)
     {
         $bOpen = false;
         $aPostUser = array();
@@ -65,28 +31,30 @@ class RealmController extends Controller
             'shortDescription' => $_POST['short-description'],
             'description' => $_POST['description'],
             'fk_creator' => Auth::user()->id,
-            'fk_gamemaster' => $_POST['dungeon-master'],
-            'isOpen' => $bOpen == true ? 1 : 0
+            'fk_dungeonMaster' => $_POST['dungeon-master'],
+            'isOpen' => $bOpen == true ? 1 : 0,
+            'url' => Controller::createURL('App\Models\Realm', $_POST['title'])
         ]);
 
         $oRealm = Realm::all()->last();
         $oRealm->knownBy()->sync($aPostUser);
 
-        return redirect()->route('realm', $oRealm->id);
+        return redirect()->route('single', [$sModel, $oRealm->url]);
     }
 
     /**
-     * @param $realmID
+     * @param $sModel
+     * @param $sName
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function save($realmID)
+    public static function save($sModel, $sName)
     {
         $bOpen = false;
         $aPostUser = array();
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
         if (isset($_POST['is-open'])) $bOpen = $_POST['is-open'];
 
-        $oRealm = Realm::find($realmID);
+        $oRealm = Realm::where('url', $sName)->get()->first();
         $oRealm->name = $_POST['title'];
         $oRealm->description = $_POST['description'];
         $oRealm->shortDescription = $_POST['short-description'];
@@ -96,6 +64,6 @@ class RealmController extends Controller
         $oRealm->knownBy()->sync($aPostUser);
         $oRealm->save();
 
-        return redirect()->route('realm', $realmID);
+        return redirect()->route('single', [$sModel, $oRealm->url]);
     }
 }

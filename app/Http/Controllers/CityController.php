@@ -8,57 +8,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Interfaces\IController;
 use App\Models\City;
 
-class CityController extends Controller implements IController
+class CityController extends Controller
 {
     /**
-     * SmallCityController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * @param $iCityID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function single($iCityID)
-    {
-        return view('city', [
-            'oCity' => City::find($iCityID),
-            'object' => City::find($iCityID)
-        ]);
-    }
-
-    /**
-     * @param null $iLandscapeID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function creator($iLandscapeID = null)
-    {
-        return view('create.city', ['object' => new City(), 'iLandscapeID' => $iLandscapeID]);
-    }
-
-    /**
-     * @param $iCityID
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function editor($iCityID)
-    {
-        $oCity = City::find($iCityID);
-        return view('edit.city', [
-            'oCity' => $oCity,
-            'object' => $oCity
-        ]);
-    }
-
-    /**
+     * @param $sModel
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function create()
+    public static function create($sModel)
     {
         $aTags = array();
         $aPostUser = array();
@@ -69,28 +27,30 @@ class CityController extends Controller implements IController
             'name' => $_POST['title'],
             'fk_landscape' => $_POST['landscape'],
             'shortDescription' => $_POST['short-description'],
-            'description' => $_POST['description']
+            'description' => $_POST['description'],
+            'url' => Controller::createURL('App\Models\City', $_POST['title'])
         ]);
 
         $oCity = City::all()->last();
         $oCity->knownBy()->sync($aPostUser);
         $oCity->tags()->sync($aTags);
 
-        return redirect()->route('city', $oCity->id);
+        return redirect()->route('single', [$sModel, $oCity->url]);
     }
 
     /**
-     * @param $iCityID
+     * @param $sModel
+     * @param $sName
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function save($iCityID)
+    public static function save($sModel, $sName)
     {
         $aPostUser = array();
         $aTags = array();
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
         if (isset($_POST['tags'])) $aTags = $_POST['tags'];
 
-        $oCity = City::find($iCityID);
+        $oCity = City::where('url', $sName)->get()->first();
         $oCity->description = $_POST['description'];
         $oCity->shortDescription = $_POST['short-description'];
         $oCity->fk_landscape = $_POST['landscape'];
@@ -99,6 +59,6 @@ class CityController extends Controller implements IController
         $oCity->knownBy()->sync($aPostUser);
         $oCity->save();
 
-        return redirect()->route('city', $oCity);
+        return redirect()->route('single', [$sModel, $oCity->url]);
     }
 }

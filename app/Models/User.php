@@ -35,7 +35,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'password', 'isAdmin', 'is_dungeonmaster'
+        'name', 'password', 'isAdmin', 'is_dungeonmaster', 'url'
     ];
 
     /**
@@ -46,6 +46,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @return string
+     */
+    public function getModel()
+    {
+        return strtolower(substr(get_class($this), 11));
+    }
 
     /**
      * @return bool

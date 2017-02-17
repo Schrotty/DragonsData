@@ -28,8 +28,16 @@ class Landmark extends BaseModel implements IModel
      * @var array
      */
     protected $fillable = [
-        'description', 'shortDescription', 'name', 'fk_landscape'
+        'description', 'shortDescription', 'name', 'fk_landscape', 'url'
     ];
+
+    /**
+     * @return mixed
+     */
+    public function parent()
+    {
+        return $this->landscape();
+    }
 
     /**
      * @return mixed

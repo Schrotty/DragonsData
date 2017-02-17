@@ -10,7 +10,7 @@
             @endif
 
             <tr>
-                <td><a href="{{ url('realm/' . $realm->id) }}">{{ $realm->name }}</a></td>
+                <td><a href="{{ url('realm/' . $realm->url) }}">{{ $realm->name }}</a></td>
                 <td>{{ $realm->shortDescription }}</td>
             </tr>
         @endforeach

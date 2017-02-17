@@ -30,8 +30,16 @@ class Lake extends BaseModel implements IModel
      * @var array
      */
     protected $fillable = [
-        'name', 'shortDescription', 'description', 'fk_landscape'
+        'name', 'shortDescription', 'description', 'fk_landscape', 'url'
     ];
+
+    /**
+     * @return mixed
+     */
+    public function parent()
+    {
+        return $this->landscape();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
