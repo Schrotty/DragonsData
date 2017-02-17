@@ -79,6 +79,14 @@ class Realm extends BaseModel
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function oceans()
+    {
+        return $this->hasMany('App\Models\Ocean', 'fk_realm', 'id')->get();
+    }
+
+    /**
      * @param User $oUser
      * @return bool
      */

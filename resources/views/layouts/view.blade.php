@@ -17,15 +17,19 @@
             <div class="row">
                 @include('widgets.description', ['oObject' => $oObject])
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     @yield('parent')
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="realm-player">
                         <div>{{ trans('general.known_by') }}</div>
                         @include('widgets.knownBy', ['object' => $oObject])
                     </div>
+                </div>
+
+                <div class="col-md-4">
+                    @yield('tags')
                 </div>
             </div>
         </div>

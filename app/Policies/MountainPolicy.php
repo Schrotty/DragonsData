@@ -11,6 +11,10 @@ namespace App\Policies;
 use App\Models\Mountain;
 use App\Models\User;
 
+/**
+ * Class MountainPolicy
+ * @package App\Policies
+ */
 class MountainPolicy extends Policy
 {
     /**

@@ -13,23 +13,23 @@ use App\Models\Interfaces\IModel;
 
 /**
  * @property mixed realm
+ * @property mixed ocean
  */
-class Continent extends BaseModel implements IModel
+class Sea extends BaseModel implements IModel
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'continent';
-
+    protected $table = 'sea';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'fk_realm', 'shortDescription', 'description', 'url'
+        'name', 'description', 'fk_ocean', 'shortDescription', 'description', 'url'
     ];
 
     /**
@@ -37,23 +37,15 @@ class Continent extends BaseModel implements IModel
      */
     public function parent()
     {
-        return $this->realm();
+        return $this->ocean();
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function realm()
+    public function ocean()
     {
-        return $this->hasOne('App\Models\Realm', 'id', 'fk_realm');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function landscapes()
-    {
-        return $this->hasMany('App\Models\Landscape', 'fk_continent', 'id')->get();
+        return $this->hasOne('App\Models\Ocean', 'id', 'fk_ocean');
     }
 
     /**
@@ -61,7 +53,7 @@ class Continent extends BaseModel implements IModel
      */
     public function knownBy()
     {
-        return $this->belongsToMany('App\Models\User', 'knownContinent', 'fk_continent', 'fk_user');
+        return $this->belongsToMany('App\Models\User', 'knownSea', 'fk_sea', 'fk_user');
     }
 
     /**
@@ -70,7 +62,7 @@ class Continent extends BaseModel implements IModel
      */
     public function isRealmMaster(User $oUser)
     {
-        return $this->realm->dungeonMaster->id == $oUser->id;
+        return $this->ocean->realm->dungeonMaster->id == $oUser->id;
     }
 
     /**
@@ -78,6 +70,6 @@ class Continent extends BaseModel implements IModel
      */
     public function isOpenRealm()
     {
-        return $this->realm->isOpen;
+        return $this->ocean->realm->isOpen;
     }
 }

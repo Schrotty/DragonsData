@@ -26,4 +26,21 @@
             @include('widgets.defaultList', ['aObjects' => Auth::user()->knownContinents($oObject), 'sTarget' => 'continent'])
         </div>
     </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span>{{ trans('realm.assigned_oceans') }}</span>
+            @can('edit', $oObject)
+                <div class="pull-right">
+                    <a href="{{ url('ocean/creator/' . $oObject->url) }}">
+                        {{ trans('realm.add_ocean') }}
+                    </a>
+                </div>
+            @endcan
+        </div>
+
+        <div class="panel-body">
+            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownOceans($oObject), 'sTarget' => 'ocean'])
+        </div>
+    </div>
 @endsection

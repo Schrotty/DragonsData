@@ -274,4 +274,44 @@ class User extends Authenticatable
 
         return $aResult;
     }
+
+    /**
+     * @param $oRealm
+     * @return array
+     */
+    public function knownOceans($oRealm)
+    {
+        $aResult = array();
+        $aUserContinents = $this->belongsToMany('App\Models\Ocean', 'knownOcean', 'fk_user', 'fk_ocean')->get();
+        $aRealmContinents = $oRealm->oceans();
+
+        if ($this->isRootAdmin || $oRealm->isRealmMaster($this) || $oRealm->isOpen) return $aRealmContinents;
+        foreach ($aRealmContinents as $oContinent) {
+            foreach ($aUserContinents as $oUserContinent) {
+                if ($oContinent->id == $oUserContinent->id) $aResult[] = $oContinent;
+            }
+        }
+
+        return $aResult;
+    }
+
+    /**
+     * @param $oLandscape
+     * @return array
+     */
+    public function knownSeas($oLandscape)
+    {
+        $aResult = array();
+        $aUserMountains = $this->belongsToMany('App\Models\Sea', 'knownSea', 'fk_user', 'fk_sea')->get();
+        $aLandscapeMountains = $oLandscape->seas();
+
+        if ($this->isRootAdmin || $oLandscape->isRealmMaster($this) || $oLandscape->isOpenRealm()) return $aLandscapeMountains;
+        foreach ($aLandscapeMountains as $oMountain) {
+            foreach ($aUserMountains as $oUserMountain) {
+                if ($oLandscape->id == $oUserMountain->id) $aResult[] = $oMountain;
+            }
+        }
+
+        return $aResult;
+    }
 }

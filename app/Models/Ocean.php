@@ -14,15 +14,14 @@ use App\Models\Interfaces\IModel;
 /**
  * @property mixed realm
  */
-class Continent extends BaseModel implements IModel
+class Ocean extends BaseModel implements IModel
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'continent';
-
+    protected $table = 'ocean';
     /**
      * The attributes that are mass assignable.
      *
@@ -51,9 +50,9 @@ class Continent extends BaseModel implements IModel
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function landscapes()
+    public function seas()
     {
-        return $this->hasMany('App\Models\Landscape', 'fk_continent', 'id')->get();
+        return $this->hasMany('App\Models\Sea', 'fk_ocean', 'id')->get();
     }
 
     /**
@@ -61,7 +60,7 @@ class Continent extends BaseModel implements IModel
      */
     public function knownBy()
     {
-        return $this->belongsToMany('App\Models\User', 'knownContinent', 'fk_continent', 'fk_user');
+        return $this->belongsToMany('App\Models\User', 'knownOcean', 'fk_ocean', 'fk_user');
     }
 
     /**
