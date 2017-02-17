@@ -21,6 +21,7 @@ Route::get('/', 'HomeController@index');
 Route::group(['middleware' => 'auth'], function () {
 
     /* CREATE ROUTES */
+    Route::get('/{model}/creator/', 'Controller@creator');
     Route::get('/{model}/creator/{parent}', 'Controller@creator');
     Route::post('/{model}/create/', 'Controller@create');
 
@@ -31,6 +32,3 @@ Route::group(['middleware' => 'auth'], function () {
     /* DISPLAY ROUTES */
     Route::get('/{model}/{name}', 'Controller@single')->name('single');
 });
-
-/* OBJECT MANAGER */
-Route::post('/object-create', 'ObjectController@create');

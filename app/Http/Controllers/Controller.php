@@ -91,8 +91,9 @@ class Controller extends BaseController
      * @param $sParameter
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function creator($sModel, $sParameter)
+    public function creator($sModel, $sParameter = null)
     {
+        if (isset($_POST['object-type'])) $sModel = $_POST['object-type'];
         $sFullModel = 'App\Models\\' . ucfirst($sModel);
         $sParentModel = $sFullModel::first()->parent->getModel();
         $sParentURL = $sParameter;

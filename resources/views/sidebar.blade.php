@@ -21,7 +21,7 @@
             <div class="panel-heading">{{trans('general.controls')}}</div>
             <div class="panel-body">
                 <div class="row">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/object-create') }}">
+                    <form id="new-object-form" class="form-horizontal" role="form" method="GET" action="{{ url('/realm/creator') }}">
                         {{ csrf_field() }}
                         <div class="col-md-6">
                             @include('widgets.elements.objects_dropdown')
