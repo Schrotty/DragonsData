@@ -8,14 +8,6 @@ use Illuminate\Support\Facades\Auth;
 class RealmController extends Controller
 {
     /**
-     * RealmController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
      * @param $sModel
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -23,6 +15,8 @@ class RealmController extends Controller
     {
         $bOpen = false;
         $aPostUser = array();
+
+        $aParent = explode('-', $_POST['parent']);
         if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
         if (isset($_POST['is-open'])) $bOpen = $_POST['is-open'];
 
@@ -31,7 +25,7 @@ class RealmController extends Controller
             'shortDescription' => $_POST['short-description'],
             'description' => $_POST['description'],
             'fk_creator' => Auth::user()->id,
-            'fk_dungeonMaster' => $_POST['dungeon-master'],
+            'fk_dungeonMaster' => $aParent[1],
             'isOpen' => $bOpen == true ? 1 : 0,
             'url' => Controller::createURL('App\Models\Realm', $_POST['title'])
         ]);
@@ -58,7 +52,7 @@ class RealmController extends Controller
         $oRealm->name = $_POST['title'];
         $oRealm->description = $_POST['description'];
         $oRealm->shortDescription = $_POST['short-description'];
-        $oRealm->fk_dungeonMaster = $_POST['dungeon-master'];
+        $oRealm->fk_dungeonMaster = $_POST['parent'];
         $oRealm->isOpen = $bOpen == true ? 1 : 0;
 
         $oRealm->knownBy()->sync($aPostUser);

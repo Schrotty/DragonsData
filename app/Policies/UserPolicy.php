@@ -20,4 +20,14 @@ class UserPolicy extends Policy
     {
         return $oUser->isDungeonMaster;
     }
+
+    /**
+     * @param User $oUser
+     * @param User $oCheckUser
+     * @return bool
+     */
+    public function see(User $oUser, User $oCheckUser)
+    {
+        return true; //Users are public objects
+    }
 }

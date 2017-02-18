@@ -23,11 +23,11 @@ Route::group(['middleware' => 'auth'], function () {
     /* CREATE ROUTES */
     Route::get('/{model}/creator/', 'Controller@creator');
     Route::get('/{model}/creator/{parent}', 'Controller@creator');
-    Route::post('/{model}/create/', 'Controller@create');
+    Route::post('/{model}/create/', 'Controller@baseCreate');
 
     /* EDIT ROUTES */
     Route::get('/{model}/editor/{name}', 'Controller@editor');
-    Route::post('/{model}/save/{name}', 'Controller@save');
+    Route::post('/{model}/save/{name}', 'Controller@baseSave');
 
     /* DISPLAY ROUTES */
     Route::get('/{model}/{name}', 'Controller@single')->name('single');

@@ -12,24 +12,25 @@ use App\Models\Base\BaseModel;
 use App\Models\Interfaces\IModel;
 
 /**
- * @property mixed realm
- * @property mixed ocean
+ * @property mixed sea
+ * @property mixed parent
  */
-class Sea extends BaseModel implements IModel
+class Island extends BaseModel implements IModel
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'sea';
+    protected $table = 'island';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'fk_ocean', 'shortDescription', 'description', 'url'
+        'name', 'description', 'fk_sea', 'shortDescription', 'description', 'url'
     ];
 
     /**
@@ -37,23 +38,23 @@ class Sea extends BaseModel implements IModel
      */
     public function parent()
     {
-        return $this->ocean();
+        return $this->sea();
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function ocean()
+    public function sea()
     {
-        return $this->hasOne('App\Models\Ocean', 'id', 'fk_ocean');
+        return $this->hasOne('App\Models\Sea', 'id', 'fk_sea');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function islands()
+    public function landscapes()
     {
-        return $this->hasMany('App\Models\Island', 'fk_sea', 'id')->get();
+        return $this->hasMany('App\Models\Landscape', 'fk_island', 'id')->get();
     }
 
     /**
@@ -61,7 +62,7 @@ class Sea extends BaseModel implements IModel
      */
     public function knownBy()
     {
-        return $this->belongsToMany('App\Models\User', 'knownSea', 'fk_sea', 'fk_user');
+        return $this->belongsToMany('App\Models\User', 'knownIsland', 'fk_island', 'fk_user');
     }
 
     /**
@@ -70,7 +71,7 @@ class Sea extends BaseModel implements IModel
      */
     public function isRealmMaster(User $oUser)
     {
-        return $this->ocean->realm->dungeonMaster->id == $oUser->id;
+        return $this->sea->ocean->realm->dungeonMaster->id == $oUser->id;
     }
 
     /**
@@ -78,6 +79,14 @@ class Sea extends BaseModel implements IModel
      */
     public function isOpenRealm()
     {
-        return $this->ocean->realm->isOpen;
+        return $this->sea->ocean->realm->isOpen;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function realm()
+    {
+        return $this->sea->ocean->realm();
     }
 }

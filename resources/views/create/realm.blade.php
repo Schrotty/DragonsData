@@ -1,27 +1,22 @@
 @extends('layouts.create')
 
 @section('left-block')
-    <div class="col-md-4">
         <div class="realm-gamemaster">
             <div>{{ trans('realm.dungeon_master') }}</div>
             <span>
-                @include('widgets.elements.user_dropdown', ['user' => Auth::user()])
+                @include('widgets.dropdown', ['oParent' => $oObject->parent, 'aObjects' => $oObject->possibleParents(['User'])])
             </span>
         </div>
-    </div>
 @endsection
 
 @section('middle-block')
-    <div class="col-md-4">
         <div class="realm-player">
             <div>{{ trans('general.known_by') }}</div>
             @include('widgets.elements.user_dropdown_multi', ['obj' => new \App\Models\Realm()])
         </div>
-    </div>
 @endsection
 
 @section('right-block')
-    <div class="col-md-4">
         <div class="open-realm">
             <div name="is-open" class="checkbox pull-left">
                 <label>
@@ -39,5 +34,4 @@
                 </label>
             </div>
         </div>
-    </div>
 @endsection

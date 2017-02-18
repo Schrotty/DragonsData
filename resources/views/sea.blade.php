@@ -23,7 +23,7 @@
         </div>
 
         <div class="panel-body">
-
+            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownIslands($oObject), 'sTarget' => 'island'])
         </div>
     </div>
 @endsection

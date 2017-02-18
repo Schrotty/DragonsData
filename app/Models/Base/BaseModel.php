@@ -4,6 +4,7 @@ namespace App\Models\Base;
 
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property mixed description
@@ -18,6 +19,36 @@ abstract class BaseModel extends Model
     public function getModel()
     {
         return strtolower(substr(get_class($this), 11));
+    }
+
+    /**
+     * @param $aModels
+     * @return array
+     */
+    public function possibleParents($aModels)
+    {
+        $aResult = array();
+        foreach ($aModels as $sModel) {
+            $aResult = array_merge($aResult, $this->getParents("App\\Models\\" . $sModel));
+        }
+
+        return $aResult;
+    }
+
+    /**
+     * @param $sModel
+     * @return array
+     */
+    private function getParents($sModel)
+    {
+        $aResult = array();
+        foreach ($sModel::all() as $oObject) {
+            if (Auth::user()->can('see', $oObject)) {
+                $aResult[] = $oObject;
+            }
+        }
+
+        return $aResult;
     }
 
     /**

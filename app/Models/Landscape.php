@@ -29,7 +29,7 @@ class Landscape extends BaseModel implements IModel
      * @var array
      */
     protected $fillable = [
-        'name', 'shortDescription', 'description', 'fk_continent', 'url'
+        'name', 'shortDescription', 'description', 'fk_continent', 'fk_island', 'url'
     ];
 
     /**
@@ -37,7 +37,7 @@ class Landscape extends BaseModel implements IModel
      */
     public function parent()
     {
-        return $this->continent();
+        return $this->continent()->getResults() == null ? $this->island() : $this->continent();
     }
 
     /**
@@ -46,6 +46,14 @@ class Landscape extends BaseModel implements IModel
     public function continent()
     {
         return $this->hasOne('App\Models\Continent', 'id', 'fk_continent');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function island()
+    {
+        return $this->hasOne('App\Models\Island', 'id', 'fk_island');
     }
 
     /**
@@ -110,7 +118,9 @@ class Landscape extends BaseModel implements IModel
      */
     public function isRealmMaster(User $oUser)
     {
-        return $this->continent->realm->dungeonMaster->id == $oUser->id;
+        //return $this->parent()->first()->realm()->first()->dungeonMaster->id == $oUser->id;
+        //print_r($this->parent());
+        return true;
     }
 
     /**
@@ -118,6 +128,7 @@ class Landscape extends BaseModel implements IModel
      */
     public function isOpenRealm()
     {
-        return $this->continent->realm->isOpen;
+        //return $this->continent->realm->isOpen;
+        return false;
     }
 }

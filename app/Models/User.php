@@ -314,4 +314,24 @@ class User extends Authenticatable
 
         return $aResult;
     }
+
+    /**
+     * @param $oLandscape
+     * @return array
+     */
+    public function knownIslands($oLandscape)
+    {
+        $aResult = array();
+        $aUserMountains = $this->belongsToMany('App\Models\Island', 'knownIsland', 'fk_user', 'fk_island')->get();
+        $aLandscapeMountains = $oLandscape->islands();
+
+        if ($this->isRootAdmin || $oLandscape->isRealmMaster($this) || $oLandscape->isOpenRealm()) return $aLandscapeMountains;
+        foreach ($aLandscapeMountains as $oMountain) {
+            foreach ($aUserMountains as $oUserMountain) {
+                if ($oLandscape->id == $oUserMountain->id) $aResult[] = $oMountain;
+            }
+        }
+
+        return $aResult;
+    }
 }

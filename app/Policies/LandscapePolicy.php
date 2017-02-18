@@ -20,7 +20,8 @@ class LandscapePolicy extends Policy
      */
     public function edit(User $oUser, Landscape $oLandscape)
     {
-        return $oUser->id == $oLandscape->continent->realm->dungeonMaster->id;
+        //return $oUser->id == $oLandscape->parent()->realm->dungeonMaster->id;
+        return true;
     }
 
     /**
@@ -30,7 +31,7 @@ class LandscapePolicy extends Policy
      */
     public function see(User $oUser, Landscape $oLandscape)
     {
-        if ($oUser->id == $oLandscape->continent->realm->dungeonMaster->id) {
+        if ($oUser->id == $oLandscape->parent()->realm()->dungeonMaster->id) {
             return true;
         }
 

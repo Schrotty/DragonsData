@@ -1,42 +1,15 @@
-@extends('layouts.restricted')
+@extends('layouts.view')
 
-@section('restricted')
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <span>{{ $oObject->name }}</span>
-            @can('edit', $oObject)
-                <div class="pull-right">
-                    <a href="{{ url('landscape/editor/' . $oObject->url) }}">
-                        {{ trans('realm.edit_landscape') }}
-                    </a>
-                </div>
-            @endcan
-        </div>
-
-        <div class="panel-body">
-            <div class="row">
-                @include('widgets.description', ['oObject' => $oObject])
-
-                <div class="col-md-6">
-                    <div class="realm-gamemaster">
-                        <div>{{ trans('realm.continent') }}</div>
-                        <span>
-                        <a href="{{ url('continent/' . $oObject->continent->url) }}">
-                            {{ $oObject->continent->name }}
-                        </a>
-                    </span>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="realm-player">
-                        <div>{{ trans('general.known_by') }}</div>
-                        @include('widgets.knownBy', ['object' => $oObject])
-                    </div>
-                </div>
-            </div>
-        </div>
+@section('parent')
+    <div class="object-parent">
+        <div>{{ trans('realm.dungeon_master') }}</div>
+        <span>
+            <a href="{{ url( $oObject->parent->getModel() . '/' . $oObject->parent->url) }}">{{ $oObject->parent->name }}</a>
+        </span>
     </div>
+@endsection
+
+@section('child-elements')
 
     <!-- assigned cities -->
     <div class="panel panel-default">

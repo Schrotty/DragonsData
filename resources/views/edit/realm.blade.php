@@ -16,7 +16,7 @@
                         <div class="realm-gamemaster">
                             <div>{{ trans('realm.dungeon_master') }}</div>
                             <span>
-                                @include('widgets.elements.user_dropdown', ['user' => $oObject->dungeonMaster])
+                                @include('widgets.dropdown', ['oParent' => $oObject->parent, 'aObjects' => $oObject->possibleParents(['User'])])
                             </span>
                         </div>
                     </div>

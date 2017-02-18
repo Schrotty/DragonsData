@@ -13,9 +13,17 @@
                 <div class="row">
                     @include('widgets.edit.description', ['oObject' => $oObject])
 
-                    @yield('left-block')
-                    @yield('middle-block')
-                    @yield('right-block')
+                    <div class="col-md-4">
+                        @yield('left-block')
+                    </div>
+
+                    <div class="col-md-4">
+                        @yield('middle-block')
+                    </div>
+
+                    <div class="col-md-4">
+                        @yield('right-block')
+                    </div>
                 </div>
             </div>
         </div>
