@@ -11,10 +11,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TagModel extends Model
+class BasicModel extends Model
 {
     /**
      * @var string
      */
-    protected $table = 'tagModel';
+    protected $table = 'model';
 }

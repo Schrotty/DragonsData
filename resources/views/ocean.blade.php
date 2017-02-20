@@ -23,7 +23,7 @@
         </div>
 
         <div class="panel-body">
-            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownSeas($oObject), 'sTarget' => 'sea'])
+            @include('widget.defaultList', ['aObjects' => Auth::user()->knownSeas($oObject), 'sTarget' => 'sea'])
         </div>
     </div>
 @endsection

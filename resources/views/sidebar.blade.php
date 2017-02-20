@@ -8,7 +8,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <a href="{{ url('user/'. Auth::user()->username()) }}"><img
+                    <a href="{{ url('user/'. Auth::user()->url) }}"><img
                                 src="{{ URL::to('/img') }}/{{ strtolower(Auth::user()->avatar) }}"
                                 class="default-avatar"></a>
                 </div>
@@ -24,7 +24,7 @@
                     <form id="new-object-form" class="form-horizontal" role="form" method="GET" action="{{ url('/realm/creator') }}">
                         {{ csrf_field() }}
                         <div class="col-md-6">
-                            @include('widgets.elements.objects_dropdown')
+                            @include('widget.elements.objects_dropdown')
                         </div>
 
                         <div class="col-md-6">

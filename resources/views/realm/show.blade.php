@@ -1,4 +1,4 @@
-@extends('layouts.view')
+@extends('layouts.show')
 
 @section('parent')
     <div class="object-parent">
@@ -13,34 +13,34 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <span>{{ trans('realm.assigned_continents') }}</span>
-            @can('edit', $oObject)
+            @if($oObject->isDungeonMaster(Auth::user()))
                 <div class="pull-right">
                     <a href="{{ url('continent/creator/' . $oObject->url) }}">
                         {{ trans('realm.add_continent') }}
                     </a>
                 </div>
-            @endcan
+            @endif
         </div>
 
         <div class="panel-body">
-            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownContinents($oObject), 'sTarget' => 'continent'])
+            @include('widget.defaultList', ['aObjects' => \App\Models\Continent::all(), 'sTarget' => 'continent'])
         </div>
     </div>
 
     <div class="panel panel-default">
         <div class="panel-heading">
             <span>{{ trans('realm.assigned_oceans') }}</span>
-            @can('edit', $oObject)
+            @if($oObject->isDungeonMaster(Auth::user()))
                 <div class="pull-right">
                     <a href="{{ url('ocean/creator/' . $oObject->url) }}">
                         {{ trans('realm.add_ocean') }}
                     </a>
                 </div>
-            @endcan
+            @endif
         </div>
 
         <div class="panel-body">
-            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownOceans($oObject), 'sTarget' => 'ocean'])
+            @include('widget.defaultList', ['aObjects' => \App\Models\Ocean::all(), 'sTarget' => 'ocean'])
         </div>
     </div>
 @endsection

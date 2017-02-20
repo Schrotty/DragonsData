@@ -17,6 +17,8 @@ use App\Models\Interfaces\IModel;
  */
 class Sea extends BaseModel implements IModel
 {
+    public $sParentModel = 'Ocean';
+
     /**
      * The table associated with the model.
      *

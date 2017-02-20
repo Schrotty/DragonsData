@@ -12,6 +12,6 @@
 @section('tags')
     <div class="realm-player">
         <div>{{ trans('general.tags') }}</div>
-        @include('widgets.tags', ['aTags' => $oObject->tags])
+        @include('widget.tags', ['aTags' => $oObject->tags])
     </div>
 @endsection

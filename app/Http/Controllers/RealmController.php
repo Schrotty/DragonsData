@@ -3,61 +3,145 @@
 namespace App\Http\Controllers;
 
 use App\Models\Realm;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 
 class RealmController extends Controller
 {
     /**
-     * @param $sModel
-     * @return \Illuminate\Http\RedirectResponse
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public static function create($sModel)
+    public function index()
     {
-        $bOpen = false;
-        $aPostUser = array();
-
-        $aParent = explode('-', $_POST['parent']);
-        if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
-        if (isset($_POST['is-open'])) $bOpen = $_POST['is-open'];
-
-        Realm::create([
-            'name' => $_POST['title'],
-            'shortDescription' => $_POST['short-description'],
-            'description' => $_POST['description'],
-            'fk_creator' => Auth::user()->id,
-            'fk_dungeonMaster' => $aParent[1],
-            'isOpen' => $bOpen == true ? 1 : 0,
-            'url' => Controller::createURL('App\Models\Realm', $_POST['title'])
-        ]);
-
-        $oRealm = Realm::all()->last();
-        $oRealm->knownBy()->sync($aPostUser);
-
-        return redirect()->route('single', [$sModel, $oRealm->url]);
+        return View::make('realm.index', ['aObjects' => Realm::all()]);
     }
 
     /**
-     * @param $sModel
-     * @param $sName
-     * @return \Illuminate\Http\RedirectResponse
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public static function save($sModel, $sName)
+    public function create()
     {
-        $bOpen = false;
-        $aPostUser = array();
-        if (isset($_POST['known-by'])) $aPostUser = $_POST['known-by'];
-        if (isset($_POST['is-open'])) $bOpen = $_POST['is-open'];
+        return View::make('realm.create', ['sMethod' => 'POST', 'oObject' => new Realm()]);
+    }
 
-        $oRealm = Realm::where('url', $sName)->get()->first();
-        $oRealm->name = $_POST['title'];
-        $oRealm->description = $_POST['description'];
-        $oRealm->shortDescription = $_POST['short-description'];
-        $oRealm->fk_dungeonMaster = $_POST['parent'];
-        $oRealm->isOpen = $bOpen == true ? 1 : 0;
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
 
-        $oRealm->knownBy()->sync($aPostUser);
+        $aRules = array(
+            'name'              => 'required',
+            'description'       => 'required',
+            'short-description' => 'required',
+            'dungeon-master'    => 'required'
+        );
+
+        $oValidator = Validator::make($request->all(), $aRules);
+
+        if ($oValidator->fails()){
+            return Redirect::to('realm/create')->withErrors($oValidator)->withInput();
+        }
+
+        $oRealm = new Realm();
+        $oRealm->name = $request->input('name');
+        $oRealm->description = $request->input('description');
+        $oRealm->shortDescription = $request->input('short-description');
+        $oRealm->fk_creator = Auth::user()->id;
+        $oRealm->fk_dungeonMaster = $request->input('dungeon-master');
+        $oRealm->url = parent::createURL('realm', $oRealm->name);
+        $oRealm->isOpen = $request->input('is-open') == true ? 1 : 0;
+        $oRealm->knownBy()->sync($aUser);
+
         $oRealm->save();
 
-        return redirect()->route('single', [$sModel, $oRealm->url]);
+        Session::flash('message', trans('realm.created_realm'));
+        return Redirect::to('realm/' . $oRealm->url);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $sURL
+     * @return \Illuminate\Http\Response
+     */
+    public function show($sURL)
+    {
+        return View::make('realm.show', ['oObject' => Realm::where('url', $sURL)->get()->first()]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  string  $sURL
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($sURL)
+    {
+        return View::make('realm.edit', ['oObject' => Realm::where('url', $sURL)->get()->first()]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $sURL
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $sURL)
+    {
+        $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+
+        $aRules = array(
+            'name'              => 'required',
+            'description'       => 'required',
+            'short-description' => 'required',
+            'dungeon-master'    => 'required'
+        );
+
+        $oValidator = Validator::make($request->all(), $aRules);
+
+        if ($oValidator->fails()){
+            return Redirect::to('realm/edit')->withErrors($oValidator)->withInput();
+        }
+
+        $oRealm = Realm::where('url', $sURL)->get()->first();
+        $oRealm->name = $request->input('name');
+        $oRealm->description = $request->input('description');
+        $oRealm->shortDescription = $request->input('short-description');
+        $oRealm->fk_creator = Auth::user()->id;
+        $oRealm->fk_dungeonMaster = $request->input('dungeon-master');
+        $oRealm->url = parent::createURL('realm', $oRealm->name);
+        $oRealm->isOpen = $request->input('is-open') == true ? 1 : 0;
+        $oRealm->knownBy()->sync($aUser);
+
+        $oRealm->save();
+
+        Session::flash('message', trans('realm.realm_updated'));
+        return Redirect::to('realm/' . $oRealm->url);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  string  $sURL
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($sURL)
+    {
+        Realm::where('url', $sURL)->get()->first()->delete();
+        return Redirect::to('/');
     }
 }

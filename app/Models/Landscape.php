@@ -13,9 +13,12 @@ use App\Models\Interfaces\IModel;
 
 /**
  * @property mixed continent
+ * @property mixed fk_model
  */
 class Landscape extends BaseModel implements IModel
 {
+    public $sParentModel = 'Island';
+
     /**
      * The table associated with the model.
      *
@@ -29,7 +32,7 @@ class Landscape extends BaseModel implements IModel
      * @var array
      */
     protected $fillable = [
-        'name', 'shortDescription', 'description', 'fk_continent', 'fk_island', 'url'
+        'name', 'shortDescription', 'description', 'parent_id', 'fk_model', 'url'
     ];
 
     /**
@@ -37,23 +40,10 @@ class Landscape extends BaseModel implements IModel
      */
     public function parent()
     {
-        return $this->continent()->getResults() == null ? $this->island() : $this->continent();
-    }
+        App('debugbar')->info(BasicModel::where('id', $this->fk_model)->get());
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function continent()
-    {
-        return $this->hasOne('App\Models\Continent', 'id', 'fk_continent');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function island()
-    {
-        return $this->hasOne('App\Models\Island', 'id', 'fk_island');
+        $sModel = $this->hasOne('App\Models\BasicModel', 'id', 'fk_model')->get()->first()->model;
+        return $this->hasOne($sModel, 'id', 'parent_id');
     }
 
     /**

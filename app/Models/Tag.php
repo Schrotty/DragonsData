@@ -26,6 +26,6 @@ class Tag extends Model
 
     public function model()
     {
-        return $this->hasOne('App\Models\TagModel', 'fk_model', 'id');
+        return $this->hasOne('App\Models\TagModel', 'id', 'fk_model')->get()->first()->model;
     }
 }

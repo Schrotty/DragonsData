@@ -6,8 +6,8 @@
             <span>{{ $oObject->name }}</span>
             @can('edit', $oObject)
                 <div class="pull-right">
-                    <a href="{{ url($sModel . '/editor/' . $oObject->url) }}">
-                        {{ trans('realm.edit_' . $sModel) }}
+                    <a href="{{ url($oObject->getModel() . '/' . $oObject->url . '/edit/') }}">
+                        {{ trans('realm.edit_' . $oObject->getModel()) }}
                     </a>
                 </div>
             @endcan
@@ -15,7 +15,7 @@
 
         <div class="panel-body">
             <div class="row">
-                @include('widgets.description', ['oObject' => $oObject])
+                @include('widget.description', ['oObject' => $oObject])
 
                 <div class="col-md-4">
                     @yield('parent')
@@ -24,7 +24,7 @@
                 <div class="col-md-4">
                     <div class="realm-player">
                         <div>{{ trans('general.known_by') }}</div>
-                        @include('widgets.knownBy', ['object' => $oObject])
+                        @include('widget.knownBy', ['object' => $oObject])
                     </div>
                 </div>
 

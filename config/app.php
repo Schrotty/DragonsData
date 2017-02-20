@@ -164,6 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
 
         /*
@@ -179,7 +180,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        App\Providers\RouteServiceProvider::class
 
     ],
 
@@ -230,7 +231,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-
+        'Form' => Collective\Html\FormFacade::class,
+        'HTML' => Collective\Html\HtmlFacade::class
     ],
 
 ];

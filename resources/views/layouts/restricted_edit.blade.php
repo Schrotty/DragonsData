@@ -7,7 +7,7 @@
                 @can('edit', $oObject)
                     @yield('restricted')
                 @else
-                    @include('widgets.noAccess')
+                    @include('widget.noAccess')
                 @endcan
             </div>
 

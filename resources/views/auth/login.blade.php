@@ -34,9 +34,12 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
+                                <div name="remember" class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : ''}}> Remember Me
+                                        <input type="checkbox" {{ old('remember') ? 'checked' : ''}}> Remember Me
+                                        <span class="cr">
+                                            <i class="cr-icon glyphicon glyphicon-ok"></i>
+                                        </span>
                                     </label>
                                 </div>
                             </div>

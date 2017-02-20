@@ -17,6 +17,8 @@ use App\Models\Interfaces\IModel;
  */
 class River extends BaseModel implements IModel
 {
+    public $sParentModel = 'Landscape';
+
     /**
      * The table associated with the model.
      *

@@ -23,7 +23,7 @@
         </div>
 
         <div class="panel-body">
-            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownLandscape($oObject), 'sTarget' => 'landscape'])
+            @include('widget.defaultList', ['aObjects' => Auth::user()->knownLandscape($oObject), 'sTarget' => 'landscape'])
         </div>
     </div>
 @endsection

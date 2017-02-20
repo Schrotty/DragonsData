@@ -65,7 +65,7 @@
 
                     <div class="panel-body">
                         @if( count($oObject->knownRealms()) > 0 )
-                            @include('widgets.realms', ['realms' => $oObject->knownRealms(), 'openRealmMode' => false])
+                            @include('widget.realms', ['realms' => $oObject->knownRealms(), 'openRealmMode' => false])
                         @else
                             {{ trans('user.no_assigned_realms_for_user', ['user' => $oObject->name]) }}
                         @endif

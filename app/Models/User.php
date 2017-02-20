@@ -14,12 +14,16 @@ use Illuminate\Notifications\Notifiable;
  * @property mixed isDungeonMaster
  * @property mixed isGameMaster
  * @property mixed name
+ * @property mixed rank
  * @package App
  */
 class User extends Authenticatable
 {
     use Notifiable;
 
+    /**
+     * @var array
+     */
     protected $dates = ['created_at', 'updated_at'];
 
     /**
@@ -35,7 +39,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'password', 'isAdmin', 'is_dungeonmaster', 'url'
+        'name', 'password', 'url', 'email', 'fk_rank'
     ];
 
     /**
@@ -68,15 +72,7 @@ class User extends Authenticatable
      */
     public function rank()
     {
-        return $this->hasOne('App\Models\Rank', 'id', 'fk_rank');
-    }
-
-    /**
-     * @return string
-     */
-    public function username()
-    {
-        return strtolower($this->name);
+        return $this->hasOne('App\Models\Rank', 'id', 'fk_rank')->get()->first();
     }
 
     /**
@@ -84,19 +80,11 @@ class User extends Authenticatable
      */
     public function knownRealms()
     {
-        if ($this->isRootAdmin()) {
+        if ($this->rank()->is_root) {
             return Realm::all();
         }
 
         return $this->masterRealms()->merge($this->assignedRealms());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function isRootAdmin()
-    {
-        return $this->isRootAdmin;
     }
 
     /**
@@ -116,222 +104,28 @@ class User extends Authenticatable
     }
 
     /**
-     * @param $oRealm
-     * @return array
+     * @param string $sName
+     * @return mixed
      */
-    public function knownContinents($oRealm)
+    public static function userWithRank(string $sName)
     {
-        $aResult = array();
-        $aUserContinents = $this->belongsToMany('App\Models\Continent', 'knownContinent', 'fk_user', 'fk_continent')->get();
-        $aRealmContinents = $oRealm->continents();
-
-        if ($this->isRootAdmin || $oRealm->isRealmMaster($this) || $oRealm->isOpen) return $aRealmContinents;
-        foreach ($aRealmContinents as $oContinent) {
-            foreach ($aUserContinents as $oUserContinent) {
-                if ($oContinent->id == $oUserContinent->id) $aResult[] = $oContinent;
-            }
-        }
-
-        return $aResult;
+        $oRank = Rank::where('name', $sName)->get()->first();
+        return User::where('fk_rank', $oRank->id);
     }
 
     /**
-     * @param $oContinent
-     * @return array
+     * @param string $sPrivilege
+     * @return mixed
      */
-    public function knownLandscape($oContinent)
+    public static function userWithPrivilege(string $sPrivilege)
     {
-        $aResult = array();
-        $aUserLandscapes = $this->belongsToMany('App\Models\Landscape', 'knownLandscape', 'fk_user', 'fk_landscape')->get();
-        $aContinentLandscapes = $oContinent->landscapes();
+        $aRankIDs = array();
+        $aRanks = Rank::where($sPrivilege, '1')->get();
 
-        if ($this->isRootAdmin || $oContinent->isRealmMaster($this) || $oContinent->isOpenRealm()) return $aContinentLandscapes;
-        foreach ($aContinentLandscapes as $oLandscape) {
-            foreach ($aUserLandscapes as $oUserLandscape) {
-                if ($oLandscape->id == $oUserLandscape->id) $aResult[] = $oLandscape;
-            }
+        foreach ($aRanks as $oRank) {
+            $aRankIDs[] = $oRank->id;
         }
 
-        return $aResult;
-    }
-
-    /**
-     * @param $oLandscape
-     * @return array
-     */
-    public function knownCities($oLandscape)
-    {
-        $aResult = array();
-        $aUserCities = $this->belongsToMany('App\Models\City', 'knownCity', 'fk_user', 'fk_city')->get();
-        $aLandscapeCities = $oLandscape->cities();
-
-        if ($this->isRootAdmin || $oLandscape->isRealmMaster($this) || $oLandscape->isOpenRealm()) return $aLandscapeCities;
-        foreach ($aLandscapeCities as $oLandscape) {
-            foreach ($aUserCities as $oUserLandscape) {
-                if ($oLandscape->id == $oUserLandscape->id) $aResult[] = $oLandscape;
-            }
-        }
-
-        return $aResult;
-    }
-
-    /**
-     * @param $oLandscape
-     * @return array
-     */
-    public function knownRivers($oLandscape)
-    {
-        $aResult = array();
-        $aUserRivers = $this->belongsToMany('App\Models\River', 'knownRiver', 'fk_user', 'fk_river')->get();
-        $aLandscapeRivers = $oLandscape->rivers();
-
-        if ($this->isRootAdmin || $oLandscape->isRealmMaster($this) || $oLandscape->isOpenRealm()) return $aLandscapeRivers;
-        foreach ($aLandscapeRivers as $oRiver) {
-            foreach ($aUserRivers as $oUserRiver) {
-                if ($oLandscape->id == $oUserRiver->id) $aResult[] = $oRiver;
-            }
-        }
-
-        return $aResult;
-    }
-
-    /**
-     * @param $oLandscape
-     * @return array
-     */
-    public function knownLakes($oLandscape)
-    {
-        $aResult = array();
-        $aUserLakes = $this->belongsToMany('App\Models\River', 'knownRiver', 'fk_user', 'fk_river')->get();
-        $aLandscapeLakes = $oLandscape->lakes();
-
-        if ($this->isRootAdmin || $oLandscape->isRealmMaster($this) || $oLandscape->isOpenRealm()) return $aLandscapeLakes;
-        foreach ($aLandscapeLakes as $oLake) {
-            foreach ($aUserLakes as $oUserLake) {
-                if ($oLandscape->id == $oUserLake->id) $aResult[] = $oLake;
-            }
-        }
-
-        return $aResult;
-    }
-
-    /**
-     * @param $oLandscape
-     * @return array
-     */
-    public function knownBiomes($oLandscape)
-    {
-        $aResult = array();
-        $aUserBiomes = $this->belongsToMany('App\Models\Biome', 'knownBiome', 'fk_user', 'fk_biome')->get();
-        $aLandscapeBiomes = $oLandscape->biomes();
-
-        if ($this->isRootAdmin || $oLandscape->isRealmMaster($this) || $oLandscape->isOpenRealm()) return $aLandscapeBiomes;
-        foreach ($aLandscapeBiomes as $oBiome) {
-            foreach ($aUserBiomes as $oUserBiome) {
-                if ($oLandscape->id == $oUserBiome->id) $aResult[] = $oBiome;
-            }
-        }
-
-        return $aResult;
-    }
-
-    /**
-     * @param $oLandscape
-     * @return array
-     */
-    public function knownLandmarks($oLandscape)
-    {
-        $aResult = array();
-        $aUserLandmarks = $this->belongsToMany('App\Models\Landmark', 'knownLandmark', 'fk_user', 'fk_landmark')->get();
-        $aLandscapeLandmarks = $oLandscape->landmarks();
-
-        if ($this->isRootAdmin || $oLandscape->isRealmMaster($this) || $oLandscape->isOpenRealm()) return $aLandscapeLandmarks;
-        foreach ($aLandscapeLandmarks as $oLandmark) {
-            foreach ($aUserLandmarks as $oUserLandmark) {
-                if ($oLandscape->id == $oUserLandmark->id) $aResult[] = $oLandmark;
-            }
-        }
-
-        return $aResult;
-    }
-
-    /**
-     * @param $oLandscape
-     * @return array
-     */
-    public function knownMountains($oLandscape)
-    {
-        $aResult = array();
-        $aUserMountains = $this->belongsToMany('App\Models\Mountain', 'knownMountain', 'fk_user', 'fk_mountain')->get();
-        $aLandscapeMountains = $oLandscape->mountains();
-
-        if ($this->isRootAdmin || $oLandscape->isRealmMaster($this) || $oLandscape->isOpenRealm()) return $aLandscapeMountains;
-        foreach ($aLandscapeMountains as $oMountain) {
-            foreach ($aUserMountains as $oUserMountain) {
-                if ($oLandscape->id == $oUserMountain->id) $aResult[] = $oMountain;
-            }
-        }
-
-        return $aResult;
-    }
-
-    /**
-     * @param $oRealm
-     * @return array
-     */
-    public function knownOceans($oRealm)
-    {
-        $aResult = array();
-        $aUserContinents = $this->belongsToMany('App\Models\Ocean', 'knownOcean', 'fk_user', 'fk_ocean')->get();
-        $aRealmContinents = $oRealm->oceans();
-
-        if ($this->isRootAdmin || $oRealm->isRealmMaster($this) || $oRealm->isOpen) return $aRealmContinents;
-        foreach ($aRealmContinents as $oContinent) {
-            foreach ($aUserContinents as $oUserContinent) {
-                if ($oContinent->id == $oUserContinent->id) $aResult[] = $oContinent;
-            }
-        }
-
-        return $aResult;
-    }
-
-    /**
-     * @param $oLandscape
-     * @return array
-     */
-    public function knownSeas($oLandscape)
-    {
-        $aResult = array();
-        $aUserMountains = $this->belongsToMany('App\Models\Sea', 'knownSea', 'fk_user', 'fk_sea')->get();
-        $aLandscapeMountains = $oLandscape->seas();
-
-        if ($this->isRootAdmin || $oLandscape->isRealmMaster($this) || $oLandscape->isOpenRealm()) return $aLandscapeMountains;
-        foreach ($aLandscapeMountains as $oMountain) {
-            foreach ($aUserMountains as $oUserMountain) {
-                if ($oLandscape->id == $oUserMountain->id) $aResult[] = $oMountain;
-            }
-        }
-
-        return $aResult;
-    }
-
-    /**
-     * @param $oLandscape
-     * @return array
-     */
-    public function knownIslands($oLandscape)
-    {
-        $aResult = array();
-        $aUserMountains = $this->belongsToMany('App\Models\Island', 'knownIsland', 'fk_user', 'fk_island')->get();
-        $aLandscapeMountains = $oLandscape->islands();
-
-        if ($this->isRootAdmin || $oLandscape->isRealmMaster($this) || $oLandscape->isOpenRealm()) return $aLandscapeMountains;
-        foreach ($aLandscapeMountains as $oMountain) {
-            foreach ($aUserMountains as $oUserMountain) {
-                if ($oLandscape->id == $oUserMountain->id) $aResult[] = $oMountain;
-            }
-        }
-
-        return $aResult;
+        return User::whereIn('fk_rank', $aRankIDs)->get();
     }
 }

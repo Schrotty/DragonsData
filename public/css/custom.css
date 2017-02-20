@@ -13,7 +13,7 @@
     height: 120px;
 }
 
-.user-table, .realm-table {
+.user-table, .realm-table, .index-table {
     table-layout: fixed;
     width: 100%;
 }

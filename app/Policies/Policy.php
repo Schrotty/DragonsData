@@ -18,7 +18,26 @@ class Policy
      */
     public function before(User $oUser)
     {
-        if ($oUser->isRootAdmin) return true;
+        if ($oUser->rank()->is_root) return true;
+    }
+
+    /**
+     * @param User $oUser
+     * @param $oObject
+     * @return mixed
+     */
+    public function view(User $oUser, $oObject)
+    {
+        return $oObject->knownByUser($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function edit(User $oUser)
+    {
+        return $oUser->rank()->is_dungeon_master;
     }
 
     /**
@@ -27,6 +46,15 @@ class Policy
      */
     public function create(User $oUser)
     {
-        return $oUser->isDungeonMaster || $oUser->isRootAdmin;
+        return $oUser->rank()->is_dungeon_master;
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function destroy(User $oUser)
+    {
+        return $oUser->rank()->is_dungeon_master;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Realm;
 use App\Models\User;
 
 /**
@@ -13,21 +12,38 @@ class RealmPolicy extends Policy
 {
     /**
      * @param User $oUser
-     * @param Realm $oRealm
-     * @return bool
+     * @param $oObject
+     * @return mixed
      */
-    public function see(User $oUser, Realm $oRealm)
+    public function view(User $oUser, $oObject)
     {
-        return $oRealm->knownByUser($oUser) || $oRealm->isOpen || $oRealm->isRealmMaster($oUser);
+        return parent::view($oUser, $oObject);
     }
 
     /**
      * @param User $oUser
-     * @param Realm $oRealm
      * @return bool
      */
-    public function edit(User $oUser, Realm $oRealm)
+    public function edit(User $oUser)
     {
-        return $oUser->id === $oRealm->dungeonMaster->id;
+        return parent::edit($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function create(User $oUser)
+    {
+        return parent::create($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function destroy(User $oUser)
+    {
+        return parent::destroy($oUser);
     }
 }

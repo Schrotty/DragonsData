@@ -23,7 +23,7 @@
             @endcan</div>
 
         <div class="panel-body">
-            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownCities($oObject), 'sTarget' => 'city'])
+            @include('widget.defaultList', ['aObjects' => Auth::user()->knownCities($oObject), 'sTarget' => 'city'])
         </div>
     </div>
 
@@ -39,7 +39,7 @@
             @endcan</div>
 
         <div class="panel-body">
-            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownRivers($oObject), 'sTarget' => 'river'])
+            @include('widget.defaultList', ['aObjects' => Auth::user()->knownRivers($oObject), 'sTarget' => 'river'])
         </div>
     </div>
 
@@ -55,7 +55,7 @@
             @endcan</div>
 
         <div class="panel-body">
-            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownLakes($oObject), 'sTarget' => 'lake'])
+            @include('widget.defaultList', ['aObjects' => Auth::user()->knownLakes($oObject), 'sTarget' => 'lake'])
         </div>
     </div>
 
@@ -71,7 +71,7 @@
             @endcan</div>
 
         <div class="panel-body">
-            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownBiomes($oObject), 'sTarget' => 'biome'])
+            @include('widget.defaultList', ['aObjects' => Auth::user()->knownBiomes($oObject), 'sTarget' => 'biome'])
         </div>
     </div>
 
@@ -87,7 +87,7 @@
             @endcan</div>
 
         <div class="panel-body">
-            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownLandmarks($oObject), 'sTarget' => 'landmark'])
+            @include('widget.defaultList', ['aObjects' => Auth::user()->knownLandmarks($oObject), 'sTarget' => 'landmark'])
         </div>
     </div>
 
@@ -103,7 +103,7 @@
             @endcan</div>
 
         <div class="panel-body">
-            @include('widgets.defaultList', ['aObjects' => Auth::user()->knownMountains($oObject), 'sTarget' => 'mountain'])
+            @include('widget.defaultList', ['aObjects' => Auth::user()->knownMountains($oObject), 'sTarget' => 'mountain'])
         </div>
     </div>
 @endsection

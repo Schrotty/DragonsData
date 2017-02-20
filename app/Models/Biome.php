@@ -19,6 +19,9 @@ use App\Models\Interfaces\IModel;
  */
 class Biome extends BaseModel implements IModel
 {
+
+    public $sParentModel = 'Landscape';
+
     /**
      * @var string
      */

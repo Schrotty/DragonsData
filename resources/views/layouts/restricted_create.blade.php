@@ -4,10 +4,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                @can('create', \Illuminate\Support\Facades\Auth::user())
+                @can('create',$oObject)
                     @yield('restricted')
                 @else
-                    @include('widgets.noAccess')
+                    @include('widget.noAccess')
                 @endcan
             </div>
 

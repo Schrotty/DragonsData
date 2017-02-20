@@ -17,6 +17,7 @@ use App\Models\Interfaces\IModel;
  */
 class Island extends BaseModel implements IModel
 {
+    public $sParentModel = 'Sea';
     /**
      * The table associated with the model.
      *
@@ -54,7 +55,7 @@ class Island extends BaseModel implements IModel
      */
     public function landscapes()
     {
-        return $this->hasMany('App\Models\Landscape', 'fk_island', 'id')->get();
+        return $this->hasMany('App\Models\Landscape', 'parent_id', 'id')->get();
     }
 
     /**

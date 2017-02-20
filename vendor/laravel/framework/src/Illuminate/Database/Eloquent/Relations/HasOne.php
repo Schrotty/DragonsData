@@ -5,6 +5,9 @@ namespace Illuminate\Database\Eloquent\Relations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * @property  is_dungeon_master
+ */
 class HasOne extends HasOneOrMany
 {
     /**

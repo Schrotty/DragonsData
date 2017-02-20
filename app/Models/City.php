@@ -19,6 +19,8 @@ use App\Models\Interfaces\IModel;
  */
 class City extends BaseModel implements IModel
 {
+
+    public $sParentModel = 'Landscape';
     /**
      * @var string
      */

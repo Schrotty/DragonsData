@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\{
     Auth\Access\AuthorizesRequests, Bus\DispatchesJobs, Validation\ValidatesRequests
 };
+
 use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
@@ -27,7 +28,8 @@ class Controller extends BaseController
     public static function baseSave($sModel, $sName)
     {
         $sFullPath = 'App\Http\Controllers\\' . ucfirst($sModel) . 'Controller';
-        if (file_exists($sFullPath)) {
+
+        if (class_exists($sFullPath)) {
             return $sFullPath::save($sModel, $sName);
         }
 
@@ -73,7 +75,7 @@ class Controller extends BaseController
     public static function baseCreate($sModel)
     {
         $sFullPath = 'App\Http\Controllers\\' . ucfirst($sModel) . 'Controller';
-        if (file_exists($sFullPath)) {
+        if (class_exists($sFullPath)) {
             return $sFullPath::create($sModel);
         }
 
@@ -84,7 +86,7 @@ class Controller extends BaseController
      * @param $sModel
      * @return \Illuminate\Http\RedirectResponse
      */
-    public static function create($sModel)
+    public function creeate($sModel)
     {
         $aParent = explode('-', $_POST['parent']);
         $sFullModelPath = 'App\Models\\' . ucfirst($sModel);
@@ -119,7 +121,8 @@ class Controller extends BaseController
     public static function createURL($sModel, $sName)
     {
         $sURL = str_replace(' ', '-', strtolower($sName));
-        $iURLCount = $sModel::where('name', $sURL)->get()->count();
+        $sFullModel = 'App\Models\\' . ucfirst($sModel);
+        $iURLCount = $sFullModel::where('name', $sURL)->get()->count();
         if ($iURLCount >= 1) {
             $sURL .= '-' . ++$iURLCount;
         }
@@ -151,9 +154,12 @@ class Controller extends BaseController
     {
         $sFullModel = 'App\Models\\' . ucfirst($sModel);
         $oObject = $sFullModel::where('url', $sName)->get()->first();
+        $oParent = $oObject->parent;
 
         return view('edit.' . strtolower($sModel), [
-            'oObject' => $oObject, 'sModel' => $sModel, 'sParentModel' => $oObject->getModel(), 'sParentURL' => $oObject->url
+            'oObject' => $oObject,
+            'sModel' => $sModel,
+            'oParent' => $oParent
         ]);
     }
 
@@ -165,23 +171,20 @@ class Controller extends BaseController
      */
     public function creator($sModel, $sParentModel = null, $sParameter = null)
     {
-        if (isset($_POST['object-type'])) $sModel = $_POST['object-type'];
         $sFullModel = 'App\Models\\' . ucfirst($sModel);
 
-        if ($sParentModel == null) $sParentModel = $sFullModel::first()->parent->getModel();
+        $oObject = new $sFullModel;
+        $sParent = 'App\Models\\' . ucfirst($oObject->sParentModel);
+        App('debugbar')->info($sParentModel);
+        $oParent = $sParent::where('url', $sParentModel)->get()->first();
 
-        $sParentURL = $sParameter;
-        if ($sModel == 'realm') {
-            $sParentModel = 'dashboard';
-            $sParentURL = '';
-        }
+        if (isset($_POST['object-type'])) $sModel = $_POST['object-type'];
 
         return view('create.' . strtolower($sModel), [
             'sModel' => $sModel,
-            'sParentModel' => $sParentModel,
-            'sParentURL' => $sParentURL,
-            'sParameter' => $sParameter,
-            'oObject' => new $sFullModel
+            'oObject' => $oObject,
+            'oParent' => $oParent,
+            'sParameter' => $sParameter
         ]);
     }
 }

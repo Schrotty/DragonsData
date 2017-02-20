@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Base\BaseModel;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property mixed users
@@ -10,25 +11,34 @@ use App\Models\Base\BaseModel;
  * @property mixed dungeonMaster
  * @property mixed isOpen
  * @property mixed url
+ * @property mixed name
+ * @property mixed shortDescription
+ * @property mixed fk_creator
+ * @property mixed fk_dungeonMaster
  */
 class Realm extends BaseModel
 {
+    public $sParentModel = 'User';
+
     /**
      * @var string
      */
     public $aParent = [
         'dungeon_master', 'user'
     ];
+
     /**
      * @var array
      */
     protected $dates = ['created_at', 'updated_at'];
+
     /**
      * The table associated with the model.
      *
      * @var string
      */
     protected $table = 'realm';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -70,6 +80,11 @@ class Realm extends BaseModel
         return $this->belongsToMany('App\Models\User', 'knownRealm', 'fk_realm', 'fk_user');
     }
 
+    public function realm()
+    {
+        return $this;
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -86,11 +101,7 @@ class Realm extends BaseModel
         return $this->hasMany('App\Models\Ocean', 'fk_realm', 'id')->get();
     }
 
-    /**
-     * @param User $oUser
-     * @return bool
-     */
-    public function isRealmMaster(User $oUser)
+    public function isDungeonMaster(User $oUser)
     {
         return $this->dungeonMaster->id == $oUser->id;
     }

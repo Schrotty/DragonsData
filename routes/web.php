@@ -17,18 +17,23 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
-/* PROTECTED ROUTES */
-Route::group(['middleware' => 'auth'], function () {
+/* first level resources */
+Route::resource('user', 'UserController');
+Route::resource('realm', 'RealmController');
 
-    /* CREATE ROUTES */
-    Route::get('/{model}/creator/', 'Controller@creator');
-    Route::get('/{model}/creator/{parent}', 'Controller@creator');
-    Route::post('/{model}/create/', 'Controller@baseCreate');
+/* second level resource */
+Route::resource('continent', 'ContinentController');
+Route::resource('ocean', 'OceanController');
+Route::resource('island', 'IslandController');
 
-    /* EDIT ROUTES */
-    Route::get('/{model}/editor/{name}', 'Controller@editor');
-    Route::post('/{model}/save/{name}', 'Controller@baseSave');
+/* third level resource */
+Route::resource('landscape', 'LandscapeController');
+Route::resource('sea', 'SeaController');
 
-    /* DISPLAY ROUTES */
-    Route::get('/{model}/{name}', 'Controller@single')->name('single');
-});
+/* fourth level resource */
+Route::resource('city', 'CityController');
+Route::resource('river', 'RiverController');
+Route::resource('lake', 'LakeController');
+Route::resource('biome', 'BiomeController');
+Route::resource('landmark', 'LandmarkController');
+Route::resource('mountain', 'MountainController');

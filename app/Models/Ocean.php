@@ -16,6 +16,7 @@ use App\Models\Interfaces\IModel;
  */
 class Ocean extends BaseModel implements IModel
 {
+    public $sParentModel = 'Realm';
     /**
      * The table associated with the model.
      *

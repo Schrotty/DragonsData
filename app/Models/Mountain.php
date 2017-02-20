@@ -17,6 +17,7 @@ use App\Models\Interfaces\IModel;
  */
 class Mountain extends BaseModel implements IModel
 {
+    public $sParentModel = 'Landscape';
     /**
      * The table associated with the model.
      *

@@ -17,6 +17,11 @@ use App\Models\Interfaces\IModel;
 class Continent extends BaseModel implements IModel
 {
     /**
+     * @var string
+     */
+    public $sParentModel = 'Realm';
+
+    /**
      * The table associated with the model.
      *
      * @var string
@@ -53,7 +58,7 @@ class Continent extends BaseModel implements IModel
      */
     public function landscapes()
     {
-        return $this->hasMany('App\Models\Landscape', 'fk_continent', 'id')->get();
+        return $this->hasMany('App\Models\Landscape', 'parent_id', 'id')->get();
     }
 
     /**
