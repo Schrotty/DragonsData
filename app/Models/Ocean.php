@@ -13,6 +13,10 @@ use App\Models\Interfaces\IModel;
 
 /**
  * @property mixed realm
+ * @property array|string name
+ * @property array|string shortDescription
+ * @property mixed|string url
+ * @property array|string fk_realm
  */
 class Ocean extends BaseModel implements IModel
 {

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Landscape;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 
 class LandscapeController extends Controller
 {
@@ -14,7 +18,7 @@ class LandscapeController extends Controller
      */
     public function index()
     {
-        //
+        return View::make('landscape.index', ['aObjects' => Landscape::all()]);
     }
 
     /**
@@ -24,7 +28,7 @@ class LandscapeController extends Controller
      */
     public function create()
     {
-        //
+        return View::make('landscape.create', ['sMethod' => 'POST', 'oObject' => new landscape()]);
     }
 
     /**
@@ -35,51 +39,103 @@ class LandscapeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+
+        $aRules = array(
+            'name' => 'required',
+            'description' => 'required',
+            'short-description' => 'required',
+            'parent' => 'required'
+        );
+
+        $oValidator = Validator::make($request->all(), $aRules);
+
+        if ($oValidator->fails()) {
+            return Redirect::to('landscape/create')->withErrors($oValidator)->withInput();
+        }
+
+        $oLandscape = new Landscape();
+        $oLandscape->name = $request->input('name');
+        $oLandscape->description = $request->input('description');
+        $oLandscape->shortDescription = $request->input('short-description');
+        $oLandscape->url = parent::createURL('realm', $oLandscape->name);
+        $oLandscape->fk_continent = $request->input('parent');
+        $oLandscape->save();
+
+        Landscape::where('url', $oLandscape->url)->get()->first()->knownBy()->sync($aUser);
+
+        Session::flash('message', trans('landscape.created'));
+        return Redirect::to('landscape/' . $oLandscape->url);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $sURL
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
     public function show($sURL)
     {
-        return view('landscape', ['oObject' => Landscape::where('url', $sURL)->get()->first()]);
+        return View::make('landscape.show', ['oObject' => Landscape::where('url', $sURL)->get()->first()]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($sURL)
     {
-        //
+        return View::make('landscape.edit', ['oObject' => Landscape::where('url', $sURL)->get()->first()]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $sURL)
     {
-        //
+        $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+
+        $aRules = array(
+            'name' => 'required',
+            'description' => 'required',
+            'short-description' => 'required',
+            'parent' => 'required'
+        );
+
+        $oValidator = Validator::make($request->all(), $aRules);
+
+        if ($oValidator->fails()) {
+            return Redirect::to('landscape/edit')->withErrors($oValidator)->withInput();
+        }
+
+        $oLandscape = Landscape::where('url', $sURL)->get()->first();
+        $oLandscape->name = $request->input('name');
+        $oLandscape->description = $request->input('description');
+        $oLandscape->shortDescription = $request->input('short-description');
+        $oLandscape->fk_continent = $request->input('parent');
+        $oLandscape->knownBy()->sync($aUser);
+
+        $oLandscape->save();
+
+        Session::flash('message', trans('landscape.updated'));
+        return Redirect::to('landscape/' . $oLandscape->url);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($sURL)
     {
-        //
+        Landscape::where('url', $sURL)->get()->first()->delete();
+        return Redirect::to('/');
     }
 }

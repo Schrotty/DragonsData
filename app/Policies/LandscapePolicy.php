@@ -8,33 +8,44 @@
 
 namespace App\Policies;
 
-use App\Models\Landscape;
 use App\Models\User;
 
 class LandscapePolicy extends Policy
 {
     /**
      * @param User $oUser
-     * @param Landscape $oLandscape
-     * @return bool
+     * @param $oObject
+     * @return mixed
      */
-    public function edit(User $oUser, Landscape $oLandscape)
+    public function view(User $oUser, $oObject)
     {
-        //return $oUser->id == $oLandscape->parent()->realm->dungeonMaster->id;
-        return true;
+        return parent::view($oUser, $oObject);
     }
 
     /**
      * @param User $oUser
-     * @param Landscape $oLandscape
      * @return bool
      */
-    public function see(User $oUser, Landscape $oLandscape)
+    public function edit(User $oUser)
     {
-        if ($oUser->id == $oLandscape->parent()->realm()->dungeonMaster->id) {
-            return true;
-        }
+        return parent::edit($oUser);
+    }
 
-        return $oLandscape->knownByUser($oUser) || $oLandscape->isOpenRealm();
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function create(User $oUser)
+    {
+        return parent::create($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function destroy(User $oUser)
+    {
+        return parent::destroy($oUser);
     }
 }

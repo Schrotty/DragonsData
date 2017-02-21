@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Island;
 use App\Models\User;
 
 /**
@@ -13,25 +12,38 @@ class IslandPolicy extends Policy
 {
     /**
      * @param User $oUser
-     * @param Island $oIsland
-     * @return bool
+     * @param $oObject
+     * @return mixed
      */
-    public function edit(User $oUser, Island $oIsland)
+    public function view(User $oUser, $oObject)
     {
-        return $oUser->id == $oIsland->sea->ocean->realm->dungeonMaster->id;
+        return parent::view($oUser, $oObject);
     }
 
     /**
      * @param User $oUser
-     * @param Island $oIsland
      * @return bool
      */
-    public function see(User $oUser, Island $oIsland)
+    public function edit(User $oUser)
     {
-        if ($oUser->id == $oIsland->sea->ocean->realm->dungeonMaster->id) {
-            return true;
-        }
+        return parent::edit($oUser);
+    }
 
-        return $oIsland->knownByUser($oUser) || $oIsland->isOpenRealm();
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function create(User $oUser)
+    {
+        return parent::create($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function destroy(User $oUser)
+    {
+        return parent::destroy($oUser);
     }
 }

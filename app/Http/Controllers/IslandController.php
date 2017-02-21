@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Island;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 
 class IslandController extends Controller
 {
@@ -14,7 +18,7 @@ class IslandController extends Controller
      */
     public function index()
     {
-        //
+        return View::make('island.index', ['aObjects' => Island::all()]);
     }
 
     /**
@@ -24,7 +28,7 @@ class IslandController extends Controller
      */
     public function create()
     {
-        //
+        return View::make('island.create', ['sMethod' => 'POST', 'oObject' => new Island()]);
     }
 
     /**
@@ -35,51 +39,103 @@ class IslandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+
+        $aRules = array(
+            'name' => 'required',
+            'description' => 'required',
+            'short-description' => 'required',
+            'sea' => 'required'
+        );
+
+        $oValidator = Validator::make($request->all(), $aRules);
+
+        if ($oValidator->fails()) {
+            return Redirect::to('island/create')->withErrors($oValidator)->withInput();
+        }
+
+        $oIsland = new Island();
+        $oIsland->name = $request->input('name');
+        $oIsland->description = $request->input('description');
+        $oIsland->shortDescription = $request->input('short-description');
+        $oIsland->url = parent::createURL('realm', $oIsland->name);
+        $oIsland->fk_sea = $request->input('sea');
+        $oIsland->save();
+
+        Sea::where('url', $oIsland->url)->get()->first()->knownBy()->sync($aUser);
+
+        Session::flash('message', trans('island.created'));
+        return Redirect::to('island/' . $oIsland->url);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $sURL
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
     public function show($sURL)
     {
-        return view('island', ['oObject' => Island::where('url', $sURL)->get()->first()]);
+        return View::make('island.show', ['oObject' => Island::where('url', $sURL)->get()->first()]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($sURL)
     {
-        //
+        return View::make('island.edit', ['oObject' => Island::where('url', $sURL)->get()->first()]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $sURL)
     {
-        //
+        $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+
+        $aRules = array(
+            'name' => 'required',
+            'description' => 'required',
+            'short-description' => 'required',
+            'sea' => 'required'
+        );
+
+        $oValidator = Validator::make($request->all(), $aRules);
+
+        if ($oValidator->fails()) {
+            return Redirect::to('island/edit')->withErrors($oValidator)->withInput();
+        }
+
+        $oIsland = Island::where('url', $sURL)->get()->first();
+        $oIsland->name = $request->input('name');
+        $oIsland->description = $request->input('description');
+        $oIsland->shortDescription = $request->input('short-description');
+        $oIsland->fk_sea = $request->input('sea');
+        $oIsland->knownBy()->sync($aUser);
+
+        $oIsland->save();
+
+        Session::flash('message', trans('island.updated'));
+        return Redirect::to('island/' . $oIsland->url);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($sURL)
     {
-        //
+        Island::where('url', $sURL)->get()->first()->delete();
+        return Redirect::to('/');
     }
 }

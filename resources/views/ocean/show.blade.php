@@ -1,4 +1,4 @@
-@extends('layouts.view')
+@extends('layouts.show')
 
 @section('parent')
     <div class="object-parent">
@@ -12,18 +12,18 @@
 @section('child-elements')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ trans('realm.assigned_seas') }}</span>
-            @can('edit', $oObject)
+            <span>{{ trans('sea.assigned_seas') }}</span>
+            @if($oObject->realm->isDungeonMaster(Auth::user()))
                 <div class="pull-right">
-                    <a href="{{ url('sea/creator/' . $oObject->url) }}">
-                        {{ trans('realm.add_sea') }}
+                    <a href="{{ url('sea/create/' . $oObject->url) }}">
+                        {{ trans('realm.add_landscape') }}
                     </a>
                 </div>
-            @endcan
+            @endif
         </div>
 
         <div class="panel-body">
-            @include('widget.defaultList', ['aObjects' => Auth::user()->knownSeas($oObject), 'sTarget' => 'sea'])
+            @include('widget.defaultList', ['aObjects' => \App\Models\Sea::all(), 'sTarget' => 'sea'])
         </div>
     </div>
 @endsection

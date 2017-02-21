@@ -32,7 +32,7 @@
             <span>{{ trans('realm.assigned_oceans') }}</span>
             @if($oObject->isDungeonMaster(Auth::user()))
                 <div class="pull-right">
-                    <a href="{{ url('ocean/creator/' . $oObject->url) }}">
+                    <a href="{{ url('ocean/create/realm/' . $oObject->url) }}">
                         {{ trans('realm.add_ocean') }}
                     </a>
                 </div>

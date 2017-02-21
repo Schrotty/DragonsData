@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Ocean;
 use App\Models\User;
 
 /**
@@ -11,28 +10,40 @@ use App\Models\User;
  */
 class OceanPolicy extends Policy
 {
-
     /**
      * @param User $oUser
-     * @param Ocean $oOcean
-     * @return bool
+     * @param $oObject
+     * @return mixed
      */
-    public function edit(User $oUser, Ocean $oOcean)
+    public function view(User $oUser, $oObject)
     {
-        return $oUser->id == $oOcean->realm->dungeonMaster->id;
+        return parent::view($oUser, $oObject);
     }
 
     /**
      * @param User $oUser
-     * @param Ocean $oOcean
      * @return bool
      */
-    public function see(User $oUser, Ocean $oOcean)
+    public function edit(User $oUser)
     {
-        if ($oUser->id == $oOcean->realm->dungeonMaster->id) {
-            return true;
-        }
+        return parent::edit($oUser);
+    }
 
-        return $oOcean->knownByUser($oUser) || $oOcean->isOpenRealm();
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function create(User $oUser)
+    {
+        return parent::create($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function destroy(User $oUser)
+    {
+        return parent::destroy($oUser);
     }
 }

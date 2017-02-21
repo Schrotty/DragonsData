@@ -17,8 +17,6 @@ use App\Models\Interfaces\IModel;
  */
 class Landscape extends BaseModel implements IModel
 {
-    public $sParentModel = 'Island';
-
     /**
      * The table associated with the model.
      *
@@ -40,10 +38,7 @@ class Landscape extends BaseModel implements IModel
      */
     public function parent()
     {
-        App('debugbar')->info(BasicModel::where('id', $this->fk_model)->get());
-
-        $sModel = $this->hasOne('App\Models\BasicModel', 'id', 'fk_model')->get()->first()->model;
-        return $this->hasOne($sModel, 'id', 'parent_id');
+        return $this->hasOne('App\Models\Continent', 'id', 'fk_continent');
     }
 
     /**
@@ -120,5 +115,10 @@ class Landscape extends BaseModel implements IModel
     {
         //return $this->continent->realm->isOpen;
         return false;
+    }
+
+    public function isDungeonMaster()
+    {
+
     }
 }
