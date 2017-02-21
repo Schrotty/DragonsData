@@ -17,6 +17,18 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
+/* create new child object */
+Route::get('/{childModel}/create/{parentModel}/{parentUrl}', function($sChildModel, $sParentModel, $sParentURL = null){
+    $sChild = 'App\Models\\' . ucfirst($sChildModel);
+    $sParent = 'App\Models\\' . ucfirst($sParentModel);
+
+    return View::make($sChildModel .'.create', [
+        'sMethod' => 'POST',
+        'oObject' => new $sChild(),
+        'oParent' => $sParent::where('url', $sParentURL)->get()->first()
+    ]);
+});
+
 /* first level resources */
 Route::resource('user', 'UserController');
 Route::resource('realm', 'RealmController');

@@ -1,5 +1,5 @@
-@if(!$object->isUnknown())
-    @foreach($object->knownBy as $oPlayer)
+@if(!$oObject->isUnknown())
+    @foreach($oObject->knownBy as $oPlayer)
         @if(!$loop->last)
             <span><a href="{{ url('user/' . $oPlayer->url) }}">{{ $oPlayer->name }},</a></span>
         @else

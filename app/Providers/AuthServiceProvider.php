@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Continent;
 use App\Models\Realm;
+use App\Policies\ContinentPolicy;
 use App\Policies\Policy;
 use App\Policies\RealmPolicy;
 use Illuminate\Database\Eloquent\Model;
@@ -16,8 +18,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Model::class => Policy::class,
-        Realm::class => RealmPolicy::class
+        Model::class        => Policy::class,
+        Realm::class        => RealmPolicy::class,
+        Continent::class    => ContinentPolicy::class
     ];
 
     /**

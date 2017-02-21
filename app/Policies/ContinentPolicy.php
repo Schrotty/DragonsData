@@ -11,28 +11,40 @@ use App\Models\User;
  */
 class ContinentPolicy extends Policy
 {
-
     /**
      * @param User $oUser
-     * @param Continent $oContinent
-     * @return bool
+     * @param $oObject
+     * @return mixed
      */
-    public function edit(User $oUser, Continent $oContinent)
+    public function view(User $oUser, $oObject)
     {
-        return $oUser->id == $oContinent->realm->dungeonMaster->id;
+        return parent::view($oUser, $oObject);
     }
 
     /**
      * @param User $oUser
-     * @param Continent $oContinent
      * @return bool
      */
-    public function see(User $oUser, Continent $oContinent)
+    public function edit(User $oUser)
     {
-        if ($oUser->id == $oContinent->realm->dungeonMaster->id) {
-            return true;
-        }
+        return parent::edit($oUser);
+    }
 
-        return $oContinent->knownByUser($oUser) || $oContinent->isOpenRealm();
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function create(User $oUser)
+    {
+        return parent::create($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function destroy(User $oUser)
+    {
+        return parent::destroy($oUser);
     }
 }

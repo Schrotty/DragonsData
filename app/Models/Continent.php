@@ -13,14 +13,16 @@ use App\Models\Interfaces\IModel;
 
 /**
  * @property mixed realm
+ * @property array|string name
+ * @property array|string shortDescription
+ * @property array|string fk_creator
+ * @property array|string fk_dungeonMaster
+ * @property mixed|string url
+ * @property int isOpen
+ * @property array|string fk_realm
  */
 class Continent extends BaseModel implements IModel
 {
-    /**
-     * @var string
-     */
-    public $sParentModel = 'Realm';
-
     /**
      * The table associated with the model.
      *
@@ -84,5 +86,14 @@ class Continent extends BaseModel implements IModel
     public function isOpenRealm()
     {
         return $this->realm->isOpen;
+    }
+
+    /**
+     * @param $oUser
+     * @return bool
+     */
+    public function knownByUser($oUser)
+    {
+        return parent::knownByUser($oUser) || $this->realm->dungeonMaster->id == $oUser->id;
     }
 }

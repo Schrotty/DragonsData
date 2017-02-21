@@ -1,4 +1,4 @@
-@extends('layouts.view')
+@extends('layouts.show')
 
 @section('parent')
     <div class="object-parent">
@@ -13,17 +13,17 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <span>{{ trans('realm.assigned_landscapes') }}</span>
-            @can('edit', $oObject)
+            @if($oObject->realm->isDungeonMaster(Auth::user()))
                 <div class="pull-right">
                     <a href="{{ url('landscape/creator/' . $oObject->url) }}">
                         {{ trans('realm.add_landscape') }}
                     </a>
                 </div>
-            @endcan
+            @endif
         </div>
 
         <div class="panel-body">
-            @include('widget.defaultList', ['aObjects' => Auth::user()->knownLandscape($oObject), 'sTarget' => 'landscape'])
+            @include('widget.defaultList', ['aObjects' => \App\Models\Landscape::all(), 'sTarget' => 'landscape'])
         </div>
     </div>
 @endsection

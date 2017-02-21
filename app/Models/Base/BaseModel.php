@@ -22,36 +22,6 @@ abstract class BaseModel extends Model
     }
 
     /**
-     * @param $aModels
-     * @return array
-     */
-    public function possibleParents($aModels)
-    {
-        $aResult = array();
-        foreach ($aModels as $sModel) {
-            $aResult = array_merge($aResult, $this->getParents("App\\Models\\" . $sModel));
-        }
-
-        return $aResult;
-    }
-
-    /**
-     * @param $sModel
-     * @return array
-     */
-    private function getParents($sModel)
-    {
-        $aResult = array();
-        foreach ($sModel::all() as $oObject) {
-            if (Auth::user()->can('see', $oObject)) {
-                $aResult[] = $oObject;
-            }
-        }
-
-        return $aResult;
-    }
-
-    /**
      * Does a specific user know this object?
      *
      * @param $oUser
@@ -79,6 +49,6 @@ abstract class BaseModel extends Model
      */
     public function isUnknown()
     {
-        return count($this->knownBy()) == 0 ? true : false;
+        return count($this->knownBy) == 0 ? true : false;
     }
 }

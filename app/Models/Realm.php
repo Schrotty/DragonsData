@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Base\BaseModel;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property mixed users
@@ -18,15 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Realm extends BaseModel
 {
-    public $sParentModel = 'User';
-
-    /**
-     * @var string
-     */
-    public $aParent = [
-        'dungeon_master', 'user'
-    ];
-
     /**
      * @var array
      */
@@ -80,29 +70,47 @@ class Realm extends BaseModel
         return $this->belongsToMany('App\Models\User', 'knownRealm', 'fk_realm', 'fk_user');
     }
 
+    /**
+     * @return $this
+     */
     public function realm()
     {
         return $this;
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @param $oRealm
+     * @return mixed
      */
-    public function continents()
+    public static function continents($oRealm)
     {
-        return $this->hasMany('App\Models\Continent', 'fk_realm', 'id')->get();
+        return Realm::find($oRealm->id)->hasMany('App\Models\Continent', 'fk_realm', 'id')->get();
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @param $oRealm
+     * @return mixed
      */
-    public function oceans()
+    public static function oceans($oRealm)
     {
-        return $this->hasMany('App\Models\Ocean', 'fk_realm', 'id')->get();
+        return Realm::find($oRealm->id)->hasMany('App\Models\Ocean', 'fk_realm', 'id')->get();
     }
 
+    /**
+     * @param User $oUser
+     * @return bool
+     */
     public function isDungeonMaster(User $oUser)
     {
         return $this->dungeonMaster->id == $oUser->id;
+    }
+
+    /**
+     * @param $oUser
+     * @return bool
+     */
+    public function knownByUser($oUser)
+    {
+        return parent::knownByUser($oUser) || $this->dungeonMaster->id == $oUser->id;
     }
 }

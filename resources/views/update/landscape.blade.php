@@ -4,7 +4,7 @@
         <div class="realm-gamemaster">
             <div>{{ trans('realm.continent') }}</div>
             <span>
-                @include('widget.dropdown', ['oParent' => $oObject->parent, 'aObjects' => $oObject->possibleParents(['Continent', 'Island'])])
+                @include('widget.dropdown', ['oParent' => $oObject->parent, 'aObjects' => $oObject->possibleParents(['continent.continent', 'Island'])])
             </span>
         </div>
 @endsection

@@ -25,13 +25,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span>{{trans('realm.open_realms')}}</span>
-                    @if(Auth::user()->rank()->is_root)
-                        <div class="pull-right">
-                            <a href="{{ url('realm/creator/true') }}">
-                                {{ trans('realm.create_open_realm') }}
-                            </a>
-                        </div>
-                    @endif
                 </div>
 
                 <div class="panel-body">

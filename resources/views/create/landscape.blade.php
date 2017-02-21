@@ -5,7 +5,7 @@
             <div>{{ trans('realm.continent') }}</div>
             <span>
                 {{ App('debugbar')->info($oObject->parent()) }}
-                @include('widget.dropdown', ['oParent' => $oObject->parent, 'aObjects' => $oObject->possibleParents(['Continent', 'Island'])])
+                @include('widget.dropdown', ['oParent' => $oObject->parent, 'aObjects' => $oObject->possibleParents(['continent.continent', 'Island'])])
             </span>
         </div>
 @endsection

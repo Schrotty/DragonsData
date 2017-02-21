@@ -63,9 +63,9 @@ class RealmController extends Controller
         $oRealm->fk_dungeonMaster = $request->input('dungeon-master');
         $oRealm->url = parent::createURL('realm', $oRealm->name);
         $oRealm->isOpen = $request->input('is-open') == true ? 1 : 0;
-        $oRealm->knownBy()->sync($aUser);
-
         $oRealm->save();
+
+        Realm::where('url', $oRealm->url)->get()->first()->knownBy()->sync($aUser);
 
         Session::flash('message', trans('realm.created_realm'));
         return Redirect::to('realm/' . $oRealm->url);
@@ -123,7 +123,6 @@ class RealmController extends Controller
         $oRealm->shortDescription = $request->input('short-description');
         $oRealm->fk_creator = Auth::user()->id;
         $oRealm->fk_dungeonMaster = $request->input('dungeon-master');
-        $oRealm->url = parent::createURL('realm', $oRealm->name);
         $oRealm->isOpen = $request->input('is-open') == true ? 1 : 0;
         $oRealm->knownBy()->sync($aUser);
 

@@ -1,7 +1,7 @@
 @extends('layouts.restricted_create')
 
 @section('restricted')
-    {{ Form::model($oObject, array('route' => array('realm.update', $oObject->url), 'method' => 'PUT')) }}
+    {{ Form::model($oObject, array('route' => array($oObject->getModel() . '.update', $oObject->url), 'method' => 'PUT')) }}
     @if(count($errors) > 0)
         <div class="alert alert-danger" role="alert">
             <span class="sr-only">Error:</span>

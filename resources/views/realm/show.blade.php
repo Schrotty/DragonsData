@@ -15,7 +15,7 @@
             <span>{{ trans('realm.assigned_continents') }}</span>
             @if($oObject->isDungeonMaster(Auth::user()))
                 <div class="pull-right">
-                    <a href="{{ url('continent/creator/' . $oObject->url) }}">
+                    <a href="{{ url('continent/create/realm/' . $oObject->url) }}">
                         {{ trans('realm.add_continent') }}
                     </a>
                 </div>
@@ -23,7 +23,7 @@
         </div>
 
         <div class="panel-body">
-            @include('widget.defaultList', ['aObjects' => \App\Models\Continent::all(), 'sTarget' => 'continent'])
+            @include('widget.defaultList', ['aObjects' => \App\Models\Realm::continents($oObject), 'sTarget' => 'continent'])
         </div>
     </div>
 
@@ -40,7 +40,7 @@
         </div>
 
         <div class="panel-body">
-            @include('widget.defaultList', ['aObjects' => \App\Models\Ocean::all(), 'sTarget' => 'ocean'])
+            @include('widget.defaultList', ['aObjects' => \App\Models\Realm::oceans($oObject), 'sTarget' => 'ocean'])
         </div>
     </div>
 @endsection

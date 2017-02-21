@@ -24,7 +24,7 @@
                 <div class="col-md-4">
                     <div class="realm-player">
                         <div>{{ trans('general.known_by') }}</div>
-                        @include('widget.knownBy', ['object' => $oObject])
+                        @include('widget.knownBy')
                     </div>
                 </div>
 
