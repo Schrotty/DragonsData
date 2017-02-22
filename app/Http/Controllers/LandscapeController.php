@@ -18,7 +18,7 @@ class LandscapeController extends Controller
      */
     public function index()
     {
-        return View::make('landscape.index', ['aObjects' => Landscape::all()]);
+        return View::make('models.landscape.index', ['aObjects' => Landscape::all()]);
     }
 
     /**
@@ -28,7 +28,7 @@ class LandscapeController extends Controller
      */
     public function create()
     {
-        return View::make('landscape.create', ['sMethod' => 'POST', 'oObject' => new landscape()]);
+        return View::make('models.landscape.create', ['sMethod' => 'POST', 'oObject' => new landscape()]);
     }
 
     /**
@@ -54,12 +54,15 @@ class LandscapeController extends Controller
             return Redirect::to('landscape/create')->withErrors($oValidator)->withInput();
         }
 
+        $aParentInfo = explode('-', $request->input('parent'));
+        $sParentCol = 'fk_' . $aParentInfo[0];
+
         $oLandscape = new Landscape();
         $oLandscape->name = $request->input('name');
         $oLandscape->description = $request->input('description');
         $oLandscape->shortDescription = $request->input('short-description');
         $oLandscape->url = parent::createURL('realm', $oLandscape->name);
-        $oLandscape->fk_continent = $request->input('parent');
+        $oLandscape->$sParentCol = $aParentInfo[1];
         $oLandscape->save();
 
         Landscape::where('url', $oLandscape->url)->get()->first()->knownBy()->sync($aUser);
@@ -76,7 +79,7 @@ class LandscapeController extends Controller
      */
     public function show($sURL)
     {
-        return View::make('landscape.show', ['oObject' => Landscape::where('url', $sURL)->get()->first()]);
+        return View::make('models.landscape.show', ['oObject' => Landscape::where('url', $sURL)->get()->first()]);
     }
 
     /**
@@ -87,7 +90,7 @@ class LandscapeController extends Controller
      */
     public function edit($sURL)
     {
-        return View::make('landscape.edit', ['oObject' => Landscape::where('url', $sURL)->get()->first()]);
+        return View::make('models.landscape.edit', ['oObject' => Landscape::where('url', $sURL)->get()->first()]);
     }
 
     /**
@@ -114,11 +117,17 @@ class LandscapeController extends Controller
             return Redirect::to('landscape/edit')->withErrors($oValidator)->withInput();
         }
 
+        $aParentInfo = explode('-', $request->input('parent'));
+        $sParentCol = 'fk_' . $aParentInfo[0];
+
         $oLandscape = Landscape::where('url', $sURL)->get()->first();
+        $oLandscape->fk_continent = null;
+        $oLandscape->fk_island = null;
+
         $oLandscape->name = $request->input('name');
         $oLandscape->description = $request->input('description');
         $oLandscape->shortDescription = $request->input('short-description');
-        $oLandscape->fk_continent = $request->input('parent');
+        $oLandscape->$sParentCol = $aParentInfo[1];
         $oLandscape->knownBy()->sync($aUser);
 
         $oLandscape->save();
@@ -136,6 +145,8 @@ class LandscapeController extends Controller
     public function destroy($sURL)
     {
         Landscape::where('url', $sURL)->get()->first()->delete();
+
+        Session::flash('message', trans('landscape.deleted'));
         return Redirect::to('/');
     }
 }

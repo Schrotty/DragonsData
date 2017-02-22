@@ -17,14 +17,13 @@ use App\Models\Interfaces\IModel;
  */
 class Sea extends BaseModel implements IModel
 {
-    public $sParentModel = 'Ocean';
-
     /**
      * The table associated with the model.
      *
      * @var string
      */
     protected $table = 'sea';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -51,11 +50,12 @@ class Sea extends BaseModel implements IModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @param $oSea
+     * @return mixed
      */
-    public function islands()
+    public static function islands($oSea)
     {
-        return $this->hasMany('App\Models\Island', 'fk_sea', 'id')->get();
+        return Sea::find($oSea->id)->hasMany('App\Models\Island', 'fk_sea', 'id')->get();
     }
 
     /**

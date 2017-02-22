@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Mountain;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 
 class MountainController extends Controller
 {
@@ -14,7 +18,7 @@ class MountainController extends Controller
      */
     public function index()
     {
-        //
+        return View::make('models.mountain.index', ['aObjects' => Mountain::all()]);
     }
 
     /**
@@ -24,7 +28,7 @@ class MountainController extends Controller
      */
     public function create()
     {
-        //
+        return View::make('models.mountain.create', ['sMethod' => 'POST', 'oObject' => new Mountain()]);
     }
 
     /**
@@ -35,51 +39,109 @@ class MountainController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+
+        $aRules = array(
+            'name' => 'required',
+            'description' => 'required',
+            'short-description' => 'required',
+            'landscape' => 'required'
+        );
+
+        $oValidator = Validator::make($request->all(), $aRules);
+
+        if ($oValidator->fails()) {
+            return Redirect::to('mountain/create')->withErrors($oValidator)->withInput();
+        }
+
+        $aParentInfo = explode('-', $request->input('landscape'));
+
+        $oMountain = new Mountain();
+        $oMountain->name = $request->input('name');
+        $oMountain->description = $request->input('description');
+        $oMountain->shortDescription = $request->input('short-description');
+        $oMountain->url = parent::createURL('realm', $oMountain->name);
+        $oMountain->fk_landscape = $aParentInfo[1];
+        $oMountain->save();
+
+        Mountain::where('url', $oMountain->url)->get()->first()->knownBy()->sync($aUser);
+
+        Session::flash('message', trans('mountain.created'));
+        return Redirect::to('mountain/' . $oMountain->url);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $sURL
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
     public function show($sURL)
     {
-        return view('mountain', ['oObject' => Mountain::where('url', $sURL)->get()->first()]);
+        return View::make('models.mountain.show', ['oObject' => Mountain::where('url', $sURL)->get()->first()]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($sURL)
     {
-        //
+        return View::make('models.mountain.edit', ['oObject' => Mountain::where('url', $sURL)->get()->first()]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $sURL)
     {
-        //
+        $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+
+        $aRules = array(
+            'name' => 'required',
+            'description' => 'required',
+            'short-description' => 'required',
+            'landscape' => 'required'
+        );
+
+        $oValidator = Validator::make($request->all(), $aRules);
+
+        if ($oValidator->fails()) {
+            return Redirect::to('mountain/edit')->withErrors($oValidator)->withInput();
+        }
+
+        $aParentInfo = explode('-', $request->input('landscape'));
+
+        $oMountain = Mountain::where('url', $sURL)->get()->first();
+        $oMountain->name = $request->input('name');
+        $oMountain->description = $request->input('description');
+        $oMountain->shortDescription = $request->input('short-description');
+        $oMountain->fk_landscape = $aParentInfo[1];
+        $oMountain->knownBy()->sync($aUser);
+
+        $oMountain->save();
+
+        Session::flash('message', trans('mountain.updated'));
+        return Redirect::to('mountain/' . $oMountain->url);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($sURL)
     {
-        //
+        Mountain::where('url', $sURL)->get()->first()->delete();
+
+        Session::flash('message', trans('mountain.deleted'));
+        return Redirect::to('/');
     }
 }

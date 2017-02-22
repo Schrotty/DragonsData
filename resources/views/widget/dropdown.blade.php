@@ -1,10 +1,18 @@
 <select name="{{ $sName }}" class="selectpicker" required>
-    @if(isset($oParent))
-        <option value="{{ $oParent->id }}">{{ $oParent->name }}</option>
-    @endif
+    @foreach($aObjects as $aObject)
+        @foreach($aObject as $oSingleObject)
+            @if(isset($oParent))
+                @if($oParent->id == $oSingleObject->id)
+                    <option selected value="{{ $oSingleObject->getModel() . '-' . $oSingleObject->id }}">{{ $oSingleObject->name }}</option>
+                    @continue
+                @endif
+            @endif
 
-    @foreach($aObjects as $oSingleObject)
-        @if(isset($oParent)) @if($oParent->id == $oSingleObject->id) @continue @endif @endif
-        <option value="{{ $oSingleObject->id }}">{{ $oSingleObject->name }}</option>
+            <option value="{{ $oSingleObject->getModel() . '-' . $oSingleObject->id }}">{{ $oSingleObject->name }}</option>
+        @endforeach
+
+        @if(!$loop->last)
+            <option data-divider="true"></option>
+        @endif
     @endforeach
 </select>

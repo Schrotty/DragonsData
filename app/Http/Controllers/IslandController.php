@@ -54,12 +54,14 @@ class IslandController extends Controller
             return Redirect::to('island/create')->withErrors($oValidator)->withInput();
         }
 
+        $aParentInfo = explode('-', $request->input('sea'));
+
         $oIsland = new Island();
         $oIsland->name = $request->input('name');
         $oIsland->description = $request->input('description');
         $oIsland->shortDescription = $request->input('short-description');
         $oIsland->url = parent::createURL('realm', $oIsland->name);
-        $oIsland->fk_sea = $request->input('sea');
+        $oIsland->fk_sea = $aParentInfo[1];
         $oIsland->save();
 
         Sea::where('url', $oIsland->url)->get()->first()->knownBy()->sync($aUser);
@@ -114,11 +116,13 @@ class IslandController extends Controller
             return Redirect::to('island/edit')->withErrors($oValidator)->withInput();
         }
 
+        $aParentInfo = explode('-', $request->input('sea'));
+
         $oIsland = Island::where('url', $sURL)->get()->first();
         $oIsland->name = $request->input('name');
         $oIsland->description = $request->input('description');
         $oIsland->shortDescription = $request->input('short-description');
-        $oIsland->fk_sea = $request->input('sea');
+        $oIsland->fk_sea = $aParentInfo[1];
         $oIsland->knownBy()->sync($aUser);
 
         $oIsland->save();

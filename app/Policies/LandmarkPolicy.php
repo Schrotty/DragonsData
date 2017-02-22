@@ -8,32 +8,44 @@
 
 namespace App\Policies;
 
-use App\Models\Landmark;
 use App\Models\User;
 
 class LandmarkPolicy extends Policy
 {
     /**
      * @param User $oUser
-     * @param Landmark $oLandmark
-     * @return bool
+     * @param $oObject
+     * @return mixed
      */
-    public function edit(User $oUser, Landmark $oLandmark)
+    public function view(User $oUser, $oObject)
     {
-        return $oUser->id == $oLandmark->landscape->continent->realm->dungeonMaster->id;
+        return parent::view($oUser, $oObject);
     }
 
     /**
      * @param User $oUser
-     * @param Landmark $oLandmark
      * @return bool
      */
-    public function see(User $oUser, Landmark $oLandmark)
+    public function edit(User $oUser)
     {
-        if ($oUser->id == $oLandmark->landscape->continent->realm->dungeonMaster->id) {
-            return true;
-        }
+        return parent::edit($oUser);
+    }
 
-        return $oLandmark->knownByUser($oUser) || $oLandmark->isOpenRealm();
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function create(User $oUser)
+    {
+        return parent::create($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function destroy(User $oUser)
+    {
+        return parent::destroy($oUser);
     }
 }

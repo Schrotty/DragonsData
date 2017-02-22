@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\River;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 
 class RiverController extends Controller
 {
@@ -14,7 +19,7 @@ class RiverController extends Controller
      */
     public function index()
     {
-        //
+        return View::make('models.river.index', ['aObjects' => River::all()]);
     }
 
     /**
@@ -24,7 +29,7 @@ class RiverController extends Controller
      */
     public function create()
     {
-        //
+        return View::make('models.river.create', ['sMethod' => 'POST', 'oObject' => new River()]);
     }
 
     /**
@@ -35,51 +40,109 @@ class RiverController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+
+        $aRules = array(
+            'name' => 'required',
+            'description' => 'required',
+            'short-description' => 'required',
+            'landscape' => 'required'
+        );
+
+        $oValidator = Validator::make($request->all(), $aRules);
+
+        if ($oValidator->fails()) {
+            return Redirect::to('river/create')->withErrors($oValidator)->withInput();
+        }
+
+        $aParentInfo = explode('-', $request->input('landscape'));
+
+        $oRiver = new River();
+        $oRiver->name = $request->input('name');
+        $oRiver->description = $request->input('description');
+        $oRiver->shortDescription = $request->input('short-description');
+        $oRiver->url = parent::createURL('realm', $oRiver->name);
+        $oRiver->fk_landscape = $aParentInfo[1];
+        $oRiver->save();
+
+        River::where('url', $oRiver->url)->get()->first()->knownBy()->sync($aUser);
+
+        Session::flash('message', trans('river.created'));
+        return Redirect::to('river/' . $oRiver->url);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $sURL
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
     public function show($sURL)
     {
-        return view('river', ['oObject' => River::where('url', $sURL)->get()->first()]);
+        return View::make('models.river.show', ['oObject' => River::where('url', $sURL)->get()->first()]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($sURL)
     {
-        //
+        return View::make('models.river.edit', ['oObject' => River::where('url', $sURL)->get()->first()]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $sURL)
     {
-        //
+        $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+
+        $aRules = array(
+            'name' => 'required',
+            'description' => 'required',
+            'short-description' => 'required',
+            'landscape' => 'required'
+        );
+
+        $oValidator = Validator::make($request->all(), $aRules);
+
+        if ($oValidator->fails()) {
+            return Redirect::to('river/edit')->withErrors($oValidator)->withInput();
+        }
+
+        $aParentInfo = explode('-', $request->input('landscape'));
+
+        $oRiver = River::where('url', $sURL)->get()->first();
+        $oRiver->name = $request->input('name');
+        $oRiver->description = $request->input('description');
+        $oRiver->shortDescription = $request->input('short-description');
+        $oRiver->fk_landscape = $aParentInfo[1];
+        $oRiver->knownBy()->sync($aUser);
+
+        $oRiver->save();
+
+        Session::flash('message', trans('river.updated'));
+        return Redirect::to('river/' . $oRiver->url);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($sURL)
     {
-        //
+        River::where('url', $sURL)->get()->first()->delete();
+
+        Session::flash('message', trans('river.deleted'));
+        return Redirect::to('/');
     }
 }

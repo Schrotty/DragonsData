@@ -8,32 +8,44 @@
 
 namespace App\Policies;
 
-use App\Models\Biome;
 use App\Models\User;
 
 class BiomePolicy extends Policy
 {
     /**
      * @param User $oUser
-     * @param Biome $oBiome
-     * @return bool
+     * @param $oObject
+     * @return mixed
      */
-    public function edit(User $oUser, Biome $oBiome)
+    public function view(User $oUser, $oObject)
     {
-        return $oUser->id == $oBiome->landscape->continent->realm->dungeonMaster->id;
+        return parent::view($oUser, $oObject);
     }
 
     /**
      * @param User $oUser
-     * @param Biome $oBiome
      * @return bool
      */
-    public function see(User $oUser, Biome $oBiome)
+    public function edit(User $oUser)
     {
-        if ($oUser->id == $oBiome->landscape->continent->realm->dungeonMaster->id) {
-            return true;
-        }
+        return parent::edit($oUser);
+    }
 
-        return $oBiome->knownByUser($oUser) || $oBiome->isOpenRealm();
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function create(User $oUser)
+    {
+        return parent::create($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function destroy(User $oUser)
+    {
+        return parent::destroy($oUser);
     }
 }

@@ -56,11 +56,12 @@ class Continent extends BaseModel implements IModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @param $oContinent
+     * @return mixed
      */
-    public function landscapes()
+    public static function landscapes($oContinent)
     {
-        return $this->hasMany('App\Models\Landscape', 'parent_id', 'id')->get();
+        return Continent::find($oContinent->id)->hasMany('App\Models\Landscape', 'fk_continent', 'id')->get();
     }
 
     /**

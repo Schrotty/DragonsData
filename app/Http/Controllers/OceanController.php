@@ -18,7 +18,7 @@ class OceanController extends Controller
      */
     public function index()
     {
-        return View::make('ocean.index', ['aObjects' => Ocean::all()]);
+        return View::make('models.ocean.index', ['aObjects' => Ocean::all()]);
     }
 
     /**
@@ -28,7 +28,7 @@ class OceanController extends Controller
      */
     public function create()
     {
-        return View::make('ocean.create', ['sMethod' => 'POST', 'oObject' => new Ocean()]);
+        return View::make('models.ocean.create', ['sMethod' => 'POST', 'oObject' => new Ocean()]);
     }
 
     /**
@@ -54,15 +54,17 @@ class OceanController extends Controller
             return Redirect::to('ocean/create')->withErrors($oValidator)->withInput();
         }
 
+        $aParentInfo = explode('-', $request->input('realm'));
+
         $oOcean = new Ocean();
         $oOcean->name = $request->input('name');
         $oOcean->description = $request->input('description');
         $oOcean->shortDescription = $request->input('short-description');
         $oOcean->url = parent::createURL('realm', $oOcean->name);
-        $oOcean->fk_realm = $request->input('realm');
+        $oOcean->fk_realm = $aParentInfo[1];
         $oOcean->save();
 
-        Continent::where('url', $oOcean->url)->get()->first()->knownBy()->sync($aUser);
+        Ocean::where('url', $oOcean->url)->get()->first()->knownBy()->sync($aUser);
 
         Session::flash('message', trans('ocean.created'));
         return Redirect::to('ocean/' . $oOcean->url);
@@ -76,7 +78,7 @@ class OceanController extends Controller
      */
     public function show($sURL)
     {
-        return View::make('ocean.show', ['oObject' => Ocean::where('url', $sURL)->get()->first()]);
+        return View::make('models.ocean.show', ['oObject' => Ocean::where('url', $sURL)->get()->first()]);
     }
 
     /**
@@ -87,7 +89,7 @@ class OceanController extends Controller
      */
     public function edit($sURL)
     {
-        return View::make('ocean.edit', ['oObject' => Ocean::where('url', $sURL)->get()->first()]);
+        return View::make('models.ocean.edit', ['oObject' => Ocean::where('url', $sURL)->get()->first()]);
     }
 
     /**
@@ -114,11 +116,13 @@ class OceanController extends Controller
             return Redirect::to('ocean/edit')->withErrors($oValidator)->withInput();
         }
 
+        $aParentInfo = explode('-', $request->input('realm'));
+
         $oOcean = Ocean::where('url', $sURL)->get()->first();
         $oOcean->name = $request->input('name');
         $oOcean->description = $request->input('description');
         $oOcean->shortDescription = $request->input('short-description');
-        $oOcean->fk_realm = $request->input('realm');
+        $oOcean->fk_realm = $aParentInfo[1];
         $oOcean->knownBy()->sync($aUser);
 
         $oOcean->save();

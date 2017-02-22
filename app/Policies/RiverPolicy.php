@@ -8,32 +8,44 @@
 
 namespace App\Policies;
 
-use App\Models\River;
 use App\Models\User;
 
 class RiverPolicy extends Policy
 {
     /**
      * @param User $oUser
-     * @param River $oRiver
-     * @return bool
+     * @param $oObject
+     * @return mixed
      */
-    public function edit(User $oUser, River $oRiver)
+    public function view(User $oUser, $oObject)
     {
-        return $oUser->id == $oRiver->landscape->continent->realm->dungeonMaster->id;
+        return parent::view($oUser, $oObject);
     }
 
     /**
      * @param User $oUser
-     * @param River $oRiver
      * @return bool
      */
-    public function see(User $oUser, River $oRiver)
+    public function edit(User $oUser)
     {
-        if ($oUser->id == $oRiver->landscape->continent->realm->dungeonMaster->id) {
-            return true;
-        }
+        return parent::edit($oUser);
+    }
 
-        return $oRiver->knownByUser($oUser) || $oRiver->isOpenRealm();
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function create(User $oUser)
+    {
+        return parent::create($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function destroy(User $oUser)
+    {
+        return parent::destroy($oUser);
     }
 }

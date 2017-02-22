@@ -53,11 +53,12 @@ class Ocean extends BaseModel implements IModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @param $oOcean
+     * @return mixed
      */
-    public function seas()
+    public static function seas($oOcean)
     {
-        return $this->hasMany('App\Models\Sea', 'fk_ocean', 'id')->get();
+        return Ocean::find($oOcean->id)->hasMany('App\Models\Sea', 'fk_ocean', 'id')->get();
     }
 
     /**

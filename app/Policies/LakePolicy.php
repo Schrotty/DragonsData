@@ -8,32 +8,44 @@
 
 namespace App\Policies;
 
-use App\Models\Lake;
 use App\Models\User;
 
 class LakePolicy extends Policy
 {
     /**
      * @param User $oUser
-     * @param Lake $oLake
-     * @return bool
+     * @param $oObject
+     * @return mixed
      */
-    public function edit(User $oUser, Lake $oLake)
+    public function view(User $oUser, $oObject)
     {
-        return $oUser->id == $oLake->landscape->continent->realm->dungeonMaster->id;
+        return parent::view($oUser, $oObject);
     }
 
     /**
      * @param User $oUser
-     * @param Lake $oLake
      * @return bool
      */
-    public function see(User $oUser, Lake $oLake)
+    public function edit(User $oUser)
     {
-        if ($oUser->id == $oLake->landscape->continent->realm->dungeonMaster->id) {
-            return true;
-        }
+        return parent::edit($oUser);
+    }
 
-        return $oLake->knownByUser($oUser) || $oLake->isOpenRealm();
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function create(User $oUser)
+    {
+        return parent::create($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function destroy(User $oUser)
+    {
+        return parent::destroy($oUser);
     }
 }

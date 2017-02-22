@@ -6,7 +6,7 @@
     @if( count($aObjects) != 0 )
         @foreach($aObjects as $oObject)
             <tr>
-                <td><a href="{{ url($sTarget . '/' . $oObject->url) }}">{{ $oObject->name }}</a></td>
+                <td><a href="{{ url($oObject->getModel() . '/' . $oObject->url) }}">{{ $oObject->name }}</a></td>
                 <td>{{ $oObject->shortDescription }}</td>
             </tr>
         @endforeach

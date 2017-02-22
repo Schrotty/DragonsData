@@ -8,7 +8,6 @@
 
 namespace App\Policies;
 
-use App\Models\Mountain;
 use App\Models\User;
 
 /**
@@ -19,25 +18,38 @@ class MountainPolicy extends Policy
 {
     /**
      * @param User $oUser
-     * @param Mountain $oMountain
-     * @return bool
+     * @param $oObject
+     * @return mixed
      */
-    public function edit(User $oUser, Mountain $oMountain)
+    public function view(User $oUser, $oObject)
     {
-        return $oUser->id == $oMountain->landscape->continent->realm->dungeonMaster->id;
+        return parent::view($oUser, $oObject);
     }
 
     /**
      * @param User $oUser
-     * @param Mountain $oMountain
      * @return bool
      */
-    public function see(User $oUser, Mountain $oMountain)
+    public function edit(User $oUser)
     {
-        if ($oUser->id == $oMountain->landscape->continent->realm->dungeonMaster->id) {
-            return true;
-        }
+        return parent::edit($oUser);
+    }
 
-        return $oMountain->knownByUser($oUser) || $oMountain->isOpenRealm();
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function create(User $oUser)
+    {
+        return parent::create($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function destroy(User $oUser)
+    {
+        return parent::destroy($oUser);
     }
 }

@@ -18,7 +18,7 @@ class ContinentController extends Controller
      */
     public function index()
     {
-        return View::make('continent.index', ['aObjects' => Continent::all()]);
+        return View::make('models.continent.index', ['aObjects' => Continent::all()]);
     }
 
     /**
@@ -28,7 +28,7 @@ class ContinentController extends Controller
      */
     public function create()
     {
-        return View::make('continent.create', ['sMethod' => 'POST', 'oObject' => new Continent()]);
+        return View::make('models.continent.create', ['sMethod' => 'POST', 'oObject' => new Continent()]);
     }
 
     /**
@@ -54,12 +54,14 @@ class ContinentController extends Controller
             return Redirect::to('continent/create')->withErrors($oValidator)->withInput();
         }
 
+        $aParentInfo = explode('-', $request->input('realm'));
+
         $oContinent = new Continent();
         $oContinent->name = $request->input('name');
         $oContinent->description = $request->input('description');
         $oContinent->shortDescription = $request->input('short-description');
         $oContinent->url = parent::createURL('realm', $oContinent->name);
-        $oContinent->fk_realm = $request->input('realm');
+        $oContinent->fk_realm = $aParentInfo[1];
         $oContinent->save();
 
         Continent::where('url', $oContinent->url)->get()->first()->knownBy()->sync($aUser);
@@ -76,7 +78,7 @@ class ContinentController extends Controller
      */
     public function show($sURL)
     {
-        return View::make('continent.show', ['oObject' => Continent::where('url', $sURL)->get()->first()]);
+        return View::make('models.continent.show', ['oObject' => Continent::where('url', $sURL)->get()->first()]);
     }
 
     /**
@@ -87,7 +89,7 @@ class ContinentController extends Controller
      */
     public function edit($sURL)
     {
-        return View::make('continent.edit', ['oObject' => Continent::where('url', $sURL)->get()->first()]);
+        return View::make('models.continent.edit', ['oObject' => Continent::where('url', $sURL)->get()->first()]);
     }
 
     /**
@@ -114,11 +116,13 @@ class ContinentController extends Controller
             return Redirect::to('continent/edit')->withErrors($oValidator)->withInput();
         }
 
+        $aParentInfo = explode('-', $request->input('realm'));
+
         $oContinent = Continent::where('url', $sURL)->get()->first();
         $oContinent->name = $request->input('name');
         $oContinent->description = $request->input('description');
         $oContinent->shortDescription = $request->input('short-description');
-        $oContinent->fk_realm = $request->input('realm');
+        $oContinent->fk_realm = $aParentInfo[1];
         $oContinent->knownBy()->sync($aUser);
 
         $oContinent->save();

@@ -34,11 +34,14 @@ class Landscape extends BaseModel implements IModel
     ];
 
     /**
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function parent()
     {
-        return $this->hasOne('App\Models\Continent', 'id', 'fk_continent');
+        $aContinent = $this->hasOne('App\Models\Continent', 'id', 'fk_continent');
+        $aIsland = $this->hasOne('App\Models\Island', 'id', 'fk_island');
+
+        return count($aContinent->get()) >= 1 ? $aContinent : $aIsland;
     }
 
     /**
@@ -117,8 +120,12 @@ class Landscape extends BaseModel implements IModel
         return false;
     }
 
-    public function isDungeonMaster()
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function islandAndContinents()
     {
-
+        App('debugbar')->info(Island::all());
+        return Island::all()->merge(Continent::all());
     }
 }

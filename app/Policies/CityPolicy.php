@@ -8,32 +8,44 @@
 
 namespace App\Policies;
 
-use App\Models\City;
 use App\Models\User;
 
 class CityPolicy extends Policy
 {
     /**
      * @param User $oUser
-     * @param City $oCity
-     * @return bool
+     * @param $oObject
+     * @return mixed
      */
-    public function edit(User $oUser, City $oCity)
+    public function view(User $oUser, $oObject)
     {
-        return $oUser->id == $oCity->landscape->continent->realm->dungeonMaster->id;
+        return parent::view($oUser, $oObject);
     }
 
     /**
      * @param User $oUser
-     * @param City $oCity
      * @return bool
      */
-    public function see(User $oUser, City $oCity)
+    public function edit(User $oUser)
     {
-        if ($oUser->id == $oCity->landscape->continent->realm->dungeonMaster->id) {
-            return true;
-        }
+        return parent::edit($oUser);
+    }
 
-        return $oCity->knownByUser($oUser) || $oCity->isOpenRealm();
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function create(User $oUser)
+    {
+        return parent::create($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function destroy(User $oUser)
+    {
+        return parent::destroy($oUser);
     }
 }

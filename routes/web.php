@@ -22,7 +22,7 @@ Route::get('/{childModel}/create/{parentModel}/{parentUrl}', function($sChildMod
     $sChild = 'App\Models\\' . ucfirst($sChildModel);
     $sParent = 'App\Models\\' . ucfirst($sParentModel);
 
-    return View::make($sChildModel .'.create', [
+    return View::make('models.' . $sChildModel .'.create', [
         'sMethod' => 'POST',
         'oObject' => new $sChild(),
         'oParent' => $sParent::where('url', $sParentURL)->get()->first()

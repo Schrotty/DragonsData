@@ -19,7 +19,7 @@ class RealmController extends Controller
      */
     public function index()
     {
-        return View::make('realm.index', ['aObjects' => Realm::all()]);
+        return View::make('models.realm.index', ['aObjects' => Realm::all()]);
     }
 
     /**
@@ -29,7 +29,7 @@ class RealmController extends Controller
      */
     public function create()
     {
-        return View::make('realm.create', ['sMethod' => 'POST', 'oObject' => new Realm()]);
+        return View::make('models.realm.create', ['sMethod' => 'POST', 'oObject' => new Realm()]);
     }
 
     /**
@@ -55,12 +55,14 @@ class RealmController extends Controller
             return Redirect::to('realm/create')->withErrors($oValidator)->withInput();
         }
 
+        $aParentInfo = explode('-', $request->input('dungeon-master'));
+
         $oRealm = new Realm();
         $oRealm->name = $request->input('name');
         $oRealm->description = $request->input('description');
         $oRealm->shortDescription = $request->input('short-description');
         $oRealm->fk_creator = Auth::user()->id;
-        $oRealm->fk_dungeonMaster = $request->input('dungeon-master');
+        $oRealm->fk_dungeonMaster = $aParentInfo[1];
         $oRealm->url = parent::createURL('realm', $oRealm->name);
         $oRealm->isOpen = $request->input('is-open') == true ? 1 : 0;
         $oRealm->save();
@@ -79,7 +81,7 @@ class RealmController extends Controller
      */
     public function show($sURL)
     {
-        return View::make('realm.show', ['oObject' => Realm::where('url', $sURL)->get()->first()]);
+        return View::make('models.realm.show', ['oObject' => Realm::where('url', $sURL)->get()->first()]);
     }
 
     /**
@@ -90,7 +92,7 @@ class RealmController extends Controller
      */
     public function edit($sURL)
     {
-        return View::make('realm.edit', ['oObject' => Realm::where('url', $sURL)->get()->first()]);
+        return View::make('models.realm.edit', ['oObject' => Realm::where('url', $sURL)->get()->first()]);
     }
 
     /**
@@ -117,12 +119,14 @@ class RealmController extends Controller
             return Redirect::to('realm/edit')->withErrors($oValidator)->withInput();
         }
 
+        $aParentInfo = explode('-', $request->input('dungeon-master'));
+
         $oRealm = Realm::where('url', $sURL)->get()->first();
         $oRealm->name = $request->input('name');
         $oRealm->description = $request->input('description');
         $oRealm->shortDescription = $request->input('short-description');
         $oRealm->fk_creator = Auth::user()->id;
-        $oRealm->fk_dungeonMaster = $request->input('dungeon-master');
+        $oRealm->fk_dungeonMaster = $aParentInfo[1];
         $oRealm->isOpen = $request->input('is-open') == true ? 1 : 0;
         $oRealm->knownBy()->sync($aUser);
 

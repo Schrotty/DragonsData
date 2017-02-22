@@ -51,11 +51,12 @@ class Island extends BaseModel implements IModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @param $oIsland
+     * @return mixed
      */
-    public function landscapes()
+    public static function landscapes($oIsland)
     {
-        return $this->hasMany('App\Models\Landscape', 'parent_id', 'id')->get();
+        return Island::find($oIsland->id)->hasMany('App\Models\Landscape', 'fk_island', 'id')->get();
     }
 
     /**
