@@ -40,6 +40,7 @@ class BiomeController extends Controller
     public function store(Request $request)
     {
         $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+        $aTags = $request->input('tags') == null ? array() : $request->input('tags');
 
         $aRules = array(
             'name' => 'required',
@@ -65,6 +66,7 @@ class BiomeController extends Controller
         $oBiome->save();
 
         Biome::where('url', $oBiome->url)->get()->first()->knownBy()->sync($aUser);
+        Biome::where('url', $oBiome->url)->get()->first()->tags()->sync($aTags);
 
         Session::flash('message', trans('biome.created'));
         return Redirect::to('biome/' . $oBiome->url);
@@ -102,6 +104,7 @@ class BiomeController extends Controller
     public function update(Request $request, $sURL)
     {
         $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+        $aTags = $request->input('tags') == null ? array() : $request->input('tags');
 
         $aRules = array(
             'name' => 'required',
@@ -124,6 +127,7 @@ class BiomeController extends Controller
         $oBiome->shortDescription = $request->input('short-description');
         $oBiome->fk_landscape = $aParentInfo[1];
         $oBiome->knownBy()->sync($aUser);
+        $oBiome->tags()->sync($aTags);
 
         $oBiome->save();
 

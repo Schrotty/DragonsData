@@ -19,3 +19,10 @@
         @include('widget.elements.user_dropdown_multi', ['obj' => new \App\Models\Landscape()])
     </div>
 @endsection
+
+@section('right-block')
+    <div class="realm-player">
+        <div>{{ trans('general.tags') }}</div>
+        @include('widget.elements.tags', ['obj' => $oObject])
+    </div>
+@endsection

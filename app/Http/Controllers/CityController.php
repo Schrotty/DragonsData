@@ -40,6 +40,7 @@ class CityController extends Controller
     public function store(Request $request)
     {
         $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+        $aTags = $request->input('tags') == null ? array() : $request->input('tags');
 
         $aRules = array(
             'name' => 'required',
@@ -65,6 +66,7 @@ class CityController extends Controller
         $oCity->save();
 
         City::where('url', $oCity->url)->get()->first()->knownBy()->sync($aUser);
+        City::where('url', $oCity->url)->get()->first()->tags()->sync($aTags);
 
         Session::flash('message', trans('city.created'));
         return Redirect::to('city/' . $oCity->url);
@@ -102,6 +104,7 @@ class CityController extends Controller
     public function update(Request $request, $sURL)
     {
         $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+        $aTags = $request->input('tags') == null ? array() : $request->input('tags');
 
         $aRules = array(
             'name' => 'required',
@@ -124,6 +127,7 @@ class CityController extends Controller
         $oCity->shortDescription = $request->input('short-description');
         $oCity->fk_landscape = $aParentInfo[1];
         $oCity->knownBy()->sync($aUser);
+        $oCity->tags()->sync($aTags);
 
         $oCity->save();
 

@@ -40,6 +40,7 @@ class LandmarkController extends Controller
     public function store(Request $request)
     {
         $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+        $aTags = $request->input('tags') == null ? array() : $request->input('tags');
 
         $aRules = array(
             'name' => 'required',
@@ -65,6 +66,7 @@ class LandmarkController extends Controller
         $oLandmark->save();
 
         Landmark::where('url', $oLandmark->url)->get()->first()->knownBy()->sync($aUser);
+        Landmark::where('url', $oLandmark->url)->get()->first()->tags()->sync($aTags);
 
         Session::flash('message', trans('landmark.created'));
         return Redirect::to('landmark/' . $oLandmark->url);
@@ -102,6 +104,7 @@ class LandmarkController extends Controller
     public function update(Request $request, $sURL)
     {
         $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
+        $aTags = $request->input('tags') == null ? array() : $request->input('tags');
 
         $aRules = array(
             'name' => 'required',
@@ -124,6 +127,7 @@ class LandmarkController extends Controller
         $oLandmark->shortDescription = $request->input('short-description');
         $oLandmark->fk_landscape = $aParentInfo[1];
         $oLandmark->knownBy()->sync($aUser);
+        $oLandmark->tags()->sync($aTags);
 
         $oLandmark->save();
 

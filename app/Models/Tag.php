@@ -24,6 +24,9 @@ class Tag extends Model
         'name', 'fk_type', 'fk_model'
     ];
 
+    /**
+     * @return mixed
+     */
     public function model()
     {
         return $this->hasOne('App\Models\TagModel', 'id', 'fk_model')->get()->first()->model;

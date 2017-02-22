@@ -8,3 +8,10 @@
         </span>
     </div>
 @endsection
+
+@section('tags')
+    <div class="realm-player">
+        <div>{{ trans('general.tags') }}</div>
+        @include('widget.tags', ['oObject' => $oObject])
+    </div>
+@endsection
