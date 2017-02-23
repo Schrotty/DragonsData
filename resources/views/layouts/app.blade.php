@@ -95,7 +95,9 @@
                     @yield('content')
                 </div>
 
-                @include('sidebar')
+                @if(!Auth::guest())
+                    @include('sidebar')
+                @endif
             </div>
         </div>
     </div>

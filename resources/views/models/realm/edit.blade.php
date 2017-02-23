@@ -20,7 +20,12 @@
     <div class="open-realm">
         <div name="is-open" class="checkbox pull-left">
             <label>
-                <input name="is-open" type="checkbox" value="false">
+                @if($oObject->isOpen)
+                    <input checked name="is-open" type="checkbox" value="true">
+                @else
+                    <input name="is-open" type="checkbox" value="false">
+                @endif
+
                 <span class="cr">
                         <i class="cr-icon glyphicon glyphicon-ok"></i>
                     </span>
