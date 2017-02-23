@@ -140,6 +140,8 @@ class IslandController extends Controller
     public function destroy($sURL)
     {
         Island::where('url', $sURL)->get()->first()->delete();
+
+        Session::flash('message', trans('island.deleted'));
         return Redirect::to('/');
     }
 }

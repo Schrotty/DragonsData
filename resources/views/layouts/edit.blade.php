@@ -64,13 +64,13 @@
         <div class="panel-footer">
             <div class="row">
                 <div class="col-md-2">
-                    <button class="btn btn-primary" type="submit">{{ trans('general.save') }}</button>
+                    <button class="btn btn-primary" type="submit">{{ trans($oObject->getModel() . '.save') }}</button>
                 </div>
 
                 <div class="col-md-2">
                     {{ Form::open(array('url' => $oObject->getModel() . '/' . $oObject->url)) }}
                     {{ Form::hidden('_method', 'DELETE') }}
-                    {{ Form::submit('Delete Realm', array('class' => 'btn btn-danger')) }}
+                    {{ Form::submit(trans($oObject->getModel() . '.delete'), array('class' => 'btn btn-danger')) }}
                     {{ Form::close() }}
                 </div>
             </div>

@@ -2,7 +2,7 @@
 
 @section('left-block')
     <div class="realm-gamemaster">
-        <div>{{ trans('general.island_continent') }}</div>
+        <div>{{ trans('landscape.island_continent') }}</div>
         <span>
                 @if(isset($oParent))
                 @include('widget.dropdown', ['sName'  => 'parent', 'oParent' => $oParent, 'aObjects' => [\App\Models\Island::all(), \App\Models\Continent::all()]])

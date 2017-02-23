@@ -69,7 +69,7 @@ class RealmController extends Controller
 
         Realm::where('url', $oRealm->url)->get()->first()->knownBy()->sync($aUser);
 
-        Session::flash('message', trans('realm.created_realm'));
+        Session::flash('message', trans('realm.created'));
         return Redirect::to('realm/' . $oRealm->url);
     }
 
@@ -132,7 +132,7 @@ class RealmController extends Controller
 
         $oRealm->save();
 
-        Session::flash('message', trans('realm.realm_updated'));
+        Session::flash('message', trans('realm.updated'));
         return Redirect::to('realm/' . $oRealm->url);
     }
 
@@ -145,6 +145,8 @@ class RealmController extends Controller
     public function destroy($sURL)
     {
         Realm::where('url', $sURL)->get()->first()->delete();
+
+        Session::flash('message', trans('realm.deleted'));
         return Redirect::to('/');
     }
 }

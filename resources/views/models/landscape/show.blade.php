@@ -2,7 +2,7 @@
 
 @section('parent')
     <div class="object-parent">
-        <div>{{ trans('general.island_continent') }}</div>
+        <div>{{ trans('landscape.island_continent') }}</div>
         <span>
             {{ App('debugbar')->info($oObject) }}
             <a href="{{ url($oObject->parent->getModel() . '/' . $oObject->parent->url) }}">{{ $oObject->parent->name }}</a>

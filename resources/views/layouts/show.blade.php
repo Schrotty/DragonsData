@@ -7,7 +7,7 @@
             @can('edit', $oObject)
                 <div class="pull-right">
                     <a href="{{ url($oObject->getModel() . '/' . $oObject->url . '/edit/') }}">
-                        {{ trans('general.edit', ['model' => $oObject->getModel()]) }}
+                        {{ trans( $oObject->getModel() . '.edit', ['model' => $oObject->getModel()]) }}
                     </a>
                 </div>
             @endcan

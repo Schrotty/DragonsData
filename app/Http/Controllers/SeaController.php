@@ -140,6 +140,8 @@ class SeaController extends Controller
     public function destroy($sURL)
     {
         Sea::where('url', $sURL)->get()->first()->delete();
+
+        Session::flash('message', trans('sea.deleted'));
         return Redirect::to('/');
     }
 }

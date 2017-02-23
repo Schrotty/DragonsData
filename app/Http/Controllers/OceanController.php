@@ -140,6 +140,8 @@ class OceanController extends Controller
     public function destroy($sURL)
     {
         Ocean::where('url', $sURL)->get()->first()->delete();
+
+        Session::flash('message', trans('ocean.deleted'));
         return Redirect::to('/');
     }
 }

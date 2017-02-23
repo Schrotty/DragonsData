@@ -66,7 +66,7 @@ class ContinentController extends Controller
 
         Continent::where('url', $oContinent->url)->get()->first()->knownBy()->sync($aUser);
 
-        Session::flash('message', trans('continent.created_continent'));
+        Session::flash('message', trans('continent.created'));
         return Redirect::to('continent/' . $oContinent->url);
     }
 
@@ -127,7 +127,7 @@ class ContinentController extends Controller
 
         $oContinent->save();
 
-        Session::flash('message', trans('continent.updated_continent'));
+        Session::flash('message', trans('continent.updated'));
         return Redirect::to('continent/' . $oContinent->url);
     }
 
@@ -140,6 +140,8 @@ class ContinentController extends Controller
     public function destroy($sURL)
     {
         Continent::where('url', $sURL)->get()->first()->delete();
+
+        Session::flash('message', trans('continent.deleted'));
         return Redirect::to('/');
     }
 }

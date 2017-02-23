@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <span>{{trans('general.island_continent')}}</span>
+                        <span>{{trans('landscape.island_continent')}}</span>
                     </div>
 
                     <div class="panel-body">
