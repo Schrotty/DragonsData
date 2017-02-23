@@ -12,11 +12,11 @@
 @section('child-elements')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ trans('sea.assigned_seas') }}</span>
+            <span>{{ trans('sea.assigned') }}</span>
             @can('create', new \App\Models\Sea())
                 <div class="pull-right">
                     <a href="{{ url('sea/create/ocean/' . $oObject->url) }}">
-                        {{ trans('sea.add_sea') }}
+                        {{ trans('sea.add') }}
                     </a>
                 </div>
             @endcan

@@ -2,7 +2,7 @@
 
 @section('left-block')
     <div class="realm-gamemaster">
-        <div>{{ trans('sea.sea') }}</div>
+        <div>{{ trans('ocean.ocean') }}</div>
         <span>
                 @if(isset($oParent))
                 @include('widget.dropdown', ['sName'  => 'ocean', 'oParent' => $oParent, 'aObjects' => [\App\Models\Ocean::all()]])

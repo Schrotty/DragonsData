@@ -2,7 +2,7 @@
 
 @section('left-block')
     <div class="realm-gamemaster">
-        <div>{{ trans('realm.dungeon_master') }}</div>
+        <div>{{ trans('landscape.landscape') }}</div>
         <span>
             @include('widget.dropdown', ['sName' => 'landscape', 'aObjects' => [\App\Models\Landscape::all()]])
         </span>

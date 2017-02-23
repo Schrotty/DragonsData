@@ -25,7 +25,7 @@
                         <i class="cr-icon glyphicon glyphicon-ok"></i>
                     </span>
 
-                    {{ trans('realm.is_open_realm') }}
+                    {{ trans('realm.is_open') }}
                 </label>
             </div>
         </div>

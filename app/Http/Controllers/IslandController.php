@@ -18,7 +18,7 @@ class IslandController extends Controller
      */
     public function index()
     {
-        return View::make('island.index', ['aObjects' => Island::all()]);
+        return View::make('models.island.index', ['aObjects' => Island::all()]);
     }
 
     /**
@@ -28,7 +28,7 @@ class IslandController extends Controller
      */
     public function create()
     {
-        return View::make('island.create', ['sMethod' => 'POST', 'oObject' => new Island()]);
+        return View::make('models.island.create', ['sMethod' => 'POST', 'oObject' => new Island()]);
     }
 
     /**
@@ -78,7 +78,7 @@ class IslandController extends Controller
      */
     public function show($sURL)
     {
-        return View::make('island.show', ['oObject' => Island::where('url', $sURL)->get()->first()]);
+        return View::make('models.island.show', ['oObject' => Island::where('url', $sURL)->get()->first()]);
     }
 
     /**
@@ -89,7 +89,7 @@ class IslandController extends Controller
      */
     public function edit($sURL)
     {
-        return View::make('island.edit', ['oObject' => Island::where('url', $sURL)->get()->first()]);
+        return View::make('models.island.edit', ['oObject' => Island::where('url', $sURL)->get()->first()]);
     }
 
     /**

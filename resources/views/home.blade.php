@@ -3,12 +3,12 @@
 @section('content')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{trans('realm.realms')}}</span>
+            <span>{{trans('realm.realm')}}</span>
 
             @if(Auth::user()->rank()->is_root)
                 <div class="pull-right">
                     <a href="{{ url('realm/create') }}">
-                        {{ trans('realm.create_realm') }}
+                        {{ trans('realm.create') }}
                     </a>
                 </div>
             @endif

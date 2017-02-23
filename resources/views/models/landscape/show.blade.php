@@ -2,7 +2,7 @@
 
 @section('parent')
     <div class="object-parent">
-        <div>{{ trans('general.parent') }}</div>
+        <div>{{ trans('general.island_continent') }}</div>
         <span>
             {{ App('debugbar')->info($oObject) }}
             <a href="{{ url($oObject->parent->getModel() . '/' . $oObject->parent->url) }}">{{ $oObject->parent->name }}</a>
@@ -13,11 +13,11 @@
 @section('child-elements')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ trans('city.assigned_cities') }}</span>
+            <span>{{ trans('city.assigned') }}</span>
             @can('create', new \App\Models\City())
                 <div class="pull-right">
                     <a href="{{ url('city/create/landscape/' . $oObject->url) }}">
-                        {{ trans('city.add_city') }}
+                        {{ trans('city.add') }}
                     </a>
                 </div>
             @endcan
@@ -30,11 +30,11 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ trans('river.assigned_rivers') }}</span>
+            <span>{{ trans('river.assigned') }}</span>
             @can('create', new \App\Models\River())
                 <div class="pull-right">
                     <a href="{{ url('river/create/landscape/' . $oObject->url) }}">
-                        {{ trans('river.add_river') }}
+                        {{ trans('river.add') }}
                     </a>
                 </div>
             @endcan
@@ -47,11 +47,11 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ trans('lake.assigned_lakes') }}</span>
+            <span>{{ trans('lake.assigned') }}</span>
             @can('create', new \App\Models\Lake())
                 <div class="pull-right">
                     <a href="{{ url('lake/create/landscape/' . $oObject->url) }}">
-                        {{ trans('lake.add_lake') }}
+                        {{ trans('lake.add') }}
                     </a>
                 </div>
             @endcan
@@ -64,11 +64,11 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ trans('biome.assigned_biomes') }}</span>
+            <span>{{ trans('biome.assigned') }}</span>
             @can('create', new \App\Models\Biome())
                 <div class="pull-right">
                     <a href="{{ url('biome/create/landscape/' . $oObject->url) }}">
-                        {{ trans('biome.add_biome') }}
+                        {{ trans('biome.add') }}
                     </a>
                 </div>
             @endcan
@@ -81,11 +81,11 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ trans('landmark.assigned_landmarks') }}</span>
+            <span>{{ trans('landmark.assigned') }}</span>
             @can('create', new \App\Models\Landmark())
                 <div class="pull-right">
                     <a href="{{ url('landmark/create/landscape/' . $oObject->url) }}">
-                        {{ trans('landmark.add_landmark') }}
+                        {{ trans('landmark.add') }}
                     </a>
                 </div>
             @endcan
@@ -98,11 +98,11 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ trans('mountain.assigned_mountains') }}</span>
+            <span>{{ trans('mountain.assigned') }}</span>
             @can('create', new \App\Models\Mountain())
                 <div class="pull-right">
                     <a href="{{ url('mountain/create/landscape/' . $oObject->url) }}">
-                        {{ trans('mountain.add_mountain') }}
+                        {{ trans('mountain.add') }}
                     </a>
                 </div>
             @endcan

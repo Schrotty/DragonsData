@@ -2,7 +2,7 @@
 
 @section('left-block')
     <div class="realm-gamemaster">
-        <div>{{ trans('realm.dungeon_master') }}</div>
+        <div>{{ trans('general.island_continent') }}</div>
         <span>
             @include('widget.dropdown', ['sName' => 'parent', 'aObjects' => [\App\Models\Island::all(), \App\Models\Continent::all()]])
         </span>

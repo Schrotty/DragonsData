@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <span>{{trans('realm.realms')}}</span>
+                        <span>{{trans('ocean.ocean')}}</span>
                     </div>
 
                     <div class="panel-body">

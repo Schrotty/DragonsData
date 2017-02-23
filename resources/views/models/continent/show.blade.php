@@ -12,11 +12,11 @@
 @section('child-elements')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ trans('realm.assigned_landscapes') }}</span>
+            <span>{{ trans('landscape.assigned') }}</span>
             @can('create', new \App\Models\Landscape())
                 <div class="pull-right">
                     <a href="{{ url('landscape/create/continent/' . $oObject->url) }}">
-                        {{ trans('realm.add_landscape') }}
+                        {{ trans('landscape.add') }}
                     </a>
                 </div>
             @endcan

@@ -12,11 +12,11 @@
 @section('child-elements')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ trans('realm.assigned_continents') }}</span>
+            <span>{{ trans('continent.assigned') }}</span>
             @can('create', new \App\Models\Continent())
                 <div class="pull-right">
                     <a href="{{ url('continent/create/realm/' . $oObject->url) }}">
-                        {{ trans('realm.add_continent') }}
+                        {{ trans('continent.add') }}
                     </a>
                 </div>
             @endcan
@@ -29,11 +29,11 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ trans('realm.assigned_oceans') }}</span>
+            <span>{{ trans('ocean.assigned') }}</span>
             @can('create', new \App\Models\Ocean())
                 <div class="pull-right">
                     <a href="{{ url('ocean/create/realm/' . $oObject->url) }}">
-                        {{ trans('realm.add_ocean') }}
+                        {{ trans('ocean.add') }}
                     </a>
                 </div>
             @endcan
