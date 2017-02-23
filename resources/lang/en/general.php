@@ -12,5 +12,8 @@ return [
     'description-short' => 'Description',
     'known_by' => 'Known by',
     'tags' => 'Tags',
-    'abort' => 'Abort'
+    'abort' => 'Abort',
+    'username' => 'Username',
+    'mail' => 'E-Mail',
+    'edit' => 'Edit'
 ];

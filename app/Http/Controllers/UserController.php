@@ -46,7 +46,7 @@ class UserController extends Controller
      */
     public function show($sURL)
     {
-        return view('user', ['oObject' => User::where('url', $sURL)->get()->first()]);
+        return view('models.user.show', ['oObject' => User::where('url', $sURL)->get()->first()]);
     }
 
     /**

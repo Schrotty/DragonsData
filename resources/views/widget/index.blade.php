@@ -1,7 +1,7 @@
 <table class="index-table">
     <tr>
         <th>{{ trans('general.name') }}</th>
-        <th>{{ trans('general.dungeon_master') }}</th>
+        <th>{{ trans('realm.dungeon_master') }}</th>
         <th>{{ trans('general.edit') }}</th>
     </tr>
 
@@ -10,7 +10,9 @@
             <tr>
                 <td><a href="{{ url($sModel . '/' . $oObject->url) }}">{{ $oObject->name }}</a></td>
                 <td>{{ $oObject->dungeonMaster->name }}</td>
-                <td><a href="{{ action(ucfirst($sModel) . 'Controller@edit', $oObject->url) }}">{{ trans('general.edit') }}</a></td>
+                <td>
+                    <a href="{{ action(ucfirst($sModel) . 'Controller@edit', $oObject->url) }}">{{ trans( $oObject->getModel() . '.edit') }}</a>
+                </td>
             </tr>
         @endforeach
     @else
