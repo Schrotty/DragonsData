@@ -7,7 +7,7 @@ php:
 
 before_script:
   - composer self-update
-  - composer install --no-interaction
+  - composer install --prefer-source --no-interaction --dev
 
 script:
 - tests/phpunit
