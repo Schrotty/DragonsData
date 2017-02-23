@@ -11,4 +11,4 @@ before_script:
   - composer install --prefer-source --no-interaction --dev
 
 script:
-  - phpunit --bootstrap tests/ --debug --coverage-text tests
+  - vendor/bin/phpunit
