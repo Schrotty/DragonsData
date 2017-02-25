@@ -40,6 +40,15 @@ class Continent extends BaseModel implements IModel
     ];
 
     /**
+     * @param $oContinent
+     * @return mixed
+     */
+    public static function landscapes($oContinent)
+    {
+        return Continent::find($oContinent->id)->hasMany('App\Models\Landscape', 'fk_continent', 'id')->get();
+    }
+
+    /**
      * @return mixed
      */
     public function parent()
@@ -53,15 +62,6 @@ class Continent extends BaseModel implements IModel
     public function realm()
     {
         return $this->hasOne('App\Models\Realm', 'id', 'fk_realm');
-    }
-
-    /**
-     * @param $oContinent
-     * @return mixed
-     */
-    public static function landscapes($oContinent)
-    {
-        return Continent::find($oContinent->id)->hasMany('App\Models\Landscape', 'fk_continent', 'id')->get();
     }
 
     /**
@@ -96,5 +96,13 @@ class Continent extends BaseModel implements IModel
     public function knownByUser($oUser)
     {
         return parent::knownByUser($oUser) || $this->realm->dungeonMaster->id == $oUser->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function inOpenRealm()
+    {
+        return $this->realm->isOpen;
     }
 }

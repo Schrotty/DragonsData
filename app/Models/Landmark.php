@@ -78,4 +78,12 @@ class Landmark extends BaseModel implements IModel
     {
         return $this->landscape->continent->realm->isOpen;
     }
+
+    /**
+     * @return mixed
+     */
+    public function inOpenRealm()
+    {
+        return $this->landscape->parent->realm->isOpen;
+    }
 }

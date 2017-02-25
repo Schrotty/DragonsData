@@ -37,6 +37,15 @@ class Ocean extends BaseModel implements IModel
     ];
 
     /**
+     * @param $oOcean
+     * @return mixed
+     */
+    public static function seas($oOcean)
+    {
+        return Ocean::find($oOcean->id)->hasMany('App\Models\Sea', 'fk_ocean', 'id')->get();
+    }
+
+    /**
      * @return mixed
      */
     public function parent()
@@ -50,15 +59,6 @@ class Ocean extends BaseModel implements IModel
     public function realm()
     {
         return $this->hasOne('App\Models\Realm', 'id', 'fk_realm');
-    }
-
-    /**
-     * @param $oOcean
-     * @return mixed
-     */
-    public static function seas($oOcean)
-    {
-        return Ocean::find($oOcean->id)->hasMany('App\Models\Sea', 'fk_ocean', 'id')->get();
     }
 
     /**
@@ -81,7 +81,7 @@ class Ocean extends BaseModel implements IModel
     /**
      * @return mixed
      */
-    public function isOpenRealm()
+    public function inOpenRealm()
     {
         return $this->realm->isOpen;
     }

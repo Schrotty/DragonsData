@@ -34,6 +34,15 @@ class Landscape extends BaseModel implements IModel
     ];
 
     /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function islandAndContinents()
+    {
+        App('debugbar')->info(Island::all());
+        return Island::all()->merge(Continent::all());
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function parent()
@@ -114,18 +123,8 @@ class Landscape extends BaseModel implements IModel
     /**
      * @return mixed
      */
-    public function isOpenRealm()
+    public function inOpenRealm()
     {
-        //return $this->continent->realm->isOpen;
-        return false;
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public static function islandAndContinents()
-    {
-        App('debugbar')->info(Island::all());
-        return Island::all()->merge(Continent::all());
+        return $this->parent->realm->isOpen;
     }
 }

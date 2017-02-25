@@ -35,6 +35,15 @@ class Island extends BaseModel implements IModel
     ];
 
     /**
+     * @param $oIsland
+     * @return mixed
+     */
+    public static function landscapes($oIsland)
+    {
+        return Island::find($oIsland->id)->hasMany('App\Models\Landscape', 'fk_island', 'id')->get();
+    }
+
+    /**
      * @return mixed
      */
     public function parent()
@@ -48,15 +57,6 @@ class Island extends BaseModel implements IModel
     public function sea()
     {
         return $this->hasOne('App\Models\Sea', 'id', 'fk_sea');
-    }
-
-    /**
-     * @param $oIsland
-     * @return mixed
-     */
-    public static function landscapes($oIsland)
-    {
-        return Island::find($oIsland->id)->hasMany('App\Models\Landscape', 'fk_island', 'id')->get();
     }
 
     /**
@@ -87,8 +87,8 @@ class Island extends BaseModel implements IModel
     /**
      * @return mixed
      */
-    public function realm()
+    public function inOpenRealm()
     {
-        return $this->sea->ocean->realm();
+        return $this->sea->ocean->realm->isOpen;
     }
 }

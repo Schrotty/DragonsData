@@ -28,7 +28,7 @@ class Policy
      */
     public function view(User $oUser, $oObject)
     {
-        return $oObject->knownByUser($oUser);
+        return $oObject->knownByUser($oUser) || $oObject->inOpenRealm();
     }
 
     /**

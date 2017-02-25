@@ -39,6 +39,24 @@ class Realm extends BaseModel
     ];
 
     /**
+     * @param $oRealm
+     * @return mixed
+     */
+    public static function continents($oRealm)
+    {
+        return Realm::find($oRealm->id)->hasMany('App\Models\Continent', 'fk_realm', 'id')->get();
+    }
+
+    /**
+     * @param $oRealm
+     * @return mixed
+     */
+    public static function oceans($oRealm)
+    {
+        return Realm::find($oRealm->id)->hasMany('App\Models\Ocean', 'fk_realm', 'id')->get();
+    }
+
+    /**
      * @return mixed
      */
     public function parent()
@@ -79,24 +97,6 @@ class Realm extends BaseModel
     }
 
     /**
-     * @param $oRealm
-     * @return mixed
-     */
-    public static function continents($oRealm)
-    {
-        return Realm::find($oRealm->id)->hasMany('App\Models\Continent', 'fk_realm', 'id')->get();
-    }
-
-    /**
-     * @param $oRealm
-     * @return mixed
-     */
-    public static function oceans($oRealm)
-    {
-        return Realm::find($oRealm->id)->hasMany('App\Models\Ocean', 'fk_realm', 'id')->get();
-    }
-
-    /**
      * @param User $oUser
      * @return bool
      */
@@ -112,5 +112,13 @@ class Realm extends BaseModel
     public function knownByUser($oUser)
     {
         return parent::knownByUser($oUser) || $this->dungeonMaster->id == $oUser->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function inOpenRealm()
+    {
+        return $this->isOpen;
     }
 }

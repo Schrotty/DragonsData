@@ -3,7 +3,9 @@
         <th>{{ trans('general.name') }}</th>
         <th>{{ trans('general.description') }}</th>
     </tr>
-    @if( count($realms) != 0 )
+
+    {{ App('debugbar')->info(count($realms)) }}
+    @if(count($realms) >= 1)
         @foreach($realms as $realm)
             @if(!$openRealmMode && $realm->isOpen)
                 @continue

@@ -15,5 +15,6 @@ return [
     'abort' => 'Abort',
     'username' => 'Username',
     'mail' => 'E-Mail',
-    'edit' => 'Edit'
+    'edit' => 'Edit',
+    'login' => 'Login'
 ];

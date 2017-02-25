@@ -78,8 +78,8 @@ class Biome extends BaseModel implements IModel
     /**
      * @return mixed
      */
-    public function isOpenRealm()
+    public function inOpenRealm()
     {
-        return $this->landscape->continent->realm->isOpen;
+        return $this->landscape->parent->realm->isOpen;
     }
 }
