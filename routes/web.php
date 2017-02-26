@@ -35,6 +35,7 @@ Route::resource('realm', 'RealmController');
 
 /* second level resource */
 Route::resource('continent', 'ContinentController');
+Route::resource('empire', 'EmpireController');
 Route::resource('ocean', 'OceanController');
 Route::resource('island', 'IslandController');
 

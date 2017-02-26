@@ -12,7 +12,13 @@
 @section('child-elements')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ trans('island.assigned') }}</span>
+            <span class="panel-title">
+                <a data-toggle="collapse" href="#island">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+                    <span>{{ trans('island.assigned') }}</span>
+                </a>
+            </span>
+
             @can('create', new \App\Models\Island())
                 <div class="pull-right">
                     <a href="{{ url('island/create/sea/' . $oObject->url) }}">
@@ -22,7 +28,7 @@
             @endcan
         </div>
 
-        <div class="panel-body">
+        <div id="island" class="panel-body collapse">
             @include('widget.defaultList', ['aObjects' => \App\Models\Sea::islands($oObject), 'sTarget' => 'island'])
         </div>
     </div>

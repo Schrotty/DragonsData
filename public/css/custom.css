@@ -1,11 +1,47 @@
+.container {
+    width: 65%;
+}
+
+.navbar {
+    background-color: #24292e;
+}
+
+.navbar-default .navbar-brand {
+    color: #ecf0f1;
+}
+
+.panel, .panel-heading, .panel-body, .panel-footer,
+.input-group, .input-group-btn, .input-group-addon,
+.btn, .alert {
+    border-radius: 0;
+}
+
+.panel-body h2 {
+    margin-top: 0;
+}
+
+.sidebar-menu {
+    padding: 0;
+}
+
+.sidebar-menu .list-group-item {
+    border: 0;
+}
+
+.sidebar-menu .list-group {
+    margin-bottom: 0;
+}
+
+/* Firefox displays the input a bit to small*/
+.form-control {
+    height: 36.4px;
+}
+
 .default-avatar {
     background-color: #1f648b;
     width: 80px;
     height: 80px;
-    border-radius: 3px;
-    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
-    -moz-box-shadow: 0 1px 1px rgba(0,0,0,.05);
-    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    border: 1px solid #d3e0e9;
 }
 
 .big-avatar {
@@ -77,15 +113,10 @@
     position: relative;
     display: inline-block;
     border: 1px solid #a9a9a9;
-    border-radius: .25em;
     width: 1.3em;
     height: 1.3em;
     float: left;
     margin-right: .5em;
-}
-
-.radio .cr {
-    border-radius: 50%;
 }
 
 .checkbox .cr .cr-icon,
