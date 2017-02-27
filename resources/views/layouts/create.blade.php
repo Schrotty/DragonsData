@@ -61,7 +61,7 @@
             </div>
 
             <div class="panel-footer">
-                <button class="btn btn-default" type="submit">{{ trans('general.save') }}</button>
+                <button class="btn btn-primary" type="submit">{{ trans('general.create') }}</button>
             </div>
         </div>
     {{ Form::close() }}

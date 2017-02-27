@@ -16,5 +16,9 @@ return [
     'username' => 'Username',
     'mail' => 'E-Mail',
     'edit' => 'Edit',
-    'login' => 'Login'
+    'login' => 'Login',
+    'delete' => 'Delete',
+    'save' => 'Save',
+    'create' => 'Create',
+    'realm_type' => 'Realm Type'
 ];

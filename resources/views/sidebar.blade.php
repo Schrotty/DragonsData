@@ -38,20 +38,24 @@
 </div>
 
 <div class="panel panel-default side-panel">
-    <div class="panel-heading">Search</div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for..." aria-describedby="basic-addon2">
+    <form id="search" class="form-horizontal" role="form" method="post" action="{{ url('/search') }}">
+        {{ csrf_field() }}
+        <div class="panel-heading">Search</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="input-group">
+                        <input name="keyword" type="text" class="form-control" placeholder="Search for..."
+                               aria-describedby="basic-addon2">
 
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Search</button>
-                    </span>
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default">Search</button>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 
 @can('isDungeonMaster', Auth::user())

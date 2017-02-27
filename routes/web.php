@@ -29,6 +29,8 @@ Route::get('/{childModel}/create/{parentModel}/{parentUrl}', function($sChildMod
     ]);
 });
 
+Route::post('search', 'SearchController@search');
+
 /* first level resources */
 Route::resource('user', 'UserController');
 Route::resource('realm', 'RealmController');

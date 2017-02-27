@@ -170,6 +170,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Cviebrock\LaravelElasticsearch\ServiceProvider::class,
 
         //
 
@@ -232,7 +233,8 @@ return [
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Form' => Collective\Html\FormFacade::class,
-        'HTML' => Collective\Html\HtmlFacade::class
+        'HTML' => Collective\Html\HtmlFacade::class,
+        'Elasticsearch' => Cviebrock\LaravelElasticsearch\Facade::class,
     ],
 
 ];

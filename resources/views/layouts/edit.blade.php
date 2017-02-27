@@ -1,7 +1,7 @@
 @extends('layouts.restricted_create')
 
 @section('restricted')
-    {{ Form::model($oObject, array('route' => array($oObject->getModel() . '.update', $oObject->url), 'method' => 'PUT')) }}
+    {{ Form::model($oObject, array('route' => array($oObject->getModel() . '.update', $oObject->url), 'method' => 'PUT', 'id' => 'update-form')) }}
     @if(count($errors) > 0)
         <div class="alert alert-danger" role="alert">
             <span class="sr-only">Error:</span>
@@ -59,21 +59,44 @@
                 </div>
             </div>
         </div>
-        {{ Form::close() }}
 
         <div class="panel-footer">
-            <div class="row">
-                <div class="col-md-2">
-                    <button class="btn btn-primary" type="submit">{{ trans($oObject->getModel() . '.save') }}</button>
+            <button class="btn btn-primary" type="submit">
+                {{ trans($oObject->getModel() . '.save') }}
+            </button>
+
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal">
+                {{ trans($oObject->getModel() . '.delete') }}
+            </button>
+        </div>
+    </div>
+    {{ Form::close() }}
+
+    <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog">
+        {{ Form::open(array('id' => 'delete-form', 'url' => $oObject->getModel() . '/' . $oObject->url)) }}
+        {{ Form::hidden('_method', 'DELETE') }}
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Delete Object?</h4>
                 </div>
 
-                <div class="col-md-2">
-                    {{ Form::open(array('url' => $oObject->getModel() . '/' . $oObject->url)) }}
-                    {{ Form::hidden('_method', 'DELETE') }}
-                    {{ Form::submit(trans($oObject->getModel() . '.delete'), array('class' => 'btn btn-danger')) }}
-                    {{ Form::close() }}
+                <div class="modal-body">
+                    Do you want to delete?!
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">{{ trans('general.abort') }}</button>
+
+
+                    {{ Form::submit(trans('general.delete'), array('class' => 'btn btn-danger')) }}
                 </div>
             </div>
         </div>
+        {{ Form::close() }}
     </div>
 @endsection

@@ -2,7 +2,7 @@
 
 return [
 
-    'city' => 'City',
+    'name' => 'City',
     'create' => 'Create city',
     'edit' => 'Edit city',
     'delete' => 'Delete city',

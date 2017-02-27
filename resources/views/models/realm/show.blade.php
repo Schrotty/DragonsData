@@ -75,7 +75,7 @@
         </div>
 
         <div id="empire" class="panel-body collapse">
-            @include('widget.defaultList', ['aObjects' => \App\Models\Empire::all(), 'sTarget' => 'empire'])
+            @include('widget.defaultList', ['aObjects' => \App\Models\Realm::empires($oObject)])
         </div>
     </div>
 @endsection

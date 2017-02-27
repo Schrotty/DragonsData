@@ -2,7 +2,7 @@
 
 return [
 
-    'landmark' => 'Landmark',
+    'name' => 'Landmark',
     'create' => 'Create landmark',
     'edit' => 'Edit landmark',
     'delete' => 'Delete landmark',

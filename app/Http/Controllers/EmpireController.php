@@ -56,7 +56,7 @@ class EmpireController extends Controller
 
         $aParentInfo = explode('-', $request->input('realm'));
 
-        $oEmpire = new Continent();
+        $oEmpire = new Empire();
         $oEmpire->name = $request->input('name');
         $oEmpire->description = $request->input('description');
         $oEmpire->shortDescription = $request->input('short-description');

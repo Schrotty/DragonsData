@@ -38,7 +38,6 @@ class Landscape extends BaseModel implements IModel
      */
     public static function islandAndContinents()
     {
-        App('debugbar')->info(Island::all());
         return Island::all()->merge(Continent::all());
     }
 

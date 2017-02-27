@@ -2,7 +2,7 @@
 
 return [
 
-    'realm' => 'Realm',
+    'name' => 'Realm',
     'create' => 'Create realm',
     'edit' => 'Edit realm',
     'delete' => 'Delete realm',

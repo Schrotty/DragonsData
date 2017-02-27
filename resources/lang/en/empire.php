@@ -2,7 +2,7 @@
 
 return [
 
-    'empire' => 'Empire',
+    'name' => 'Empire',
     'create' => 'Create empire',
     'edit' => 'Edit empire',
     'delete' => 'Delete empire',

@@ -2,7 +2,7 @@
     <tr>
         <th>{{ trans('general.name') }}</th>
         <th>{{ trans('general.description') }}</th>
-        <th>{{ trans('general.open_realm') }}</th>
+        <th>{{ trans('general.realm_type') }}</th>
     </tr>
 
     @if(count($realms) >= 1)

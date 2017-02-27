@@ -2,7 +2,7 @@
 
 return [
 
-    'island' => 'Island',
+    'name' => 'Island',
     'create' => 'Create island',
     'edit' => 'Edit island',
     'delete' => 'Delete island',

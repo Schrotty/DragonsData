@@ -3,11 +3,11 @@
 @section('content')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{trans('realm.realm')}}</span>
+            <span>{{trans('general.search')}}</span>
         </div>
 
         <div class="panel-body">
-            @include('widget.index', ['sModel' => 'realm'])
+            @include('widget.index')
         </div>
     </div>
 @endsection

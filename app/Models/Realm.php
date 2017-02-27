@@ -57,6 +57,15 @@ class Realm extends BaseModel
     }
 
     /**
+     * @param $oRealm
+     * @return mixed
+     */
+    public static function empires($oRealm)
+    {
+        return Realm::find($oRealm->id)->hasMany('App\Models\Empire', 'fk_realm', 'id')->get();
+    }
+
+    /**
      * @return mixed
      */
     public function parent()

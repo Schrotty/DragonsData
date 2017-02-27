@@ -2,7 +2,7 @@
 
 return [
 
-    'sea' => 'Sea',
+    'name' => 'Sea',
     'create' => 'Create sea',
     'edit' => 'Edit sea',
     'delete' => 'Delete sea',

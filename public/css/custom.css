@@ -10,9 +10,15 @@
     color: #ecf0f1;
 }
 
+.navbar-brand:hover {
+    color: #ecf0f1;
+}
+
 .panel, .panel-heading, .panel-body, .panel-footer,
 .input-group, .input-group-btn, .input-group-addon,
-.btn, .alert {
+.btn, .alert, .dropdown-menu, .form-control,
+.modal-dialog, .modal-body, .modal-header,
+.modal-footer, .modal, .modal-content {
     border-radius: 0;
 }
 

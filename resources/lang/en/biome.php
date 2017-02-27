@@ -2,7 +2,7 @@
 
 return [
 
-    'biome' => 'Biome',
+    'name' => 'Biome',
     'create' => 'Create biome',
     'edit' => 'Edit biome',
     'delete' => 'Delete biome',
