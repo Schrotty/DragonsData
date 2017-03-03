@@ -38,9 +38,9 @@
 </div>
 
 <div class="panel panel-default side-panel">
+    <div class="panel-heading">Search</div>
     <form id="search" class="form-horizontal" role="form" method="post" action="{{ url('/search') }}">
         {{ csrf_field() }}
-        <div class="panel-heading">Search</div>
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
