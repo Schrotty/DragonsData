@@ -70,6 +70,8 @@ class RealmController extends Controller
         Realm::where('url', $oRealm->url)->get()->first()->knownBy()->sync($aUser);
 
         Session::flash('message', trans('realm.created'));
+
+        //event(new ObjectCreated($oRealm));
         return Redirect::to('realm/' . $oRealm->url);
     }
 

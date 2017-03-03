@@ -17,6 +17,13 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
+Route::get('/test', function () {
+    \App\Models\Realm::addAllToIndex();
+    \App\Models\Continent::addAllToIndex();
+    \App\Models\Empire::addAllToIndex();
+});
+
+
 /* create new child object */
 Route::get('/{childModel}/create/{parentModel}/{parentUrl}', function($sChildModel, $sParentModel, $sParentURL = null){
     $sChild = 'App\Models\\' . ucfirst($sChildModel);

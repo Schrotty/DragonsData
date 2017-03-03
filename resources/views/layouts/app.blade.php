@@ -75,5 +75,9 @@
 
     <!-- bootstrap-select js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
+
+    <!-- tinyMCE -->
+    <script src="{{ asset('/js/tinymce/tinymce.min.js') }}"></script>
+    <script>tinymce.init({selector: 'textarea#description', themes: "modern"});</script>
 </body>
 </html>

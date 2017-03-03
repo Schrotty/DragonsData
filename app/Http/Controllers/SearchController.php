@@ -8,9 +8,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Realm;
+use Elasticsearch;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 
 class SearchController extends Controller
 {
@@ -19,10 +18,21 @@ class SearchController extends Controller
      */
     public function search(Request $request)
     {
-        $sKeyword = '%' . $request->input('keyword') . '%';
+        $params = [
+            'index' => 'dragons_data',
+            'body' => [
+                'query' => [
+                    'match' => [
+                        'name' => $request->input('keyword')
+                    ]
+                ]
+            ]
+        ];
 
-        $aResults = Realm::where('name', 'like', $sKeyword)->get();
+        $response = Elasticsearch::search($params);
 
-        return View::make('index', ['aObjects' => $aResults]);
+        print_r($response);
+
+        return $response;
     }
 }

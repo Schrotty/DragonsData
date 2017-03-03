@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Base\BaseModel;
+use Elasticquent\ElasticquentTrait;
 
 /**
  * @property mixed users
@@ -17,6 +18,8 @@ use App\Models\Base\BaseModel;
  */
 class Realm extends BaseModel
 {
+    use ElasticquentTrait;
+
     /**
      * @var array
      */

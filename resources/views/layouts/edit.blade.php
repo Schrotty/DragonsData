@@ -33,7 +33,8 @@
                 <div class="col-md-12">
                     <div class="object-description">
                         <div>{{ trans('general.description') }}</div>
-                        <textarea id="name" type="text" class="form-control edit-block default-edit-block" name="description"
+                        <textarea id="description" id="name" type="text"
+                                  class="form-control edit-block default-edit-block" name="description"
                                   autofocus>{!!trim(html_entity_decode($oObject->description))!!}</textarea>
                     </div>
                 </div>

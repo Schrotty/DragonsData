@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Base\BaseModel;
+use Elasticquent\ElasticquentTrait;
 
 /**
  * Class Layer
@@ -10,6 +11,8 @@ use App\Models\Base\BaseModel;
  */
 class Empire extends BaseModel
 {
+    use ElasticquentTrait;
+
     /**
      * @var array
      */

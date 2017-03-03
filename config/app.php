@@ -171,6 +171,8 @@ return [
          * Package Service Providers...
          */
         Cviebrock\LaravelElasticsearch\ServiceProvider::class,
+        Elasticquent\ElasticquentServiceProvider::class,
+
 
         //
 
@@ -235,6 +237,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'HTML' => Collective\Html\HtmlFacade::class,
         'Elasticsearch' => Cviebrock\LaravelElasticsearch\Facade::class,
+        'Es' => Elasticquent\ElasticquentElasticsearchFacade::class,
     ],
 
 ];
