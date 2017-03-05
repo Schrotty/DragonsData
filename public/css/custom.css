@@ -34,7 +34,19 @@
     border: 0;
 }
 
+.sidebar-menu:last-child {
+    border-bottom: 1px solid black;
+}
+
 .sidebar-menu .list-group {
+    margin-bottom: 0;
+}
+
+.search-result {
+    margin-bottom: 15px;
+}
+
+.search-result:last-child {
     margin-bottom: 0;
 }
 

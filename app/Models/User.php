@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Elasticquent\ElasticquentTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -20,6 +21,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
+    use ElasticquentTrait;
 
     /**
      * @var array
@@ -52,58 +54,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * @return string
-     */
-    public function getModel()
-    {
-        return strtolower(substr(get_class($this), 11));
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasRealms()
-    {
-        return count($this->realms) >= 1 ? true : false;
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function rank()
-    {
-        return $this->hasOne('App\Models\Rank', 'id', 'fk_rank')->get()->first();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function knownRealms()
-    {
-        if ($this->rank()->is_root) {
-            return Realm::all();
-        }
-
-        return $this->masterRealms()->merge($this->assignedRealms());
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function masterRealms()
-    {
-        return $this->hasMany('App\Models\Realm', 'fk_dungeonMaster', 'id')->getEager();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function assignedRealms()
-    {
-        return $this->belongsToMany('App\Models\Realm', 'knownRealm', 'fk_user', 'fk_realm')->get();
-    }
-
-    /**
      * @param string $sName
      * @return mixed
      */
@@ -127,5 +77,57 @@ class User extends Authenticatable
         }
 
         return User::whereIn('fk_rank', $aRankIDs)->get();
+    }
+
+    /**
+     * @return string
+     */
+    public function getModel()
+    {
+        return strtolower(substr(get_class($this), 11));
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRealms()
+    {
+        return count($this->realms) >= 1 ? true : false;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function knownRealms()
+    {
+        if ($this->rank()->is_root) {
+            return Realm::all();
+        }
+
+        return $this->masterRealms()->merge($this->assignedRealms());
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function rank()
+    {
+        return $this->hasOne('App\Models\Rank', 'id', 'fk_rank')->get()->first();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function masterRealms()
+    {
+        return $this->hasMany('App\Models\Realm', 'fk_dungeonMaster', 'id')->getEager();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function assignedRealms()
+    {
+        return $this->belongsToMany('App\Models\Realm', 'knownRealm', 'fk_user', 'fk_realm')->get();
     }
 }

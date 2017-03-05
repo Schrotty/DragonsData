@@ -15,6 +15,7 @@ class SearchController extends Controller
 {
     /**
      * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function search(Request $request)
     {
@@ -22,17 +23,17 @@ class SearchController extends Controller
             'index' => 'dragons_data',
             'body' => [
                 'query' => [
-                    'match' => [
-                        'name' => $request->input('keyword')
+                    'multi_match' => [
+                        'query' => $request->input('keyword'),
+                        'fields' => [
+                            'name', '_type'
+                        ]
                     ]
                 ]
             ]
         ];
 
         $response = Elasticsearch::search($params);
-
-        print_r($response);
-
-        return $response;
+        return view('search', ['aResults' => $response['hits']]);
     }
 }

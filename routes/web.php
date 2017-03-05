@@ -21,6 +21,8 @@ Route::get('/test', function () {
     \App\Models\Realm::addAllToIndex();
     \App\Models\Continent::addAllToIndex();
     \App\Models\Empire::addAllToIndex();
+    \App\Models\Ocean::addAllToIndex();
+    \App\Models\User::addAllToIndex();
 });
 
 

@@ -10,6 +10,7 @@ namespace App\Models;
 
 use App\Models\Base\BaseModel;
 use App\Models\Interfaces\IModel;
+use Elasticquent\ElasticquentTrait;
 
 /**
  * @property mixed realm
@@ -20,7 +21,8 @@ use App\Models\Interfaces\IModel;
  */
 class Ocean extends BaseModel implements IModel
 {
-    public $sParentModel = 'Realm';
+    use ElasticquentTrait;
+
     /**
      * The table associated with the model.
      *

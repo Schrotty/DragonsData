@@ -1,5 +1,7 @@
 <div class="panel panel-default side-panel">
-    <div class="panel-heading">Central Control</div>
+    <div class="panel-heading">
+        <span class="panel-title">Central Control</span>
+    </div>
     <div class="panel-body sidebar-menu">
         <ul class="list-group">
             <div class="list-group">
@@ -38,7 +40,9 @@
 </div>
 
 <div class="panel panel-default side-panel">
-    <div class="panel-heading">Search</div>
+    <div class="panel-heading">
+        <span class="panel-title">Search</span>
+    </div>
     <form id="search" class="form-horizontal" role="form" method="post" action="{{ url('/search') }}">
         {{ csrf_field() }}
         <div class="panel-body">
