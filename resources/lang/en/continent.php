@@ -2,7 +2,7 @@
 
 return [
 
-    'continent' => 'Continent',
+    'name' => 'Continent',
     'create' => 'Create continent',
     'edit' => 'Edit continent',
     'delete' => 'Delete continent',

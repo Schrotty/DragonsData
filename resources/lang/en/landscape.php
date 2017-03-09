@@ -2,7 +2,7 @@
 
 return [
 
-    'landscape' => 'Landscape',
+    'name' => 'Landscape',
     'create' => 'Create landscape',
     'edit' => 'Edit landscape',
     'delete' => 'Delete landscape',

@@ -2,7 +2,7 @@
 
 return [
 
-    'mountain' => 'Mountain',
+    'name' => 'Mountain',
     'create' => 'Create mountain',
     'edit' => 'Edit mountain',
     'delete' => 'Delete mountain',

@@ -27,61 +27,26 @@
         ]); ?>
     </script>
 </head>
+
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top navbar-inverse">
+        <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'DragonsData') }}
-                    </a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav"></ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">{{ trans('general.login') }}</a></li>
-                        @else
-                            <li><a href="{{ url('/') }}">{{ trans('general.dashboard') }}</a></li>
-                            @if(Auth::user()->isAdmin)
-                                <li><a disabled href="#">{{ trans('general.settings') }}</a></li>
-                            @endif
-
-                            <li class="dropdown">
-                                <a href="{{ url('/logout') }}"
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    {{ trans('general.logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ url('/logout') }}" method="POST"
-                                      style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
-                            </li>
-                        @endif
-                    </ul>
+                    <span class="navbar-brand">DragonsData</span>
                 </div>
             </div>
         </nav>
 
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-3">
+                    @if(!Auth::guest())
+                        @include('sidebar')
+                    @endif
+                </div>
+
+                <div class="col-md-9">
                     @if (Session::has('message'))
                         <div class="alert alert-info alert-dismissible">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -94,10 +59,12 @@
 
                     @yield('content')
                 </div>
+            </div>
 
-                @if(!Auth::guest())
-                    @include('sidebar')
-                @endif
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    @yield('login')
+                </div>
             </div>
         </div>
     </div>
@@ -108,5 +75,9 @@
 
     <!-- bootstrap-select js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
+
+    <!-- tinyMCE -->
+    <script src="{{ asset('/js/tinymce/tinymce.min.js') }}"></script>
+    <script>tinymce.init({selector: 'textarea#description', themes: "modern"});</script>
 </body>
 </html>

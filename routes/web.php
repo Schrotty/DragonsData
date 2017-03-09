@@ -17,6 +17,28 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
+Route::get('/test', function () {
+    \App\Models\Realm::addAllToIndex();
+    \App\Models\Continent::addAllToIndex();
+    \App\Models\Empire::addAllToIndex();
+    \App\Models\Ocean::addAllToIndex();
+
+    \App\Models\User::addAllToIndex();
+
+    \App\Models\Landscape::addAllToIndex();
+    \App\Models\Sea::addAllToIndex();
+    \App\Models\Island::addAllToIndex();
+    \App\Models\Landmark::addAllToIndex();
+    \App\Models\Biome::addAllToIndex();
+    \App\Models\City::addAllToIndex();
+    \App\Models\River::addAllToIndex();
+    \App\Models\Lake::addAllToIndex();
+    \App\Models\Mountain::addAllToIndex();
+
+    //\App\Models\Tag::addAllToIndex();
+});
+
+
 /* create new child object */
 Route::get('/{childModel}/create/{parentModel}/{parentUrl}', function($sChildModel, $sParentModel, $sParentURL = null){
     $sChild = 'App\Models\\' . ucfirst($sChildModel);
@@ -29,12 +51,15 @@ Route::get('/{childModel}/create/{parentModel}/{parentUrl}', function($sChildMod
     ]);
 });
 
+Route::post('search', 'SearchController@search');
+
 /* first level resources */
 Route::resource('user', 'UserController');
 Route::resource('realm', 'RealmController');
 
 /* second level resource */
 Route::resource('continent', 'ContinentController');
+Route::resource('empire', 'EmpireController');
 Route::resource('ocean', 'OceanController');
 Route::resource('island', 'IslandController');
 

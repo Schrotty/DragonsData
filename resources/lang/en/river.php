@@ -2,7 +2,7 @@
 
 return [
 
-    'river' => 'River',
+    'name' => 'River',
     'create' => 'Create river',
     'edit' => 'Edit river',
     'delete' => 'Delete river',

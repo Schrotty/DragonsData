@@ -3,7 +3,7 @@
 @section('restricted')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{ $oObject->name }}</span>
+            <span class="panel-title">{{ $oObject->name }}</span>
             @can('edit', $oObject)
                 <div class="pull-right">
                     <a href="{{ url($oObject->getModel() . '/' . $oObject->url . '/edit/') }}">

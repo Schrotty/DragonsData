@@ -1,19 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span>{{trans('realm.realm')}}</span>
-                    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span>{{trans('realm.realm')}}</span>
+        </div>
 
-                    <div class="panel-body">
-                        @include('widget.index', ['sModel' => 'realm'])
-                    </div>
-                </div>
-            </div>
+        <div class="panel-body">
+            @include('widget.index', ['sModel' => 'realm'])
         </div>
     </div>
 @endsection

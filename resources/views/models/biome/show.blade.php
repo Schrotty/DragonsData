@@ -2,7 +2,7 @@
 
 @section('parent')
     <div class="object-parent">
-        <div>{{ trans('biome.parent') }}</div>
+        <div>{{ trans('biome.name') }}</div>
         <span>
             <a href="{{ url($oObject->parent->getModel() . '/' . $oObject->parent->url) }}">{{ $oObject->parent->name }}</a>
         </span>

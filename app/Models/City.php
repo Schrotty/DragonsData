@@ -10,6 +10,7 @@ namespace App\Models;
 
 use App\Models\Base\BaseModel;
 use App\Models\Interfaces\IModel;
+use Elasticquent\ElasticquentTrait;
 
 /**
  * Class SmallCity
@@ -20,7 +21,8 @@ use App\Models\Interfaces\IModel;
 class City extends BaseModel implements IModel
 {
 
-    public $sParentModel = 'Landscape';
+    use ElasticquentTrait;
+
     /**
      * @var string
      */

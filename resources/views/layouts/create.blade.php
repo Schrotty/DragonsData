@@ -33,7 +33,8 @@
                     <div class="col-md-12">
                         <div class="object-description">
                             <div>{{ trans('general.description') }}</div>
-                            <textarea id="name" type="text" class="form-control edit-block default-edit-block" name="description"
+                            <textarea id="description" id="name" type="text"
+                                      class="form-control edit-block default-edit-block" name="description"
                                       autofocus>{!!trim(html_entity_decode(old('description')))!!}</textarea>
                         </div>
                     </div>
@@ -61,7 +62,7 @@
             </div>
 
             <div class="panel-footer">
-                <button class="btn btn-default" type="submit">{{ trans('general.save') }}</button>
+                <button class="btn btn-primary" type="submit">{{ trans('general.create') }}</button>
             </div>
         </div>
     {{ Form::close() }}

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreObject;
+use App\Http\Requests\UpdateObject;
 use App\Models\Sea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
 class SeaController extends Controller
@@ -34,26 +35,12 @@ class SeaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreObject|Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreObject $request)
     {
         $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
-
-        $aRules = array(
-            'name' => 'required',
-            'description' => 'required',
-            'short-description' => 'required',
-            'ocean' => 'required'
-        );
-
-        $oValidator = Validator::make($request->all(), $aRules);
-
-        if ($oValidator->fails()) {
-            return Redirect::to('sea/create')->withErrors($oValidator)->withInput();
-        }
-
         $aParentInfo = explode('-', $request->input('ocean'));
 
         $oSea = new Sea();
@@ -95,27 +82,13 @@ class SeaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param UpdateObject|Request $request
      * @param  string $sURL
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $sURL)
+    public function update(UpdateObject $request, $sURL)
     {
         $aUser = $request->input('known-by') == null ? array() : $request->input('known-by');
-
-        $aRules = array(
-            'name' => 'required',
-            'description' => 'required',
-            'short-description' => 'required',
-            'ocean' => 'required'
-        );
-
-        $oValidator = Validator::make($request->all(), $aRules);
-
-        if ($oValidator->fails()) {
-            return Redirect::to('sea/edit')->withErrors($oValidator)->withInput();
-        }
-
         $aParentInfo = explode('-', $request->input('ocean'));
 
         $oContinent = Sea::where('url', $sURL)->get()->first();

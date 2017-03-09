@@ -2,7 +2,7 @@
 
 @section('left-block')
     <div class="realm-gamemaster">
-        <div>{{ trans('ocean.ocean') }}</div>
+        <div>{{ trans('ocean.name') }}</div>
         <span>
             @include('widget.dropdown', ['sName' => 'ocean', 'aObjects' => [\App\Models\Ocean::all()]])
         </span>

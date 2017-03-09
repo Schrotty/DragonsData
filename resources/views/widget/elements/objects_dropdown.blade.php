@@ -1,4 +1,4 @@
-<select id="object-creator" name="object-type" class="selectpicker" data-width="">
+<select id="object-creator" name="object-type" class="form-control" data-width="">
     <option value="Realm">Realm</option>
     <option value="User" disabled>User</option>
     <option data-divider="true"></option>

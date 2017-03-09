@@ -8,10 +8,10 @@
     @if( count($aObjects) != 0 )
         @foreach($aObjects as $oObject)
             <tr>
-                <td><a href="{{ url($sModel . '/' . $oObject->url) }}">{{ $oObject->name }}</a></td>
+                <td><a href="{{ url($oObject->getModel() . '/' . $oObject->url) }}">{{ $oObject->name }}</a></td>
                 <td>{{ $oObject->dungeonMaster->name }}</td>
                 <td>
-                    <a href="{{ action(ucfirst($sModel) . 'Controller@edit', $oObject->url) }}">{{ trans( $oObject->getModel() . '.edit') }}</a>
+                    <a href="{{ action(ucfirst($oObject->getModel()) . 'Controller@edit', $oObject->url) }}">{{ trans( $oObject->getModel() . '.edit') }}</a>
                 </td>
             </tr>
         @endforeach

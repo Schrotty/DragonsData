@@ -3,7 +3,7 @@
 @section('content')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>{{trans('realm.realm')}}</span>
+            <span class="panel-title">Geographical</span>
 
             @if(Auth::user()->rank()->is_root)
                 <div class="pull-right">
@@ -15,17 +15,7 @@
         </div>
 
         <div class="panel-body">
-            @include('widget.realms', ['realms' => Auth::user()->knownRealms(), 'openRealmMode' => false])
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <span>{{trans('realm.open_realms')}}</span>
-        </div>
-
-        <div class="panel-body">
-            @include('widget.realms', ['realms' => \App\Models\Realm::all()->where('isOpen', true), 'openRealmMode' => true])
+            @include('widget.realms', ['realms' => Auth::user()->knownRealms()])
         </div>
     </div>
 @endsection

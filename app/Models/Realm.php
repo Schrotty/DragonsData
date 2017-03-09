@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Base\BaseModel;
+use Elasticquent\ElasticquentTrait;
 
 /**
  * @property mixed users
@@ -17,6 +18,8 @@ use App\Models\Base\BaseModel;
  */
 class Realm extends BaseModel
 {
+    use ElasticquentTrait;
+
     /**
      * @var array
      */
@@ -54,6 +57,15 @@ class Realm extends BaseModel
     public static function oceans($oRealm)
     {
         return Realm::find($oRealm->id)->hasMany('App\Models\Ocean', 'fk_realm', 'id')->get();
+    }
+
+    /**
+     * @param $oRealm
+     * @return mixed
+     */
+    public static function empires($oRealm)
+    {
+        return Realm::find($oRealm->id)->hasMany('App\Models\Empire', 'fk_realm', 'id')->get();
     }
 
     /**

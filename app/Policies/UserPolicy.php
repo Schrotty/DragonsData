@@ -14,20 +14,38 @@ class UserPolicy extends Policy
 {
     /**
      * @param User $oUser
+     * @param $oObject
      * @return mixed
      */
-    public function isDungeonMaster(User $oUser)
+    public function view(User $oUser, $oObject)
     {
-        return $oUser->isDungeonMaster;
+        return parent::view($oUser, $oObject);
     }
 
     /**
      * @param User $oUser
-     * @param User $oCheckUser
      * @return bool
      */
-    public function see(User $oUser, User $oCheckUser)
+    public function edit(User $oUser)
     {
-        return true; //Users are public objects
+        return parent::edit($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function create(User $oUser)
+    {
+        return parent::create($oUser);
+    }
+
+    /**
+     * @param User $oUser
+     * @return bool
+     */
+    public function destroy(User $oUser)
+    {
+        return parent::destroy($oUser);
     }
 }
