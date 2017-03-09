@@ -10,6 +10,7 @@ namespace App\Models;
 
 use App\Models\Base\BaseModel;
 use App\Models\Interfaces\IModel;
+use Elasticquent\ElasticquentTrait;
 
 /**
  * @property mixed sea
@@ -17,7 +18,8 @@ use App\Models\Interfaces\IModel;
  */
 class Island extends BaseModel implements IModel
 {
-    public $sParentModel = 'Sea';
+    use ElasticquentTrait;
+
     /**
      * The table associated with the model.
      *

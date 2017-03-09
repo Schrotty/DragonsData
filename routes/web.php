@@ -22,7 +22,20 @@ Route::get('/test', function () {
     \App\Models\Continent::addAllToIndex();
     \App\Models\Empire::addAllToIndex();
     \App\Models\Ocean::addAllToIndex();
+
     \App\Models\User::addAllToIndex();
+
+    \App\Models\Landscape::addAllToIndex();
+    \App\Models\Sea::addAllToIndex();
+    \App\Models\Island::addAllToIndex();
+    \App\Models\Landmark::addAllToIndex();
+    \App\Models\Biome::addAllToIndex();
+    \App\Models\City::addAllToIndex();
+    \App\Models\River::addAllToIndex();
+    \App\Models\Lake::addAllToIndex();
+    \App\Models\Mountain::addAllToIndex();
+
+    //\App\Models\Tag::addAllToIndex();
 });
 
 

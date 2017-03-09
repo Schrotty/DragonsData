@@ -2,7 +2,7 @@
 
 @section('parent')
     <div class="object-parent">
-        <div>{{ trans('ocean.ocean') }}</div>
+        <div>{{ trans('ocean.name') }}</div>
         <span>
             <a href="{{ url('ocean/' . $oObject->parent->url) }}">{{ $oObject->parent->name }}</a>
         </span>

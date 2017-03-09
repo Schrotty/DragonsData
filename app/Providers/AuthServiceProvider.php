@@ -15,6 +15,7 @@ use App\Models\Ocean;
 use App\Models\Realm;
 use App\Models\River;
 use App\Models\Sea;
+use App\Models\User;
 use App\Policies\BiomePolicy;
 use App\Policies\CityPolicy;
 use App\Policies\ContinentPolicy;
@@ -29,6 +30,7 @@ use App\Policies\Policy;
 use App\Policies\RealmPolicy;
 use App\Policies\RiverPolicy;
 use App\Policies\SeaPolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -53,7 +55,8 @@ class AuthServiceProvider extends ServiceProvider
         Biome::class => BiomePolicy::class,
         Landmark::class => LandmarkPolicy::class,
         Mountain::class => MountainPolicy::class,
-        Empire::class => EmpirePolicy::class
+        Empire::class => EmpirePolicy::class,
+        User::class => UserPolicy::class
     ];
 
     /**

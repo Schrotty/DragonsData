@@ -53,7 +53,9 @@
                                aria-describedby="basic-addon2">
 
                         <span class="input-group-btn">
-                            <button type="submit" class="btn btn-default">Search</button>
+                            <button type="submit" class="btn btn-default">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            </button>
                         </span>
                     </div>
                 </div>
@@ -62,23 +64,28 @@
     </form>
 </div>
 
-@can('isDungeonMaster', Auth::user())
-    <div class="panel panel-default object-control-panel">
-        <div class="panel-heading">{{trans('general.controls')}}</div>
-        <div class="panel-body">
-            <div class="row">
-                <form id="new-object-form" class="form-horizontal" role="form" method="GET" action="{{ url('/realm/creator') }}">
-                    {{ csrf_field() }}
-                    <div class="col-md-6">
-                        @include('widget.elements.objects_dropdown')
-                    </div>
-
-                    <div class="col-md-6">
-                        <button type="submit" class="btn btn-default btn-block"
-                                value="{{ trans('general.create') }}">{{ trans('general.create') }}</button>
-                    </div>
-                </form>
-            </div>
+@if(true == false)
+    <div class="panel panel-default side-panel">
+        <div class="panel-heading">
+            <span class="panel-title">Object Creator</span>
         </div>
+        <form id="search" class="form-horizontal" role="form" method="get" action="{{ url('/test') }}">
+            {{ csrf_field() }}
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            @include('widget.elements.objects_dropdown')
+
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-@endcan
+@endif

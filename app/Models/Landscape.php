@@ -10,6 +10,7 @@ namespace App\Models;
 
 use App\Models\Base\BaseModel;
 use App\Models\Interfaces\IModel;
+use Elasticquent\ElasticquentTrait;
 
 /**
  * @property mixed continent
@@ -17,6 +18,8 @@ use App\Models\Interfaces\IModel;
  */
 class Landscape extends BaseModel implements IModel
 {
+    use ElasticquentTrait;
+
     /**
      * The table associated with the model.
      *

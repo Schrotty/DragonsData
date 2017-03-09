@@ -5,7 +5,7 @@
         <div class="panel-heading">
             <span class="panel-title">
                 <span class="panel-title">
-                    Search
+                    Results
                 </span>
             </span>
         </div>

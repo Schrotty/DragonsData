@@ -8,10 +8,13 @@
 
 namespace App\Models;
 
+use Elasticquent\ElasticquentTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
+    use ElasticquentTrait;
+
     /**
      * @var string
      */
