@@ -2,45 +2,35 @@
 /**
  * Created by PhpStorm.
  * User: ruben
- * Date: 27.02.2017
- * Time: 15:17
+ * Date: 13.08.2017
+ * Time: 09:05
  */
 
 namespace App\Http\Controllers;
 
-use App\Models\Realm;
-use Elasticsearch;
+use App\Events\AccessGrantedEvent;
+use App\Events\AccessLostEvent;
+use App\Events\NewsPublished;
+use App\Item;
+use App\News;
+use App\Notifications\AccessGranted;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class SearchController extends Controller
 {
-    public static function index()
+    public function index(Request $request)
     {
-        $oRealm = Realm::find(1);
+        $query = $request->input('query');
+
+        return view('seach-result', ['result' => Item::whereRaw(array('$text'=>array('$search'=> "\"" . $query . "\"")))->get()]);
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function search(Request $request)
+    public function find(Request $request)
     {
-        $params = [
-            'index' => 'dragons_data',
-            'body' => [
-                'query' => [
-                    'multi_match' => [
-                        'query' => $request->input('keyword'),
-                        'type' => 'phrase_prefix',
-                        'fields' => [
-                            'name', '_type'
-                        ]
-                    ]
-                ]
-            ]
-        ];
-
-        $response = Elasticsearch::search($params);
-        return view('search', ['aResults' => $response['hits'], 'sQuery' => $request->input('keyword')]);
+        return view('item.show', ['item' => Item::find($request->input('target'))]);
     }
 }

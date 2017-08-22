@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\News;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -14,8 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $realms = User::find(Auth::user()->id)->realms;
-
-        return view('home', ['realms' => $realms]);
+        return view('dashboard', ['news' => News::all()->reverse()]);
     }
 }

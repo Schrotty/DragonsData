@@ -1,53 +1,31 @@
-@extends('layouts.app')
+@extends('layout.app')
 
 @section('content')
-    <div class="row">
-        <div class="col-md-3">
-            <div class="panel">
-                <div class="panel-heading">
-                    Categorys
-                </div>
-
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-6 col-md-3">
-                            <a href="#" class="thumbnail">
-                                <img src="img/default.png" alt="Layers">
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xs-6 col-md-3">
-                            <a href="#" class="thumbnail">
-                                <img src="img/default.png" alt="Layers">
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xs-6 col-md-3">
-                            <a href="#" class="thumbnail">
-                                <img src="img/default.png" alt="Layers">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="panel panel-default side-panel">
+        <div class="panel-heading">
+            <span class="panel-title">News</span>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel">
-                <div class="panel-heading">
-                    Admin Settings
-                </div>
+        <div class="panel-body">
+            @if(count($news) != 0)
+                @foreach($news as $new)
+                    <div class="news-container">
+                        <h2 class="news-title">
+                            {{$new->title}}
+                        </h2>
 
-                <div class="panel-body">
-
-                </div>
-            </div>
+                        <p>
+                            @if(strlen($new->content) > 180)
+                                {!! strip_tags(substr(addslashes($new->content), 0, 180)) !!}... <a href="news/{{$new->_id}}">Read More</a>
+                            @else
+                                {!! strip_tags(addslashes($new->content)) !!}
+                            @endif
+                        </p>
+                    </div>
+                @endforeach
+            @else
+                <span>Nothing to show here!</span>
+            @endif
         </div>
     </div>
 @endsection

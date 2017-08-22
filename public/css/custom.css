@@ -20,6 +20,7 @@
 
 .panel-body h2 {
     margin-top: 0;
+    border-bottom: 1px solid #eaecef;
 }
 
 .sidebar-menu {
@@ -171,4 +172,64 @@ label {
 .checkbox label input[type="checkbox"]:disabled + .cr,
 .radio label input[type="radio"]:disabled + .cr {
     opacity: .5;
+}
+
+.news-container:not(:last-of-type) {
+    margin-bottom: 25px;
+}
+
+.alert-dismissable .close, .alert-dismissible .close {
+    top: -.75rem;;
+}
+
+.notification-panel:last-of-type {
+    margin-bottom:0;
+}
+
+.notification-panel:not(last-of-type) {
+    margin-bottom:15px;
+}
+
+.list-group-min {
+    margin:0;
+}
+
+.notification-news {
+    background-color: #d1ecf1;
+}
+
+.notification-access-granted {
+    background-color: #d4edda;
+}
+
+.notification-access-lost {
+    background-color: #f8d7da;
+}
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+}
+
+.caret {
+    display: none;
+}
+
+#input-group-btn {
+    width: 25%;
+}
+
+.known-card {
+    margin-top: 15px;
+}
+
+.known-card:first-of-type {
+    margin-top: 0;
+}
+
+.description-box {
+    margin-top: 15px;
+}
+
+.card-title {
+    margin-top: 0;
 }

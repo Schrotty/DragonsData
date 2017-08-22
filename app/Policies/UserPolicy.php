@@ -1,51 +1,44 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ruben
- * Date: 05.02.2017
- * Time: 17:39
- */
 
 namespace App\Policies;
 
-use App\Models\User;
+use App\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy extends Policy
+class UserPolicy
 {
-    /**
-     * @param User $oUser
-     * @param $oObject
-     * @return mixed
-     */
-    public function view(User $oUser, $oObject)
-    {
-        return parent::view($oUser, $oObject);
-    }
+    use HandlesAuthorization;
 
     /**
-     * @param User $oUser
-     * @return bool
+     * Create a new policy instance.
+     *
+     * @return void
      */
-    public function edit(User $oUser)
+    public function __construct()
     {
-        return parent::edit($oUser);
+        //
     }
 
-    /**
-     * @param User $oUser
-     * @return bool
-     */
-    public function create(User $oUser)
+    public function before(User $user)
     {
-        return parent::create($oUser);
+        if($user->isRoot()) return true;
     }
 
-    /**
-     * @param User $oUser
-     * @return bool
-     */
-    public function destroy(User $oUser)
+    public function create(User $user)
     {
-        return parent::destroy($oUser);
+        return $user->isRoot();
+    }
+
+    public function view(User $user, User $vUser)
+    {
+        return $user->_id == $vUser->_id || $user->isAdmin();
+    }
+
+    public function update(User $user) {
+        return $user->isRoot();
+    }
+
+    public function delete(User $user) {
+        return $user->isRoot();
     }
 }

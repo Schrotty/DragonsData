@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\News;
+use App\Providers\MongoUserProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -25,7 +31,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -44,6 +50,26 @@ class LoginController extends Controller
      */
     public function username()
     {
-        return 'name';
+        return 'username';
+    }
+
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        $credentials = array();
+        $credentials['username'] = $request->input('username');
+        $credentials['password'] = $request->input('password');
+
+        if (!$validator->fails()) {
+            if (Auth::attempt($credentials, false)) {
+                return redirect('/dashboard');
+            }
+        }
+
+        return redirect('/login')->withErrors($validator)->withInput();
     }
 }
