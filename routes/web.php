@@ -5,72 +5,41 @@
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| This file is where you may define all of the routes that are handled
-| by your application. Just tell Laravel the URIs it should respond
-| to using a Closure or controller method. Build something great!
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
 
-Route::get('/dashboard', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/enter', function (){
+    $user = new \App\User();
+    $user->username = "TEST";
+    $user->passsword = bcrypt("test");
+    $user->group = 0;
+    $user->save();
+
+   \Illuminate\Support\Facades\Auth::login($user);
+
+   return view('dashboard', ['news' => \App\News::all()]);
+});
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index');
+Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+Route::get('/settings', 'SettingsController@index')->name('settings');
+Route::get('/notifications', 'NotificationController@index')->name('notifications');
 
-Route::get('/test', function () {
-    \App\Models\Realm::addAllToIndex();
-    \App\Models\Continent::addAllToIndex();
-    \App\Models\Empire::addAllToIndex();
-    \App\Models\Ocean::addAllToIndex();
+//Route::post('/notifications/{id}/read', 'NotifiationControler@read');
+Route::post('search', 'SearchController@index');
+Route::post('find', 'SearchController@find');
 
-    \App\Models\User::addAllToIndex();
+Route::resource('item', 'ItemController');
+Route::resource('category', 'CategoryController');
+Route::resource('tag', 'TagController');
+Route::resource('property', 'PropertyController');
 
-    \App\Models\Landscape::addAllToIndex();
-    \App\Models\Sea::addAllToIndex();
-    \App\Models\Island::addAllToIndex();
-    \App\Models\Landmark::addAllToIndex();
-    \App\Models\Biome::addAllToIndex();
-    \App\Models\City::addAllToIndex();
-    \App\Models\River::addAllToIndex();
-    \App\Models\Lake::addAllToIndex();
-    \App\Models\Mountain::addAllToIndex();
-
-    //\App\Models\Tag::addAllToIndex();
-});
-
-
-/* create new child object */
-Route::get('/{childModel}/create/{parentModel}/{parentUrl}', function($sChildModel, $sParentModel, $sParentURL = null){
-    $sChild = 'App\Models\\' . ucfirst($sChildModel);
-    $sParent = 'App\Models\\' . ucfirst($sParentModel);
-
-    return View::make('models.' . $sChildModel .'.create', [
-        'sMethod' => 'POST',
-        'oObject' => new $sChild(),
-        'oParent' => $sParent::where('url', $sParentURL)->get()->first()
-    ]);
-});
-
-Route::post('search', 'SearchController@search');
-
-/* first level resources */
+Route::resource('news', 'NewsController');
 Route::resource('user', 'UserController');
-Route::resource('realm', 'RealmController');
 
-/* second level resource */
-Route::resource('continent', 'ContinentController');
-Route::resource('empire', 'EmpireController');
-Route::resource('ocean', 'OceanController');
-Route::resource('island', 'IslandController');
-
-/* third level resource */
-Route::resource('landscape', 'LandscapeController');
-Route::resource('sea', 'SeaController');
-
-/* fourth level resource */
-Route::resource('city', 'CityController');
-Route::resource('river', 'RiverController');
-Route::resource('lake', 'LakeController');
-Route::resource('biome', 'BiomeController');
-Route::resource('landmark', 'LandmarkController');
-Route::resource('mountain', 'MountainController');
+Route::resource('notification', 'NotificationController');
