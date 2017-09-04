@@ -40,10 +40,10 @@ class ItemPolicy
     }
 
     public function update(User $user, Item $item) {
-        return $item->hasWritePrivileges($user) || $user->isAdmin();
+        return $item->hasWritePrivileges($user);
     }
 
     public function delete(User $user, Item $item) {
-        return $item->hasDeletePrivileges($user) || $user->isAdmin();
+        return $item->hasDeletePrivileges($user);
     }
 }

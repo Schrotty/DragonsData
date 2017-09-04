@@ -11,7 +11,7 @@
                     <span>Home</span>
                 </a>
 
-                <a href="{{ url('/user/'.\Illuminate\Support\Facades\Auth::user()->_id) }}" class="list-group-item">
+                <a href="{{ url('/user/'.strtolower(\Illuminate\Support\Facades\Auth::user()->username)) }}" class="list-group-item">
                     <span class="oi oi-person"></span>
                     <span>Profile</span>
                 </a>
@@ -27,9 +27,9 @@
                     </span>
                 </a>
 
-                <a href="{{ url('/settings') }}" class="list-group-item">
+                <a href="{{ url('/account') }}" class="list-group-item">
                     <span class="oi oi-cog"></span>
-                    <span>Settings</span>
+                    <span>Account</span>
                 </a>
 
                 <div class="dropdown-divider"></div>

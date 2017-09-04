@@ -6,8 +6,8 @@
             <span class="panel-title">Create Property</span>
         </div>
 
-        <div class="panel-body">
-            <form action="/property" method="POST">
+        <form action="/property" method="POST">
+            <div class="panel-body">
                 {{ method_field('POST') }}
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -24,11 +24,15 @@
                         @endforeach
                     </select>
                 </div>
+            </div>
 
-                <div class="text-right">
-                    <button type="submit" class="btn btn-primary">Create Property</button>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="submit" class="btn btn-primary">Create Property</button>
+                    </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 @endsection

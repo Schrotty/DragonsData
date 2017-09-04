@@ -8,14 +8,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\AccessGrantedEvent;
-use App\Events\AccessLostEvent;
 use App\Events\NewsPublished;
 use App\Http\Requests\StoreItem;
 use App\Http\Requests\UpdateItem;
 use App\Item;
 use App\News;
 use App\Notifications\AccessGranted;
+use App\Notifications\AccessLost;
+use App\Notifications\ContributorRightsGranted;
+use App\Notifications\ContributorRightsLost;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -55,7 +57,7 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreItem|Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreItem $request)
@@ -86,9 +88,8 @@ class ItemController extends Controller
         $item->save();
 
         Session::flash('message', 'Item Created!');
-        if ($item->known != null) {
-            event(new AccessGrantedEvent($item, $item->known));
-        }
+        if ($item->known != null) foreach ($item->known as $user) User::find($user)->notify(new AccessGranted($item));
+        if ($item->contributors != null) foreach ($item->contributors as $user) User::find($user)->notify(new ContributorRightsGranted($item));
 
         return Redirect::to('/item/'.$item->_id);
     }
@@ -145,6 +146,9 @@ class ItemController extends Controller
         $gainAccess = array();
         $lostAccess = array();
 
+        $gainRights = array();
+        $lostRights = array();
+
         if($request->input('key') != null) {
             foreach ($request->input('key') as $key => $value) {
                 foreach(array_values(array_filter($request->input('value'))) as $nKey => $nVaue) {
@@ -153,31 +157,27 @@ class ItemController extends Controller
             }
         }
 
-        if($item->known == null && $request->input('known') != null) {
-            $gainAccess = $request->input('known'); //gain access
-        }
-
-        if($item->known != null && $request->input('known') == null) {
-            $lostAccess = $item->known; //lost access
-        }
-
+        if ($item->known == null) $gainAccess = $request->input('contributors');
+        if ($request->input('known') == null) $lostAccess = $item->known;
         if($item->known != null && $request->input('known')) {
             foreach ($item->known as $known) {
-                if(in_array($known, $request->input('known'))) {
-                    continue;
-                }
+                if(!in_array($known, $request->input('known'))) $lostAccess[] = $known;
+            }
 
-                $lostAccess[] = $known;
+            foreach ($request->input('known') as $known) {
+                if (!in_array($known, $item->known)) $gainAccess[] = $known;
             }
         }
 
-        if($request->input('known') != null && $item->known) {
-            foreach ($request->input('known') as $known) {
-                if (in_array($known, $item->known)) {
-                    continue;
-                }
+        if ($item->contributors == null) $gainRights = $request->input('contributors');
+        if ($request->input('contributors') == null) $lostRights = $item->contributors;
+        if($item->contributors != null && $request->input('contributors')) {
+            foreach ($item->contributors as $contri) {
+                if(!in_array($contri, $request->input('contributors'))) $lostRights[] = $contri;
+            }
 
-                $gainAccess[] = $known;
+            foreach ($request->input('contributors') as $contri) {
+                if (!in_array($contri, $item->contributors)) $gainRights[] = $contri;
             }
         }
 
@@ -191,8 +191,11 @@ class ItemController extends Controller
         $item->properties = $properties;
         $item->save();
 
-        event(new AccessGrantedEvent($item, $gainAccess));
-        event(new AccessLostEvent($item, $lostAccess));
+        if ($gainAccess != null) foreach ($gainAccess as $user) User::find($user)->notify(new AccessGranted($item));
+        if ($lostAccess != null) foreach ($lostAccess as $user) User::find($user)->notify(new AccessLost($item));
+
+        if ($gainRights != null) foreach ($gainRights as $user) User::find($user)->notify(new ContributorRightsGranted($item));
+        if ($lostRights != null) foreach ($lostRights as $user) User::find($user)->notify(new ContributorRightsLost($item));
 
         Session::flash('message', 'Item Updated!');
         return Redirect::to('/item/'.$item->_id);

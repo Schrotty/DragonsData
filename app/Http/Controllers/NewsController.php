@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Events\NewsPublished;
 use App\News;
+use App\Notifications\NewsPublish;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -62,7 +64,7 @@ class NewsController extends Controller
         $news->save();
 
         Session::flash('message', 'News Created!');
-        event(new NewsPublished($news));
+        foreach (User::all() as $user) $user->notify(new NewsPublish($news));
 
         return Redirect::to('/');
     }

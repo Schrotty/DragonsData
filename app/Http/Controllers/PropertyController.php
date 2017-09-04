@@ -25,27 +25,13 @@ use Illuminate\Support\Facades\Validator;
 class PropertyController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        if(!Gate::allows('create', Item::class)) {
-            abort(403, 'Access Denied!');
-        }
-
-        return view('tag.index', ['categories' => Category::all()]);
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        if(!Gate::allows('create', Item::class)) {
+        if(!Gate::allows('create', Property::class)) {
             abort(403, 'Access Denied!');
         }
 
@@ -60,7 +46,7 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        if(!Gate::allows('create', Item::class)) {
+        if(!Gate::allows('create', Property::class)) {
             abort(403, 'Access Denied!');
         }
 
@@ -84,17 +70,6 @@ class PropertyController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -102,27 +77,28 @@ class PropertyController extends Controller
      */
     public function edit($id)
     {
-        if(!Gate::allows('update', Item::class)) {
+        $prop = Property::find($id);
+        if(!Gate::allows('update', $prop)) {
             abort(403, 'Access Denied!');
         }
 
-        return view('property.edit', ['property' => Property::find($id)]);
+        return view('property.edit', ['property' => $prop]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param UpdateProperty|Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateProperty $request, $id)
     {
-        if(!Gate::allows('update', Item::class)) {
+        $prop = Property::find($id);
+        if(!Gate::allows('update', $prop)) {
             abort(403, 'Access Denied!');
         }
 
-        $prop = Property::find($id);
         $prop->name = $request->input('name');
         $prop->category = $request->input('category');
         $prop->save();
@@ -139,7 +115,7 @@ class PropertyController extends Controller
      */
     public function destroy($id)
     {
-        if(!Gate::allows('delete', News::class)) {
+        if(!Gate::allows('delete', Property::class)) {
             abort(403, 'Access Denied!');
         }
 

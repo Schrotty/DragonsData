@@ -6,8 +6,8 @@
             <span class="panel-title">Create Item</span>
         </div>
 
-        <div class="panel-body">
-            <form action="/item" method="POST">
+        <form action="/item" method="POST">
+            <div class="panel-body">
                 {{ method_field('POST') }}
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -96,11 +96,15 @@
                     <label for="content">Description</label>
                     <textarea id="mce" class="form-control" name="content" rows="3">{{ old('content') }}</textarea>
                 </div>
+            </div>
 
-                <div class="text-right">
-                    <button type="submit" class="btn btn-primary">Create Item</button>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="submit" class="btn btn-primary">Create Item</button>
+                    </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 @endsection

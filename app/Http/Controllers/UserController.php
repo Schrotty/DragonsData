@@ -9,12 +9,21 @@
 namespace App\Http\Controllers;
 
 use App\News;
+use App\Notifications\AccessGranted;
+use App\Notifications\AccessLost;
+use App\Notifications\ContributorRightsGranted;
+use App\Notifications\ContributorRightsLost;
+use App\Notifications\NewsPublish;
+use App\Notifications\Notifications;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Pusher\Pusher;
 
 class UserController extends Controller
 {
@@ -67,9 +76,18 @@ class UserController extends Controller
         }
 
         $user = new User();
-        $user->username = $request->input('username');
+        $user->username = ucfirst($request->input('username'));
         $user->group = $request->input('group');
         $user->password = bcrypt($request->input('password'));
+        $user->chars = $request->input('char');
+        $user->notifications = array(
+            AccessLost::class,
+            AccessGranted::class,
+            ContributorRightsLost::class,
+            ContributorRightsGranted::class,
+            NewsPublish::class
+        );
+
         $user->save();
 
         Session::flash('message', 'User Created!');
@@ -86,7 +104,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        //$user = User::find($id);
+        $user = User::all()->where('username', '=', ucfirst($id))->first();
         if(!Gate::allows('view', $user)) {
             abort(403, 'Access Denied!');
         }
@@ -123,8 +142,9 @@ class UserController extends Controller
         }
 
         $user = User::find($id);
-        $user->username = $request->input('username');
+        $user->username = ucfirst($request->input('username'));
         $user->group = $request->input('group');
+        $user->chars = $request->input('char');
         $user->save();
 
         Session::flash('message', 'User Updated!');
@@ -146,5 +166,67 @@ class UserController extends Controller
         User::find($id)->delete();
 
         return redirect('/user');
+    }
+
+    public function updateAccountDetails(Request $request, $id)
+    {
+        if ($request->input('type') == 'security') return $this->changePassword($request, $id);
+        if ($request->input('type') == 'notifications') return $this->changeNotifications($request, $id);
+
+        return redirect('/account');
+    }
+
+    public function changePassword(Request $request, $id)
+    {
+        if(!Gate::allows('update', Auth::user())) {
+            abort(403, 'Access Denied!');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'current-password' => 'required',
+            'password' => 'required|confirmed'
+        ]);
+
+        $validator->after(function ($validator) use ($request) {
+            if (!Hash::check($request->input('current-password'), Auth::user()->getAuthPassword())) {
+                $validator->errors()->add('current-password', 'Current password is wrong!');
+            }
+        });
+
+        if ($validator->fails()) {
+            return redirect('/account')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $user = User::find($id);
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+
+        Session::flash('message', 'Password Updated!');
+        return redirect('/account');
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function changeNotifications(Request $request, $id)
+    {
+        if(!Gate::allows('update', Auth::user())) {
+            abort(403, 'Access Denied!');
+        }
+
+        $notifications = array();
+        if ($request->input('read-access') != null) $notifications = array_merge($notifications, Notifications::READ_ACCESS);
+        if ($request->input('write-access') != null) $notifications = array_merge($notifications, Notifications::WRITE_ACCESS);
+        if ($request->input('news') != null) $notifications[] = NewsPublish::class;
+
+        $user = User::find(Auth::user()->_id);
+        $user->notifications = $notifications;
+        $user->save();
+
+        return redirect('/account');
     }
 }

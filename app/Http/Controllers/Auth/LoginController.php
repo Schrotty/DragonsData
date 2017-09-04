@@ -31,7 +31,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -66,7 +66,7 @@ class LoginController extends Controller
 
         if (!$validator->fails()) {
             if (Auth::attempt($credentials, false)) {
-                return redirect('/dashboard');
+                return redirect('/');
             }
         }
 

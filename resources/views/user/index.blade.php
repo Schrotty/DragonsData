@@ -42,11 +42,15 @@
                     @endif
                 </tbody>
             </table>
+        </div>
 
-            <div class="text-right">
-                <a href="/user/create">
-                    <button type="button" class="btn btn-primary">Create User</button>
-                </a>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <a href="/user/create">
+                        <button type="button" class="btn btn-primary">Create User</button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

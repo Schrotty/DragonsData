@@ -11,35 +11,35 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/enter', function (){
-    $user = new \App\User();
-    $user->username = "TEST";
-    $user->passsword = bcrypt("test");
-    $user->group = 0;
-    $user->save();
-
-   \Illuminate\Support\Facades\Auth::login($user);
-
-   return view('dashboard', ['news' => \App\News::all()]);
-});
 
 Auth::routes();
 
-Route::get('/dashboard', 'HomeController@index')->name('dashboard');
-Route::get('/settings', 'SettingsController@index')->name('settings');
+//Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 Route::get('/notifications', 'NotificationController@index')->name('notifications');
 
-//Route::post('/notifications/{id}/read', 'NotifiationControler@read');
 Route::post('search', 'SearchController@index');
 Route::post('find', 'SearchController@find');
 
 Route::resource('item', 'ItemController');
+Route::resource('journal', 'JournalController');
+
 Route::resource('category', 'CategoryController');
 Route::resource('tag', 'TagController');
 Route::resource('property', 'PropertyController');
 
 Route::resource('news', 'NewsController');
 Route::resource('user', 'UserController');
+Route::resource('party', 'PartyController');
 
 Route::resource('notification', 'NotificationController');
+Route::resource('settings', 'SettingsController');
+Route::resource('whitelist', 'WhitelistController');
+
+Route::get('/account', function(){
+   return view('account', ['user' => \Illuminate\Support\Facades\Auth::user()]);
+});
+
+Route::put('/account/{id}', 'UserController@updateAccountDetails');

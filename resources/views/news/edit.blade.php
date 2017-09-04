@@ -7,8 +7,8 @@
                 <span class="panel-title">Edit News</span>
             </div>
 
-            <div class="panel-body">
-                <form action="{{ '/news/' . $news->_id }}" method="POST">
+            <form action="{{ '/news/' . $news->_id }}" method="POST">
+                <div class="panel-body">
                     {{ method_field('PUT') }}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -22,11 +22,17 @@
                         <textarea id="mce" class="form-control" name="content" rows="3">{{$news->content}}</textarea>
                     </div>
 
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-primary">Update News</button>
+
+                </div>
+
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-primary">Update News</button>
+                        </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     @endcan
 @endsection

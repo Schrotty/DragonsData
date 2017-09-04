@@ -52,7 +52,7 @@
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-md-6">
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                        <button @if($tag->protected) disabled @endif type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
                             Delete Tag
                         </button>
                     </div>

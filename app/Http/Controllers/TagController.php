@@ -24,27 +24,13 @@ use Illuminate\Support\Facades\Validator;
 class TagController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        if(!Gate::allows('create', Item::class)) {
-            abort(403, 'Access Denied!');
-        }
-
-        return view('tag.index', ['categories' => Category::all()]);
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        if(!Gate::allows('create', Item::class)) {
+        if(!Gate::allows('create', Tag::class)) {
             abort(403, 'Access Denied!');
         }
 
@@ -59,7 +45,7 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        if(!Gate::allows('create', Item::class)) {
+        if(!Gate::allows('create', Tag::class)) {
             abort(403, 'Access Denied!');
         }
 
@@ -86,17 +72,6 @@ class TagController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -104,7 +79,7 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        if(!Gate::allows('update', Item::class)) {
+        if(!Gate::allows('update', Tag::class)) {
             abort(403, 'Access Denied!');
         }
 
@@ -120,7 +95,7 @@ class TagController extends Controller
      */
     public function update(UpdateTag $request, $id)
     {
-        if(!Gate::allows('update', Item::class)) {
+        if(!Gate::allows('update', Tag::class)) {
             abort(403, 'Access Denied!');
         }
 
@@ -143,7 +118,7 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        if(!Gate::allows('delete', Item::class)) {
+        if(!Gate::allows('delete', Tag::class)) {
             abort(403, 'Access Denied!');
         }
 

@@ -9,22 +9,22 @@ class Item extends Eloquent
     protected $collection = 'item';
 
     protected $fillable = [
-        'name'
+        'name', 'author', 'known', 'contributors', 'category', 'description'
     ];
 
     public function hasReadPrivileges(User $user)
     {
-        return $this->isAuthor($user) || $this->isContributor($user) || $this->knownBy($user);
+        return $this->isAuthor($user) || $this->isContributor($user) || $this->knownBy($user) || $user->isAdmin();
     }
 
     public function hasWritePrivileges(User $user)
     {
-        return $this->isAuthor($user) || $this->isContributor($user);
+        return $this->isAuthor($user) || $this->isContributor($user) || $user->isAdmin();
     }
 
     public function hasDeletePrivileges(User $user)
     {
-        return $this->isAuthor($user);
+        return $this->isAuthor($user) || $user->isAdmin();
     }
 
     public function knownBy(User $user)
@@ -48,5 +48,13 @@ class Item extends Eloquent
     public function isAuthor(User $user)
     {
         return $user->_id == $this->author;
+    }
+
+    public static function byTag($id)
+    {
+        $tag = Tag::all()->where('_id', '=', $id)->first()->_id;
+        if ($tag == null) return array();
+
+        return Item::all()->where('tags', 'all', [$tag]);
     }
 }

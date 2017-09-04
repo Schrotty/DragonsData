@@ -4,7 +4,6 @@
     <div class="panel panel-default side-panel">
         <div class="panel-heading">
             <span class="panel-title">Categories</span>
-            <small class="text-muted">High abstraction level</small>
         </div>
 
         <div class="panel-body">
@@ -40,11 +39,15 @@
                 @endif
                 </tbody>
             </table>
+        </div>
 
-            <div class="text-right">
-                <a href="/category/create">
-                    <button type="button" class="btn btn-primary">Create Category</button>
-                </a>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <a href="/category/create">
+                        <button type="button" class="btn btn-primary">Add Category</button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -52,7 +55,6 @@
     <div class="panel panel-default side-panel">
         <div class="panel-heading">
             <span class="panel-title">Tags</span>
-            <small class="text-muted">Specify category</small>
         </div>
 
         <div class="panel-body">
@@ -95,11 +97,15 @@
                 @endif
                 </tbody>
             </table>
+        </div>
 
-            <div class="text-right">
-                <a href="/tag/create">
-                    <button type="button" class="btn btn-primary">Create Tag</button>
-                </a>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <a href="/tag/create">
+                        <button type="button" class="btn btn-primary">Add Tag</button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -107,7 +113,6 @@
     <div class="panel panel-default side-panel">
         <div class="panel-heading">
             <span class="panel-title">Properties</span>
-            <small class="text-muted">Detailed information</small>
         </div>
 
         <div class="panel-body">
@@ -142,15 +147,20 @@
                     <tr>
                         <td>-</td>
                         <td>-</td>
+                        <td></td>
                     </tr>
                 @endif
                 </tbody>
             </table>
+        </div>
 
-            <div class="text-right">
-                <a href="/property/create">
-                    <button type="button" class="btn btn-primary">Create Property</button>
-                </a>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <a href="/property/create">
+                        <button type="button" class="btn btn-primary">Add Property</button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
