@@ -32,6 +32,8 @@ class UserPolicy
 
     public function view(User $user, User $vUser)
     {
+        debugbar()->info($user->_id);
+        debugbar()->info($vUser->_id);
         return $user->_id == $vUser->_id || $user->isAdmin();
     }
 

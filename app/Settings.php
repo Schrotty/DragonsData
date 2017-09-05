@@ -20,6 +20,6 @@ class Settings extends Eloquent
 
     public static function isWhitelisted($clientIp)
     {
-        return self::maintenanceWhitelist()->whereIn('ip', $clientIp);
+        return self::maintenanceWhitelist()->contains('ip', $clientIp);
     }
 }

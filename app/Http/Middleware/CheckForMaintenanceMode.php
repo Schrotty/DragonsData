@@ -19,7 +19,7 @@ class CheckForMaintenanceMode
 
     public function handle(Request $request, Closure $next)
     {
-        if ($this->app->isDownForMaintenance() && !Settings::isWhitelisted($request->getClientIp()))
+        if ($this->app->isDownForMaintenance() && Settings::isWhitelisted($request->getClientIp()) == false)
         {
             $maintenanceMode = new MaintenanceMode($this->app);
             return $maintenanceMode->handle($request, $next);

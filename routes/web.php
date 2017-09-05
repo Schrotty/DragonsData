@@ -38,6 +38,11 @@ Route::resource('notification', 'NotificationController');
 Route::resource('settings', 'SettingsController');
 Route::resource('whitelist', 'WhitelistController');
 
+
+Route::get('/profile', function(){
+    return view('user.show', ['user' => \Illuminate\Support\Facades\Auth::user()]);
+});
+
 Route::get('/account', function(){
    return view('account', ['user' => \Illuminate\Support\Facades\Auth::user()]);
 });

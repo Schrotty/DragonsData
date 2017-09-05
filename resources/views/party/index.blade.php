@@ -28,7 +28,7 @@
                                 <td>
                                     <a href="{{ '/party/' . $party->_id }}">{{ $party->name }}</a>
                                 </td>
-                                <td>{{ \App\User::find($party->creator)->username }}</td>
+                                <td>{{ \App\User::find($party->creator)->username ?? 'Unknown' }}</td>
                                 <td>{{ count($party->member) }}</td>
                                 <td class="text-right non-link">
                                     <a href="{{ '/party/' . $party->_id . '/edit' }}">

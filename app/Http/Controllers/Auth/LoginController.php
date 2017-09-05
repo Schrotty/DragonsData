@@ -64,12 +64,20 @@ class LoginController extends Controller
         $credentials['username'] = $request->input('username');
         $credentials['password'] = $request->input('password');
 
-        if (!$validator->fails()) {
-            if (Auth::attempt($credentials, false)) {
-                return redirect('/');
+        $validator->after(function ($validator) use ($credentials) {
+            if (!Auth::attempt($credentials, false)) {
+                $validator->errors()->add('credentials', 'The entered combination of username/ password is incorrect!');
             }
+        });
+
+        debugbar()->info($validator->fails());
+
+        if ($validator->fails()) {
+            return redirect('/login')
+                ->withErrors($validator)
+                ->withInput();
         }
 
-        return redirect('/login')->withErrors($validator)->withInput();
+        return redirect('/');
     }
 }
