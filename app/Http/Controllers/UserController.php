@@ -223,7 +223,6 @@ class UserController extends Controller
         if ($request->input('write-access') != null) $notifications = array_merge($notifications, Notifications::WRITE_ACCESS);
         if ($request->input('news') != null) $notifications[] = NewsPublish::class;
 
-
         $user = User::find($id);
         debugbar()->info($user);
         $user->notifications = $notifications;
@@ -231,7 +230,7 @@ class UserController extends Controller
 
         return redirect('/account');
     }
-
+  
     public function resetPassword($id)
     {
         $user = User::find($id);
