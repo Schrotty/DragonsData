@@ -40,13 +40,8 @@
                     <!-- Player -->
                     <div class="col-md-4">
                         <label for="member">Player</label>
-                        <select name="player[]" multiple class="selectpicker show-tick" data-live-search="true">
-                            @php $items = \App\Item::byTag(\App\Settings::playerTag()) @endphp
-                            @if($items != null)
-                                @foreach($items as $item)
-                                    <option value="{{ $item->_id }}">{{ $item->name }}</option>
-                                @endforeach
-                            @endif
+                        <select id="member" name="player[]" multiple class="selectpicker show-tick" data-live-search="true">
+                            @include('module.item.player-select')
                         </select>
                     </div>
 

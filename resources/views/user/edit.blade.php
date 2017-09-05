@@ -23,21 +23,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label for="char">Character</label>
-                        <select id="char" name="char" class="selectpicker" data-live-search="true">
-                            @foreach(\App\Item::byTag(\App\Settings::playerTag()) as $item)
-                                @if(in_array($item->_id, (array)$user->chars))
-                                    <option selected value="{{ $item->_id }}">{{ $item->name }}</option>
-                                    @continue
-                                @endif
-
-                                <option value="{{ $item->_id }}">{{ $item->name }}</option>
-                            @endforeach
+                        <select id="char" name="char" class="selectpicker show-tick" data-live-search="true">
+                            @include('module.item.user.player-pre-select')
                         </select>
                     </div>
 
                     <div class="col-md-6">
-                        <label for="group">Group</label>
-                        <select class="selectpicker" class="form-control" id="group" name="group">
+                        <label for="group">Auth Level</label>
+                        <select @if(\Illuminate\Support\Facades\Auth::user()->authLevel() != 0) disabled @endif class="selectpicker" class="form-control" id="group" name="group">
                             @foreach(\App\Auth::all() as $auth)
                                 @if($user->group == $auth->level)
                                     <option selected value="{{ $auth->level }}">{{ $auth->name }}</option>

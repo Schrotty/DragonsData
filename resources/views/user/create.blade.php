@@ -23,16 +23,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label for="char">Character</label>
-                        <select id="char" name="char" class="selectpicker" data-live-search="true">
-                            @foreach(\App\Item::byTag(\App\Settings::playerTag()) as $item)
-                                <option value="{{ $item->_id }}">{{ $item->name }}</option>
-                            @endforeach
+                        <select id="char" name="char" class="selectpicker show-tick" data-live-search="true">
+                            @include('module.item.player-select')
                         </select>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="group">Group</label>
+                            <label for="group">Auth Level</label>
                             <select class="selectpicker form-control" id="group" name="group" style="height: inherit">
                                 <option value="{{ \App\Groups::ROOT }}">{{ \App\Groups::NAMES[\App\Groups::ROOT] }}</option>
                                 <option value="{{ \App\Groups::ADMIN }}">{{ \App\Groups::NAMES[\App\Groups::ADMIN] }}</option>

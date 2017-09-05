@@ -65,7 +65,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Category</th>
-                    <th>Style</th>
+                    <!--<th>Style</th>-->
                     <th></th>
                 </tr>
                 </thead>
@@ -79,7 +79,7 @@
                                 @php $category = \App\Category::find($tag->category)  @endphp
                                 <td>{{ $category == null ? 'Unknown' : $category->name }}</td>
 
-                                <td><span class="badge badge-pill badge-{{ $tag->style }}">{{ ucfirst($tag->style) }}</span></td>
+                                <!--<td><span class="badge badge-pill badge-{{ $tag->style }}">{{ $tag->name }}</span></td>-->
 
                                 <td>
                                     <form class="text-right" action="{{ 'tag/'.$tag->_id.'/edit' }}" method="POST">
@@ -98,7 +98,7 @@
                     <tr>
                         <td>-</td>
                         <td>-</td>
-                        <td>-</td>
+                        <!--<td>-</td>-->
                         <td></td>
                     </tr>
                 @endif

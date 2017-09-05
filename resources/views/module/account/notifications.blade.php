@@ -23,7 +23,7 @@
                 </label>
             </div>
 
-            <hr>
+            <div class="spacer"></div>
 
             <strong>News Notification</strong>
             <p>When news is published, receive a notification about it.</p>

@@ -15,7 +15,6 @@
                         <th>Author</th>
                         <th>Date</th>
                         <th></th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,23 +26,12 @@
                                 <td>{{\App\User::find($new->author)->username}}</td>
                                 <td>{{$new->date}}</td>
                                 <td>
-                                    <form action="{{ 'news/'.$new->_id.'/edit' }}" method="POST">
+                                    <form class="text-right" action="{{ 'news/'.$new->_id.'/edit' }}" method="POST">
                                         <input type="hidden" name="_method" value="GET">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                                         <button type="submit" class="btn-empty">
                                             <span class="oi oi-pencil"></span>
-                                        </button>
-                                    </form>
-                                </td>
-
-                                <td>
-                                    <form class="text-right" action="{{ 'news/'.$new->_id }}" method="POST">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                                        <button type="submit" class="btn-empty">
-                                            <span class="oi oi-trash"></span>
                                         </button>
                                     </form>
                                 </td>
@@ -55,7 +43,6 @@
                             <td>-</td>
                             <td>-</td>
                             <td>-</td>
-                            <td></td>
                             <td></td>
                         </tr>
                     @endif

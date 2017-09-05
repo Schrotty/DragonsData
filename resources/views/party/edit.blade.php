@@ -45,15 +45,8 @@
                     <!-- Player -->
                     <div class="col-md-4">
                         <label for="member">Player</label>
-                        <select name="player[]" multiple class="selectpicker show-tick" data-live-search="true">
-                            @foreach(\App\Item::byTag(\App\Settings::playerTag()) as $item)
-                                @if(in_array($item->_id, (array)$party->player))
-                                    <option selected value="{{ $item->_id }}">{{ $item->name }}</option>
-                                    @continue
-                                @endif
-
-                                <option value="{{ $item->_id }}">{{ $item->name }}</option>
-                            @endforeach
+                        <select id="member" name="player[]" multiple class="selectpicker show-tick" data-live-search="true">
+                            @include('module.item.party.player-pre-select')
                         </select>
                     </div>
 

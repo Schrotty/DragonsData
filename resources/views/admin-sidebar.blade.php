@@ -18,12 +18,10 @@
 
                 <div class="dropdown-divider"></div>
 
-                @if(\Illuminate\Support\Facades\Auth::user()->isRoot())
-                    <a href="{{ url('/user') }}" class="list-group-item">
-                        <span class="oi oi-people"></span>
-                        <span>User</span>
-                    </a>
-                @endcan
+                <a href="{{ url('/user') }}" class="list-group-item">
+                    <span class="oi oi-people"></span>
+                    <span>User</span>
+                </a>
 
                 <a href="{{ url('/party') }}" class="list-group-item">
                     <span class="oi oi-book"></span>
@@ -37,12 +35,10 @@
                     <span>News</span>
                 </a>
 
-                @if(\Illuminate\Support\Facades\Auth::user()->isRoot())
-                    <a href="{{ url('/settings') }}" class="list-group-item">
-                        <span class="oi oi-wrench"></span>
-                        <span>System</span>
-                    </a>
-                @endif
+                <a href="{{ url('/settings') }}" class="list-group-item">
+                    <span class="oi oi-wrench"></span>
+                    <span>System</span>
+                </a>
 
                 <form></form>
             </div>
