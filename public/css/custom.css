@@ -1,13 +1,33 @@
-.navbar {
-    background-color: #24292e;
+body {
+    overflow-x: hidden;
+    padding-top: 15px;
 }
 
-.navbar-default .navbar-brand {
-    color: #ecf0f1;
+button:focus {
+    outline:0 !important;
 }
 
-.navbar-brand:hover {
-    color: #ecf0f1;
+td p {
+    margin: 0;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.half {
+    width: 50%;
+}
+
+#notificatio {
+    position: absolute;
+    right: 0;
+    top: 13%;
+    width: 15%;
+}
+
+.block {
+    padding-left: 0;
 }
 
 .panel, .panel-heading, .panel-body, .panel-footer,
@@ -84,8 +104,12 @@ label {
 }
 
 .btn-empty {
-    border: 0px;
+    border: 0;
     background-color: transparent;
+}
+
+.non-link a {
+    color: inherit;
 }
 
 .object-parent div:first-of-type,

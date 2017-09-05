@@ -19,3 +19,7 @@ $(document).ready(
         contextmenu: "link image inserttable"
     })
 );
+
+$(function() {
+    $('.notification').css('color', 'red');
+});

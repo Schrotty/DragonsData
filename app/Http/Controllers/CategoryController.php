@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Events\NewsPublished;
+use App\Http\Requests\UpdateCategory;
 use App\Item;
 use App\News;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        if(!Gate::allows('create', Item::class)) {
+        if(!Gate::allows('create', Category::class)) {
             abort(403, 'Access Denied!');
         }
 
@@ -43,7 +44,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        if(!Gate::allows('create', Item::class)) {
+        if(!Gate::allows('create', Category::class)) {
             abort(403, 'Access Denied!');
         }
 
@@ -58,7 +59,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if(!Gate::allows('create', Item::class)) {
+        if(!Gate::allows('create', Category::class)) {
             abort(403, 'Access Denied!');
         }
 
@@ -81,21 +82,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        if(!Gate::allows('view', News::class)) {
-            abort(403, 'Access Denied!');
-        }
-
-        return view('news.show', ['news' => News::find($id)]);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -103,7 +89,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        if(!Gate::allows('update', News::class)) {
+        if(!Gate::allows('update', Category::class)) {
             abort(403, 'Access Denied!');
         }
 
@@ -113,22 +99,14 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param UpdateCategory|Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategory $request, $id)
     {
-        if(!Gate::allows('update', News::class)) {
+        if(!Gate::allows('update', Category::class)) {
             abort(403, 'Access Denied!');
-        }
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255|unique:categories,name,'.$request->input('name')
-        ]);
-
-        if ($validator->fails()) {
-            return redirect('category/'. $id .'/edit')->withErrors($validator)->withInput();
         }
 
         $category = Category::find($id);
@@ -147,7 +125,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        if(!Gate::allows('delete', News::class)) {
+        if(!Gate::allows('delete', Category::class)) {
             abort(403, 'Access Denied!');
         }
 

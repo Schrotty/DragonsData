@@ -8,7 +8,6 @@
 
 namespace App;
 
-
 abstract class TagStyle
 {
     const STYLES = array(

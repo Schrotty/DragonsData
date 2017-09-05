@@ -93,6 +93,19 @@
                     <div class="col-md-2"></div>
                 </div>
             </div>
+
+            <!-- Modal -->
+            <div class="fixed-top modal fade" id="notification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body alert-info" role="alert">
+                            <div class="row">
+                                <div id="pusher-message" class="col-md-12"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Scripts -->

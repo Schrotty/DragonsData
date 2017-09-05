@@ -12,32 +12,43 @@
 
 
             <div class="panel-body">
-                <div class="form-group">
-                    <label for="title">Username</label>
-                    <input value="{{ $user->username }}" type="text" class="form-control" name="username" aria-describedby="titleHelp" placeholder="Username">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="title">Username</label>
+                            <input value="{{ $user->username }}" type="text" class="form-control" name="username" aria-describedby="titleHelp" placeholder="Username">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="group">Group</label>
-                    <select class="form-control" id="group" name="group" style="height: inherit">
-                        @if($user->group == \App\Groups::ROOT)
-                            <option selected value="{{ \App\Groups::ROOT }}">{{ \App\Groups::NAMES[\App\Groups::ROOT] }}</option>
-                        @else
-                            <option value="{{ \App\Groups::ROOT }}">{{ \App\Groups::NAMES[\App\Groups::ROOT] }}</option>
-                        @endif
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="char">Character</label>
+                        <select id="char" name="char" class="selectpicker" data-live-search="true">
+                            @foreach(\App\Item::byTag(\App\Settings::playerTag()) as $item)
+                                @if(in_array($item->_id, (array)$user->chars))
+                                    <option selected value="{{ $item->_id }}">{{ $item->name }}</option>
+                                    @continue
+                                @endif
 
-                        @if($user->group == \App\Groups::ADMIN)
-                            <option selected value="{{ \App\Groups::ADMIN }}">{{ \App\Groups::NAMES[\App\Groups::ADMIN] }}</option>
-                        @else
-                            <option value="{{ \App\Groups::ADMIN }}">{{ \App\Groups::NAMES[\App\Groups::ADMIN] }}</option>
-                        @endif
+                                <option value="{{ $item->_id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                        @if($user->group == \App\Groups::MEMBER)
-                            <option selected value="{{ \App\Groups::MEMBER }}">{{ \App\Groups::NAMES[\App\Groups::MEMBER] }}</option>
-                        @else
-                            <option value="{{ \App\Groups::MEMBER }}">{{ \App\Groups::NAMES[\App\Groups::MEMBER] }}</option>
-                        @endif
-                    </select>
+                    <div class="col-md-6">
+                        <label for="group">Group</label>
+                        <select class="selectpicker" class="form-control" id="group" name="group">
+                            @foreach(\App\Auth::all() as $auth)
+                                @if($user->group == $auth->level)
+                                    <option selected value="{{ $auth->level }}">{{ $auth->name }}</option>
+                                    @continue
+                                @endif
+
+                                <option value="{{ $auth->level }}">{{ $auth->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -51,6 +62,7 @@
 
                     <div class="col-md-6">
                         <div class="text-right">
+                            @include('module.back-button')
                             <button type="submit" class="btn btn-primary">Update User</button>
                         </div>
                     </div>

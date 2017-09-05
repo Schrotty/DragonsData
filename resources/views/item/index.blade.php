@@ -24,7 +24,7 @@
                                 <td><a href="/item/{{ $item->_id }}">{{ $item->name }}</a></td>
                                 <td>{{substr(strip_tags($item->description), 0, 35)}}</td>
                                 <td>{{ \App\Category::find($item->category)->name }}</td>
-                                <td>{{ \App\User::find($item->author)->username }}</td>
+                                <td>{{ \App\User::find($item->author)->username ?? 'Unknown' }}</td>
 
                                 <td>
                                     <form class="text-right" action="{{ 'item/'.$item->_id.'/edit' }}" method="POST">
@@ -44,15 +44,20 @@
                         <td>-</td>
                         <td>-</td>
                         <td>-</td>
+                        <td></td>
                     </tr>
                 @endif
                 </tbody>
             </table>
+        </div>
 
-            <div class="text-right">
-                <a href="/item/create">
-                    <button type="button" class="btn btn-primary">Create Item</button>
-                </a>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <a href="/item/create">
+                        <button type="button" class="btn btn-primary">Create Item</button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

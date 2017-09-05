@@ -18,3 +18,14 @@
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    <FilesMatch "\.(css|js)$">
+            ExpiresByType text/css "access plus 14 days"
+            ExpiresByType text/javascript "access plus 14 days"
+            ExpiresByType application/x-javascript "access plus 14 days"
+            ExpiresByType application/javascript "access plus 14 days"
+    </FilesMatch>
+</IfModule>

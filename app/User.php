@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Notifications\AccessLost;
+use Illuminate\Support\Facades\Auth;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Authenticatable as AuthenticableTrait;
@@ -28,6 +30,15 @@ class User extends Eloquent implements Authenticatable
         'password',
     ];
 
+    use Notifiable {
+        notify as protected notifyCall;
+    }
+
+    public function authLevel()
+    {
+        return $this->group;
+    }
+
     public function isRoot()
     {
         return $this->group == Groups::ROOT;
@@ -48,6 +59,16 @@ class User extends Eloquent implements Authenticatable
         return $this->belongsToMany('App\Item', null, 'known');
     }
 
+    public function parties()
+    {
+        return $this->belongsToMany('App\Party', null, 'member')->get();
+    }
+
+    public function characters()
+    {
+        return $this->hasOne('App\Item', '_id', 'chars')->get();
+    }
+
     public function author()
     {
         return $this->belongsToMany('App\Item', null, 'author');
@@ -61,7 +82,26 @@ class User extends Eloquent implements Authenticatable
     public function accessible()
     {
         return $this->known()->get()->merge($this->contributor()->get())->merge($this->author()->get());
+    }
 
-        //return $this->known()->mergeBindings($this->contributor()->getBaseQuery())->mergeBindings($this->author()->getBaseQuery());
+    public function receiveNotifications($types)
+    {
+        foreach ($types as $type)
+        {
+            if (!in_array($type, $this->attributes['notifications'])) return false;
+        }
+
+        return true;
+    }
+
+    public function notify($instance)
+    {
+        debugbar()->info(get_class($instance));
+        debugbar()->info($this->attributes['notifications']);
+
+        //if (in_array(get_class($instance), (array)User::find(\Illuminate\Support\Facades\Auth::id())->first()->notifications)) $this->notifyCall($instance);
+        foreach($this->attributes['notifications'] as $notify){
+            if ($notify == get_class($instance)) $this->notifyCall($instance);
+        }
     }
 }

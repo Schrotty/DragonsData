@@ -1,43 +1,106 @@
 @extends('layout.app')
 
 @section('content')
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="panel-title">Characters</span>
+        </div>
+
+        <div class="panel-body">
+            <table class="table table-hover table-responsive">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Parties</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if(count($user->characters()) > 0)
+                    @foreach($user->characters() as $character)
+                        <tr>
+                            <td><a href="/item/{{ $character->_id }}">{{ $character->name }}</a></td>
+                            <td>
+                                @foreach(\App\Party::partiesWhereMember($character) as $party)
+                                    <a href="{{ '/party/'.$party->_id }}">{{ $party->name }}</a>@if(!$loop->last),@endif
+                                @endforeach
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default side-panel">
+        <div class="panel-heading">
+            <span class="panel-title">Parties</span>
+        </div>
+
+        <div class="panel-body">
+            <table class="table table-hover table-responsive">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Member</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if(count($user->parties()) > 0)
+                    @foreach($user->parties() as $party)
+                        <tr>
+                            <td><a href="/party/{{ $party->_id }}">{{ $party->name }}</a></td>
+                            <td>{{ count($party->member) }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <div class="panel panel-default side-panel">
         <div class="panel-heading">
             <span class="panel-title">Known Items</span>
         </div>
 
         <div class="panel-body">
-            @if(!empty($user->accessible()))
-                <div class="row">
-                    <div class="col-md-12 text-right">
-                        <form action="/find" method="POST">
-                            {{ method_field('POST') }}
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                            <div class="input-group">
-                                <div class="input-group-btn" style="width: 100%">
-                                    <select name="target" class="selectpicker" data-live-search="true">
-                                        @foreach($user->accessible() as $item)
-                                            <option value="{{ $item->_id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <input class="btn-default btn" type="submit" value="Open">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                @foreach($user->accessible() as $item)
-                    <div class="card w-100 known-card">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ $item->name }}<small class="text-muted"> - {{ \App\Category::find($item->category)->name }}</small></h4>
-                            <p class="card-text">{!! strip_tags(substr(addslashes($item->description), 0, 230)) !!}... <a href="/item/{{$item->_id}}">Read More</a></p>
-                        </div>
-                    </div>
-                @endforeach
-            @endif
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @if(count($user->accessible()) > 0)
+                    @foreach($user->accessible() as $item)
+                        <tr>
+                            <td><a href="/item/{{ $item->_id }}">{{ $item->name }}</a></td>
+                            <td>{{ \App\Category::find($item->category)->name }}</td>
+                            <td>{!! substr($item->description, 0, 50) !!}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                @endif
+                </tbody>
+            </table>
         </div>
     </div>
 @endsection

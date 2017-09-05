@@ -24,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //if (true) return view('maintenance');
         return view('dashboard', ['news' => News::all()->reverse()]);
     }
 }

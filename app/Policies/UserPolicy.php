@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class UserPolicy
 {
@@ -31,11 +32,11 @@ class UserPolicy
 
     public function view(User $user, User $vUser)
     {
-        return $user->_id == $vUser->_id || $user->isAdmin();
+        return $user->_id == Auth::id() || $user->isAdmin();
     }
 
     public function update(User $user) {
-        return $user->isRoot();
+        return Auth::user()->id == $user->_id;
     }
 
     public function delete(User $user) {

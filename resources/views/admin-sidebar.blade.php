@@ -16,10 +16,7 @@
                     <span>Categories</span>
                 </a>
 
-                <a href="{{ url('/news') }}" class="list-group-item">
-                    <span class="oi oi-rss"></span>
-                    <span>News</span>
-                </a>
+                <div class="dropdown-divider"></div>
 
                 @if(\Illuminate\Support\Facades\Auth::user()->isRoot())
                     <a href="{{ url('/user') }}" class="list-group-item">
@@ -27,6 +24,25 @@
                         <span>User</span>
                     </a>
                 @endcan
+
+                <a href="{{ url('/party') }}" class="list-group-item">
+                    <span class="oi oi-book"></span>
+                    <span>Parties</span>
+                </a>
+
+                <div class="dropdown-divider"></div>
+
+                <a href="{{ url('/news') }}" class="list-group-item">
+                    <span class="oi oi-rss"></span>
+                    <span>News</span>
+                </a>
+
+                @if(\Illuminate\Support\Facades\Auth::user()->isRoot())
+                    <a href="{{ url('/settings') }}" class="list-group-item">
+                        <span class="oi oi-wrench"></span>
+                        <span>System</span>
+                    </a>
+                @endif
 
                 <form></form>
             </div>
