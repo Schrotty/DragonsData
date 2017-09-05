@@ -8,9 +8,14 @@ class Settings extends Eloquent
 {
     protected $collection = 'settings';
 
+    public static function getSetings()
+    {
+        return Settings::where('type', '=', 'system')->first();
+    }
+
     public static function playerTag()
     {
-        return Settings::where('type', '=', 'system')->first()->pctag;
+        return Settings::getSetings()->pctag;
     }
 
     public static function maintenanceWhitelist()
@@ -21,5 +26,11 @@ class Settings extends Eloquent
     public static function isWhitelisted($clientIp)
     {
         return self::maintenanceWhitelist()->contains('ip', $clientIp);
+    }
+
+    public static function maintainMessage()
+    {
+        return Settings::where('type', '=', 'system')->first()->mmessage ??
+            'We are performing scheduled maintenance. We should be back online shortly.';
     }
 }
