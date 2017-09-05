@@ -17,19 +17,21 @@
                 <tbody>
                 @if(count($categories) != 0)
                     @foreach($categories as $category)
-                        <tr>
-                            <td>{{ $category->name }}</td>
-                            <td>
-                                <form class="text-right" action="{{ 'category/'.$category->_id.'/edit' }}" method="POST">
-                                    <input type="hidden" name="_method" value="GET">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        @if($category != null)
+                            <tr>
+                                <td>{{ $category->name }}</td>
+                                <td>
+                                    <form class="text-right" action="{{ 'category/'.$category->_id.'/edit' }}" method="POST">
+                                        <input type="hidden" name="_method" value="GET">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                                    <button type="submit" class="btn-empty">
-                                        <span class="oi oi-pencil"></span>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+                                        <button type="submit" class="btn-empty">
+                                            <span class="oi oi-pencil"></span>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                 @else
                     <tr>
@@ -70,22 +72,27 @@
                 <tbody>
                 @if(count(\App\Tag::all()) != 0)
                     @foreach(\App\Tag::all() as $tag)
-                        <tr>
-                            <td>{{ $tag->name }}</td>
-                            <td>{{ \App\Category::find($tag->category)->name }}</td>
-                            <td><span class="badge badge-pill badge-{{ $tag->style }}">{{ ucfirst($tag->style) }}</span></td>
+                        @if($tag != null)
+                            <tr>
+                                <td>{{ $tag->name }}</td>
 
-                            <td>
-                                <form class="text-right" action="{{ 'tag/'.$tag->_id.'/edit' }}" method="POST">
-                                    <input type="hidden" name="_method" value="GET">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                @php $category = \App\Category::find($tag->category)  @endphp
+                                <td>{{ $category == null ? 'Unknown' : $category->name }}</td>
 
-                                    <button type="submit" class="btn-empty">
-                                        <span class="oi oi-pencil"></span>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+                                <td><span class="badge badge-pill badge-{{ $tag->style }}">{{ ucfirst($tag->style) }}</span></td>
+
+                                <td>
+                                    <form class="text-right" action="{{ 'tag/'.$tag->_id.'/edit' }}" method="POST">
+                                        <input type="hidden" name="_method" value="GET">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                                        <button type="submit" class="btn-empty">
+                                            <span class="oi oi-pencil"></span>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                 @else
                     <tr>
@@ -127,21 +134,25 @@
                 <tbody>
                 @if(count(\App\Property::all()) != 0)
                     @foreach(\App\Property::all() as $property)
-                        <tr>
-                            <td>{{ $property->name }}</td>
-                            <td>{{ \App\Category::find($property->category)->name }}</td>
+                        @if($property != null)
+                            <tr>
+                                <td>{{ $property->name }}</td>
 
-                            <td>
-                                <form class="text-right" action="{{ 'property/'.$property->_id.'/edit' }}" method="POST">
-                                    <input type="hidden" name="_method" value="GET">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                @php $category = \App\Category::find($property->category)  @endphp
+                                <td>{{ $category == null ? 'Unknown' : $category->name }}</td>
 
-                                    <button type="submit" class="btn-empty">
-                                        <span class="oi oi-pencil"></span>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+                                <td>
+                                    <form class="text-right" action="{{ 'property/'.$property->_id.'/edit' }}" method="POST">
+                                        <input type="hidden" name="_method" value="GET">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                                        <button type="submit" class="btn-empty">
+                                            <span class="oi oi-pencil"></span>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                 @else
                     <tr>
