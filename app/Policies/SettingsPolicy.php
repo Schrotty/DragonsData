@@ -24,7 +24,7 @@ class SettingsPolicy
      */
     public function before(User $user)
     {
-        return $user->isRoot();
+        return $user->isAdmin();
     }
 
     public function create(User $user)

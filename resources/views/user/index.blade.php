@@ -44,14 +44,16 @@
             </table>
         </div>
 
-        <div class="panel-footer">
-            <div class="row">
-                <div class="col-md-12 text-right">
-                    <a href="/user/create">
-                        <button type="button" class="btn btn-primary">Create User</button>
-                    </a>
+        @can('create', \App\User::class)
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <a href="/user/create">
+                            <button type="button" class="btn btn-primary">Create User</button>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endcan
     </div>
 @endsection

@@ -55,6 +55,6 @@ class Item extends Eloquent
         $tag = Tag::all()->where('_id', '=', $id)->first();
         if ($tag == null) return array();
 
-        return Item::all()->where('tags', 'all', [$tag]);
+        return Item::all()->where('tags', 'all', [$tag->_id]);
     }
 }

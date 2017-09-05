@@ -12,8 +12,6 @@ class UserPolicy
 
     /**
      * Create a new policy instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -25,20 +23,25 @@ class UserPolicy
         if($user->isRoot()) return true;
     }
 
+    public function index(User $user)
+    {
+        return $user->isAdmin();
+    }
+
     public function create(User $user)
     {
-        return $user->isRoot();
+        //
     }
 
     public function view(User $user, User $vUser)
     {
-        debugbar()->info($user->_id);
-        debugbar()->info($vUser->_id);
         return $user->_id == $vUser->_id || $user->isAdmin();
     }
 
-    public function update(User $user) {
-        return Auth::user()->id == $user->_id;
+    public function update(User $user)
+    {
+        return Auth::user()->id == $user->_id ||
+            (Auth::user()->isAdmin() && Auth::user()->authLevel() >= $user->authLevel());
     }
 
     public function delete(User $user) {

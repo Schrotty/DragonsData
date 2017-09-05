@@ -19,18 +19,17 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-3">
-                            <label for="content">Known</label>
-                            <select name="known[]" multiple class="selectpicker show-tick" data-live-search="true">
+                            <label for="known">Known</label>
+                            <select id="known" name="known[]" multiple class="selectpicker show-tick" data-live-search="true">
                                 @foreach(\App\User::all() as $user)
                                     @if($user->_id != $item->author)
                                         @if($item->known != null)
-                                            @foreach($item->known as $known)
-                                                @if($known == $user->_id)
-                                                    <option selected value="{{ $user->_id }}">{{ $user->username }}</option>
-                                                @else
-                                                    <option value="{{ $user->_id }}">{{ $user->username }}</option>
-                                                @endif
-                                            @endforeach
+                                            @if(in_array($user->_id, $item->known))
+                                                <option selected value="{{ $user->_id }}">{{ $user->username }}</option>
+                                                @continue
+                                            @endif
+
+                                            <option value="{{ $user->_id }}">{{ $user->username }}</option>
                                         @else
                                             <option value="{{ $user->_id }}">{{ $user->username }}</option>
                                         @endif
@@ -40,8 +39,8 @@
                         </div>
 
                         <div class="col-md-3">
-                            <label for="content">Contributors</label>
-                            <select name="contributors[]" multiple class="selectpicker show-tick" data-live-search="true">
+                            <label for="contri">Contributors</label>
+                            <select id="contri" name="contributors[]" multiple class="selectpicker show-tick" data-live-search="true">
                                 @foreach(\App\User::all() as $user)
                                     @if($user->_id != $item->author)
                                         @if($item->contributors != null)

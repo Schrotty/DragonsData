@@ -86,5 +86,7 @@
         </div>
     </form>
 
-    @include('maintenance.maintenance')
+    @if(\Illuminate\Support\Facades\Auth::user()->isRoot())
+        @include('maintenance.maintenance')
+    @endif
 @endsection

@@ -34,11 +34,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        if(!Gate::allows('create', User::class)) {
+        if(!Gate::allows('index', User::class)) {
             abort(403, 'Access Denied!');
         }
 
-        return view('user.index', ['user' => User::all()->sortBy('group', null, false)]);
+        $user = User::all()->where('group', '>=', Auth::user()->authLevel());
+        return view('user.index', ['user' => $user->sortBy('group', null, false)]);
     }
 
     /**
@@ -48,7 +49,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        if(!Gate::allows('create', News::class)) {
+        if(!Gate::allows('create', User::class)) {
             abort(403, 'Access Denied!');
         }
 
@@ -77,7 +78,7 @@ class UserController extends Controller
 
         $user = new User();
         $user->username = ucfirst($request->input('username'));
-        $user->group = $request->input('group');
+        $user->group = $request->input('group') ?? 2;
         $user->password = bcrypt($request->input('password'));
         $user->chars = $request->input('char');
         $user->notifications = array(
@@ -91,8 +92,6 @@ class UserController extends Controller
         $user->save();
 
         Session::flash('message', 'User Created!');
-        //event(new NewsPublished($news));
-
         return Redirect::to('/user');
     }
 
@@ -104,7 +103,6 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //$user = User::find($id);
         $user = User::all()->where('username', '=', ucfirst($id))->first();
         if(!Gate::allows('view', $user)) {
             abort(403, 'Access Denied!');
@@ -121,7 +119,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if(!Gate::allows('update', News::class)) {
+        if(!Gate::allows('update', User::class)) {
             abort(403, 'Access Denied!');
         }
 
@@ -143,7 +141,9 @@ class UserController extends Controller
 
         $user = User::find($id);
         $user->username = ucfirst($request->input('username'));
-        $user->group = $request->input('group');
+        if (Auth::user()->isRoot())
+            $user->group = $request->input('group') ?? $user->authlevel();
+
         $user->chars = $request->input('char');
         $user->save();
 

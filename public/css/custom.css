@@ -1,5 +1,4 @@
 body {
-    overflow-x: hidden;
     padding-top: 15px;
 }
 
@@ -15,6 +14,12 @@ td p {
 .col-m-t {
     margin-top: 15px;
 }
+
+.spacer {
+    margin-top: 15px;
+}
+
+/* END*/
 
 .table {
     margin-bottom: 0;
