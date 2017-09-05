@@ -75,7 +75,7 @@
         </div>
 
         <div class="panel-body">
-            <table class="table table-hover table-responsive">
+            <table class="table table-hover table-responsive data-table">
                 <thead>
                     <tr>
                         <th>Name</th>

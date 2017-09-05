@@ -7,7 +7,7 @@
         </div>
 
         <div class="panel-body">
-            <table class="table table-hover">
+            <table class="table table-hover data-table">
                 <thead>
                     <tr>
                         <th>Name</th>

@@ -30,6 +30,14 @@ td p {
     padding-left: 0;
 }
 
+.form-inline label, .form-inline {
+    display: inherit !important;
+}
+
+table.dataTable {
+    border-collapse: collapse !important;
+}
+
 .panel, .panel-heading, .panel-body, .panel-footer,
 .input-group, .input-group-btn, .input-group-addon,
 .btn, .alert, .dropdown-menu, .form-control,
