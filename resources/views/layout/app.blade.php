@@ -20,6 +20,9 @@
         <!-- bootstrap-select CSS -->
         <link rel="stylesheet" href="{{ asset('/css/bootstrap-select.min.css') }}">
 
+        <!-- PACE CSS -->
+        <link href="{{ asset('/css/pace/theme.css') }}" rel="stylesheet" />
+
         <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('/css/custom.css') }}">
 
@@ -127,6 +130,9 @@
 
         <!-- DATA TABLE JS -->
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/r-2.1.1/datatables.min.js"></script>
+
+        <!-- PACE.JS -->
+        <script src="{{ asset('/js/pace/pace.js') }}"></script>
 
         <!-- Custom JS -->
         <script src="{{ asset('/js/custom.js') }}"></script>
