@@ -32,7 +32,9 @@ class UserPolicy
 
     public function view(User $user, User $vUser)
     {
-        return $user->_id == Auth::id() || $user->isAdmin();
+        debugbar()->info($user->_id);
+        debugbar()->info($vUser->_id);
+        return $user->_id == $vUser->_id || $user->isAdmin();
     }
 
     public function update(User $user) {

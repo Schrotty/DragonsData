@@ -1,0 +1,1 @@
+<a class="btn btn-secondary" href="{{ url()->previous() }}" role="button">Abort</a>

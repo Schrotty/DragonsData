@@ -67,7 +67,7 @@
                             </div>
                         @endif
 
-                        @if (isset($errors) && $errors->any())
+                        @if (isset($errors) && $errors->any() && false)
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <ul>
                                     @foreach ($errors->all() as $error)

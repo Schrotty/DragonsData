@@ -38,7 +38,7 @@ class UserController extends Controller
             abort(403, 'Access Denied!');
         }
 
-        return view('user.index', ['user' => User::all()]);
+        return view('user.index', ['user' => User::all()->sortBy('group', null, false)]);
     }
 
     /**
@@ -171,7 +171,7 @@ class UserController extends Controller
     public function updateAccountDetails(Request $request, $id)
     {
         if ($request->input('type') == 'security') return $this->changePassword($request, $id);
-        if ($request->input('type') == 'notifications') return $this->changeNotifications($request, $id);
+        if ($request->input('type') == 'notification') return $this->changeNotifications($request, $id);
 
         return redirect('/account');
     }
@@ -223,10 +223,25 @@ class UserController extends Controller
         if ($request->input('write-access') != null) $notifications = array_merge($notifications, Notifications::WRITE_ACCESS);
         if ($request->input('news') != null) $notifications[] = NewsPublish::class;
 
-        $user = User::find(Auth::user()->_id);
+        $user = User::find($id);
+        debugbar()->info($user);
         $user->notifications = $notifications;
         $user->save();
 
         return redirect('/account');
+    }
+  
+    public function resetPassword($id)
+    {
+        $user = User::find($id);
+
+        if(!Gate::allows('update', $user)) {
+            abort(403, 'Access Denied!');
+        }
+
+        $user->password = Hash::make(strtolower($user->username));
+        $user->save();
+
+        return $this->index();
     }
 }

@@ -29,6 +29,7 @@
                                                     <span>{{ $notification->data['title'] }}</span>
                                                 </a>
                                             </div>
+
                                             <div class="col-md-1">
                                                 <form action="{{ 'notification/' . $notification->id }}" method="GET">
                                                     <input type="hidden" name="_method" value="GET">

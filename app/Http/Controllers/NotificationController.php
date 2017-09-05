@@ -20,7 +20,6 @@ class NotificationController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
      */
     public function __construct()
     {
@@ -33,15 +32,6 @@ class NotificationController extends Controller
     public function index()
     {
         return \view('notifications', ['notifications' => Auth::user()->notifications]);
-    }
-
-    public function destroy($notification)
-    {
-        foreach (Auth::user()->unreadNotifications as $not) {
-            $not->delete();
-        }
-
-        return $this->index();
     }
 
     public function show($notification)

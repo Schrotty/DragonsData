@@ -11,7 +11,7 @@
                     <span>Home</span>
                 </a>
 
-                <a href="{{ url('/user/'.strtolower(\Illuminate\Support\Facades\Auth::user()->username)) }}" class="list-group-item">
+                <a href="{{ url('/profile') }}" class="list-group-item">
                     <span class="oi oi-person"></span>
                     <span>Profile</span>
                 </a>

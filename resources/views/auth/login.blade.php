@@ -9,10 +9,10 @@
                 {{ csrf_field() }}
 
                 <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                    <label for="email" class="col-md-4 control-label">Username</label>
+                    <label for="username" class="col-md-4 control-label">Username</label>
 
                     <div class="col-md-6">
-                        <input id="email" type="text" class="form-control" name="username" value="{{ old('email') }}" autofocus>
+                        <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" autofocus>
 
                         @if ($errors->has('username'))
                             <span class="help-block">
@@ -36,11 +36,17 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group{{ $errors->has('credentials') ? ' has-error' : '' }}">
                     <div class="col-md-8 col-md-offset-4">
                         <button type="submit" class="btn btn-primary">
                             Login
                         </button>
+
+                        @if ($errors->has('credentials'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('credentials') }}</strong>
+                            </span>
+                        @endif
                     </div>
                 </div>
             </form>
