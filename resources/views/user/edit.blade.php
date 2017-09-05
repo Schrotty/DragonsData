@@ -10,7 +10,6 @@
             {{ method_field('PUT') }}
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">

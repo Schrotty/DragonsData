@@ -10,6 +10,9 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <!-- DATA TABLES CSS -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/r-2.1.1/datatables.min.css"/>
+
         <!-- Styles -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('/css/open-iconic-bootstrap.css') }}">
@@ -121,6 +124,9 @@
 
         <!-- tinyMCE -->
         <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=pe82xsff0nrqjdu3z6pb4saczh8x6q4oyeiru1sp80lj1oe4"></script>
+
+        <!-- DATA TABLE JS -->
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/r-2.1.1/datatables.min.js"></script>
 
         <!-- Custom JS -->
         <script src="{{ asset('/js/custom.js') }}"></script>
