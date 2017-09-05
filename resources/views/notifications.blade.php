@@ -50,5 +50,15 @@
                 Nothing to show here!
             @endif
         </div>
+
+        @if(count($notifications) != 0)
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <a class="btn btn-primary" href="#" role="button">Mark all as read</a>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 @endsection
