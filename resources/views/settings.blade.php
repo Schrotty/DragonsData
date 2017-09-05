@@ -4,35 +4,12 @@
     <form action="{{ '/settings/' . $settings->_id }}" method="POST">
         <div class="panel panel-default side-panel">
             <div class="panel-heading">
-                <span class="panel-title">Maintenance IP Whitelist</span>
+                <span class="panel-title">Application Settings</span>
             </div>
 
             <div class="panel-body">
                 {{ method_field('PUT') }}
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        @include('whitelist.index', ['entries' => \App\Settings::maintenanceWhitelist()])
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel-footer">
-                <div class="row">
-                    <div class="col-md-12 text-right">
-                        <a class="btn btn-primary" href="{{ '/whitelist/create' }}">Add Entry</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-default side-panel">
-            <div class="panel-heading">
-                <span class="panel-title">Settings</span>
-            </div>
-
-            <div class="panel-body">
 
                 <!-- PC TAG AND PROTECTED CATS/TAGS/PROPS -->
                 <div class="row">
@@ -108,4 +85,6 @@
             </div>
         </div>
     </form>
+
+    @include('maintenance.maintenance')
 @endsection

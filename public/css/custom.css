@@ -11,6 +11,11 @@ td p {
     margin: 0;
 }
 
+/* CUSTOM BOOTSTRAP STUFF*/
+.col-m-t {
+    margin-top: 15px;
+}
+
 .table {
     margin-bottom: 0;
 }

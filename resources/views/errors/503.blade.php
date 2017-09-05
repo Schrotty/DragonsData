@@ -55,9 +55,7 @@
             <hr>
         </div>
 
-        <p class="lead">
-            We are performing scheduled maintenance. We should be back online shortly.
-        </p>
+        <p class="lead">{{ \App\Settings::maintainMessage() }}</p>
     </div>
 </div>
 </body>

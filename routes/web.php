@@ -18,7 +18,6 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-//Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 Route::get('/notifications', 'NotificationController@index')->name('notifications');
 
 Route::post('search', 'SearchController@index');
@@ -45,8 +44,12 @@ Route::get('/profile', function(){
     return view('user.show', ['user' => Auth::user()]);
 });
 
+Route::put('/account/{id}', 'UserController@updateAccountDetails');
 Route::get('/account', function(){
    return view('account', ['user' => Auth::user()]);
 });
 
-Route::put('/account/{id}', 'UserController@updateAccountDetails');
+Route::get('/maintenance/edit', 'MaintenanceController@edit');
+Route::get('/maintenance/change', 'MaintenanceController@changeStatus');
+Route::put('/maintenance', 'MaintenanceController@update');
+
