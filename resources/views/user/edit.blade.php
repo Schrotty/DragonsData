@@ -58,6 +58,8 @@
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
                             Delete User
                         </button>
+
+                        <a href="{{ '/password-reset/'.$user->_id }}" class="btn btn-danger">Reset Password</a>
                     </div>
 
                     <div class="col-md-6">

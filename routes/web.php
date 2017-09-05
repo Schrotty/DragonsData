@@ -11,6 +11,7 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
@@ -38,13 +39,14 @@ Route::resource('notification', 'NotificationController');
 Route::resource('settings', 'SettingsController');
 Route::resource('whitelist', 'WhitelistController');
 
+Route::get('password-reset/{id}', 'UserController@resetPassword');
 
 Route::get('/profile', function(){
-    return view('user.show', ['user' => \Illuminate\Support\Facades\Auth::user()]);
+    return view('user.show', ['user' => Auth::user()]);
 });
 
 Route::get('/account', function(){
-   return view('account', ['user' => \Illuminate\Support\Facades\Auth::user()]);
+   return view('account', ['user' => Auth::user()]);
 });
 
 Route::put('/account/{id}', 'UserController@updateAccountDetails');

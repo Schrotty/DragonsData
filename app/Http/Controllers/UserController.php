@@ -38,7 +38,7 @@ class UserController extends Controller
             abort(403, 'Access Denied!');
         }
 
-        return view('user.index', ['user' => User::all()]);
+        return view('user.index', ['user' => User::all()->sortBy('group', null, false)]);
     }
 
     /**
@@ -230,5 +230,19 @@ class UserController extends Controller
         $user->save();
 
         return redirect('/account');
+    }
+
+    public function resetPassword($id)
+    {
+        $user = User::find($id);
+
+        if(!Gate::allows('update', $user)) {
+            abort(403, 'Access Denied!');
+        }
+
+        $user->password = Hash::make(strtolower($user->username));
+        $user->save();
+
+        return $this->index();
     }
 }
