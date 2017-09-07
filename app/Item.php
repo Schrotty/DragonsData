@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-
-class Item extends Eloquent
+class Item extends Model
 {
     protected $collection = 'item';
 
@@ -56,5 +54,19 @@ class Item extends Eloquent
         if ($tag == null) return array();
 
         return Item::all()->where('tags', 'all', [$tag->_id]);
+    }
+
+    public static function getPlayer($value)
+    {
+        return Item::all()->where('category', '=', $value);
+    }
+
+    /**
+     * @param $id
+     * @return array|static
+     */
+    public static function byParty($id)
+    {
+        return Item::all()->where('party', 'all', $id) ?? array();
     }
 }

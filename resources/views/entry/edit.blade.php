@@ -7,11 +7,11 @@
 
         <!-- Heading -->
         <div class="panel-heading">
-            <span class="panel-title">Edit Journal</span>
+            <span class="panel-title">Create Journal Entry</span>
         </div>
 
         <!-- Content -->
-        <form action="{{ '/journal/' . $journal->_id }}" method="POST">
+        <form action="{{ '/entry/'.$entry->_id }}" method="POST">
             <div class="panel-body">
                 {{ method_field('PUT') }}
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -20,12 +20,12 @@
                     <div class="row">
                         <div class="col-6">
                             <label for="title">Title</label>
-                            <input id="title" class="form-control" name="title">
+                            <input id="title" class="form-control" name="title" value="{{ $entry->title }}">
                         </div>
 
                         <div class="col-6">
                             <label for="date">Date</label>
-                            <input id="date" class="form-control" name="date">
+                            <input id="date" class="form-control" name="date" value="{{ $entry->date }}">
                         </div>
                     </div>
                 </div>
@@ -33,8 +33,8 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-12">
-                            <label for="mce">Entry</label>
-                            <textarea id="mce" name="entry"></textarea>
+                            <label for="mce">Content</label>
+                            <textarea id="mce" name="content">{{ $entry->content }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                     <div class="col-md-12 text-right">
                         @include('module.back-button')
                         <button type="submit" class="btn btn-primary">
-                            Update Journal
+                            Update Entry
                         </button>
                     </div>
                 </div>

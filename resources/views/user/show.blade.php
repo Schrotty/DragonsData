@@ -89,7 +89,7 @@
                         <tr>
                             <td><a href="/item/{{ $item->_id }}">{{ $item->name }}</a></td>
                             <td>{{ \App\Category::find($item->category)->name }}</td>
-                            <td>{!! substr($item->description, 0, 50) !!}</td>
+                            <td>{!! strip_tags($item->teaser) !!}</td>
                         </tr>
                     @endforeach
                 @else

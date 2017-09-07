@@ -26,6 +26,11 @@ Route::post('find', 'SearchController@find');
 Route::resource('item', 'ItemController');
 Route::resource('journal', 'JournalController');
 
+Route::get('/entry/create/{party}', 'EntryController@create');
+Route::get('/entry/{entry}/edit', 'EntryController@edit');
+Route::post('/entry', 'EntryController@store');
+Route::put('/entry/{id}', 'EntryController@update');
+
 Route::resource('category', 'CategoryController');
 Route::resource('tag', 'TagController');
 Route::resource('property', 'PropertyController');

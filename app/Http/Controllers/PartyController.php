@@ -64,6 +64,7 @@ class PartyController extends Controller
         $party->player = $request->input('player');
         $party->chronist = $request->input('chronist');
         $party->creator = Auth::user()->_id;
+        $party->description = $request->input('description');
         $party->date = date("d.m.Y");
 
         $journal = new Journal();
@@ -77,7 +78,6 @@ class PartyController extends Controller
         $journal->save();
 
         Session::flash('message', 'Party Created!');
-
         return Redirect::to('/party/'.$party->_id);
     }
 
@@ -132,6 +132,7 @@ class PartyController extends Controller
         $party->member = $request->input('member');
         $party->player = $request->input('player');
         $party->chronist = $request->input('chronist');
+        $party->description = $request->input('description');
         $party->updateAndNotify($old);
 
         Session::flash('message', 'Party Updated!');

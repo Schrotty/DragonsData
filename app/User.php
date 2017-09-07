@@ -2,17 +2,14 @@
 
 namespace App;
 
-use App\Notifications\AccessLost;
-use Illuminate\Support\Facades\Auth;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Eloquent implements Authenticatable
+class User extends Model implements Authenticatable
 {
     use AuthenticableTrait;
-    use Notifiable;
 
     protected $primaryKey = '_id';
 
@@ -96,10 +93,6 @@ class User extends Eloquent implements Authenticatable
 
     public function notify($instance)
     {
-        debugbar()->info(get_class($instance));
-        debugbar()->info($this->attributes['notifications']);
-
-        //if (in_array(get_class($instance), (array)User::find(\Illuminate\Support\Facades\Auth::id())->first()->notifications)) $this->notifyCall($instance);
         foreach($this->attributes['notifications'] as $notify){
             if ($notify == get_class($instance)) $this->notifyCall($instance);
         }

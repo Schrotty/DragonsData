@@ -18,9 +18,10 @@
 
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label for="known">Known</label>
                             <select id="known" name="known[]" multiple class="selectpicker show-tick" data-live-search="true">
+                                <optgroup label="Single user">
                                 @foreach(\App\User::all() as $user)
                                     @if($user->_id != $item->author)
                                         @if($item->known != null)
@@ -35,10 +36,17 @@
                                         @endif
                                     @endif
                                 @endforeach
+                                </optgroup>
+
+                                <optgroup label="Parties">
+                                    @foreach(\App\Party::all() as $party)
+                                        <option value="{{ $party->_id }}">{{ $party->name }}</option>
+                                    @endforeach
+                                </optgroup>
                             </select>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label for="contri">Contributors</label>
                             <select id="contri" name="contributors[]" multiple class="selectpicker show-tick" data-live-search="true">
                                 @foreach(\App\User::all() as $user)
@@ -58,7 +66,53 @@
                             </select>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
+                            <label for="party">Party</label>
+                            <select id="party" name="party[]" multiple class="selectpicker show-tick" data-live-search="true">
+                                @foreach(\App\Party::all() as $party)
+                                    @if($item->party != null)
+                                        @if(in_array($party->_id, $item->party))
+                                            <option selected value="{{ $party->_id }}">{{ $party->name }}</option>
+                                            @continue
+                                        @endif
+
+                                        <option value="{{ $party->_id }}">{{ $party->name }}</option>
+                                    @else
+                                        <option value="{{ $party->_id }}">{{ $party->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="content">References</label>
+                            <select name="parents[]" multiple class="selectpicker show-tick" data-live-search="true">
+                                @foreach(\App\Item::all() as $itm)
+                                    @if($itm->_id != $item->_id)
+                                        @if($item->parents != null)
+                                            @if(in_array($itm->_id, $item->parents))
+                                                <option selected value="{{ $itm->_id }}">{{ $itm->name }}</option>
+                                                @continue
+                                            @endif
+
+                                            <option value="{{ $itm->_id }}">{{ $itm->name }}</option>
+                                        @else
+                                            <option value="{{ $itm->_id }}">{{ $itm->name }}</option>
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
                             <label for="content">Category</label>
                             <select name="category" class="selectpicker" data-live-search="true">
                                 @foreach(\App\Category::all() as $category)
@@ -71,7 +125,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <label for="content">Tags</label>
                             <select name="tags[]" multiple class="selectpicker" data-live-search="true">
                                 @foreach(\App\Category::all() as $category)
@@ -89,31 +143,6 @@
                                             @endif
                                         @endforeach
                                     </optgroup>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label for="content">Parents</label>
-                            <select name="parents[]" multiple class="selectpicker show-tick" data-live-search="true">
-                                @foreach(\App\Item::all() as $itm)
-                                    @if($item->_id != $itm->_id)
-                                        @if($item->parents != null)
-                                            @foreach($item->parents as $parent)
-                                                @if($parent == $itm->_id)
-                                                    <option selected value="{{ $itm->_id }}">{{ $itm->name }}</option>
-                                                @else
-                                                    <option value="{{ $itm->_id }}">{{ $itm->name }}</option>
-                                                @endif
-                                            @endforeach
-                                        @else
-                                            <option value="{{ $itm->_id }}">{{ $itm->name }}</option>
-                                        @endif
-                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -176,7 +205,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="content">Description</label>
+                    <label for="teaser">Teaser</label>
+                    <textarea id="teaser" class="form-control" name="teaser" rows="3">{{ $item->teaser }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="mce">Description</label>
                     <textarea id="mce" class="form-control" name="content" rows="3">{{ $item->description }}</textarea>
                 </div>
             </div>
@@ -192,6 +226,7 @@
                     </div>
 
                     <div class="col-md-6 text-right">
+                        @include('module.back-button')
                         <button type="submit" class="btn btn-primary">Update Item</button>
                     </div>
                 </div>

@@ -17,6 +17,7 @@ use App\Notifications\AccessGranted;
 use App\Notifications\AccessLost;
 use App\Notifications\ContributorRightsGranted;
 use App\Notifications\ContributorRightsLost;
+use App\Party;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -75,16 +76,30 @@ class ItemController extends Controller
             }
         }
 
+        $known = array();
+        foreach ($request->input('known') as $id){
+            if (User::isUser($id)) {
+                $known[] = $id;
+                continue;
+            }
+
+            if (Party::isParty($id)) {
+                $known = array_merge($known, Party::find($id)->member);
+            }
+        }
+
         $item = new Item();
         $item->name = $request->input('name');
         $item->description = $request->input('content');
-        $item->known = $request->input('known');
+        $item->teaser = substr($request->input('teaser'), 0, 50);
+        $item->known = $known;
         $item->contributors = $request->input('contributors');
         $item->category = $request->input('category');
         $item->parents = $request->input('parents');
         $item->tags = $request->input('tags');
-        $item->properties = $properties;
+        $item->properties = empty($properties) ? null : $properties;
         $item->author = Auth::user()->_id;
+        $item->party = $request->input('party');
         $item->save();
 
         Session::flash('message', 'Item Created!');
@@ -149,6 +164,20 @@ class ItemController extends Controller
         $gainRights = array();
         $lostRights = array();
 
+        $knwn = array();
+        foreach ($request->input('known') ?? array() as $id){
+            if (User::exist($id)) {
+                $knwn[] = $id;
+                continue;
+            }
+
+            if (Party::exist($id)) {
+                $knwn = array_merge($knwn, Party::find($id)->member);
+            }
+        }
+
+        $knwn = array_unique($knwn);
+
         if($request->input('key') != null) {
             foreach ($request->input('key') as $key => $value) {
                 foreach(array_values(array_filter($request->input('value'))) as $nKey => $nVaue) {
@@ -158,13 +187,13 @@ class ItemController extends Controller
         }
 
         if ($item->known == null) $gainAccess = $request->input('contributors');
-        if ($request->input('known') == null) $lostAccess = $item->known;
-        if($item->known != null && $request->input('known')) {
+        if ($knwn == null) $lostAccess = $item->known;
+        if($item->known != null && count($item->known) != 0 && $knwn) {
             foreach ($item->known as $known) {
-                if(!in_array($known, $request->input('known'))) $lostAccess[] = $known;
+                if(!in_array($known, $knwn)) $lostAccess[] = $known;
             }
 
-            foreach ($request->input('known') as $known) {
+            foreach ($knwn as $known) {
                 if (!in_array($known, $item->known)) $gainAccess[] = $known;
             }
         }
@@ -183,12 +212,14 @@ class ItemController extends Controller
 
         $item->name = $request->input('name');
         $item->description = $request->input('content');
-        $item->known = $request->input('known');
+        $item->teaser = substr($request->input('teaser'), 0, 50);
+        $item->known = count($knwn) != 0 ? $knwn : null;
         $item->contributors = $request->input('contributors');
         $item->category = $request->input('category');
         $item->parents = $request->input('parents');
         $item->tags = $request->input('tags');
-        $item->properties = $properties;
+        $item->properties = empty($properties) ? null : $properties;
+        $item->party = $request->input('party');
         $item->save();
 
         if ($gainAccess != null) foreach ($gainAccess as $user) User::find($user)->notify(new AccessGranted($item));

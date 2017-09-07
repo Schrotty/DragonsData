@@ -11,6 +11,11 @@ td p {
 }
 
 /* CUSTOM BOOTSTRAP STUFF*/
+h3 {
+    border-bottom: 1px solid #eaecef;
+    overflow: hidden;
+}
+
 .col-m-t {
     margin-top: 15px;
 }
@@ -20,6 +25,62 @@ td p {
 }
 
 /* END*/
+
+.date-format {
+    text-decoration: underline;
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+    text-align: right;
+}
+
+.form-control {
+    height:36.4px !important;
+}
+
+.container-data-wrapper {
+    margin-left: 15px;
+}
+
+.container-data-index {
+    padding:10px;
+    background-color: #f8f9fa;
+    border: 1px solid lightgrey;
+    display: inline-block;
+}
+
+.index-title {
+    text-align: center;
+    font-weight: bold;
+}
+
+.index-number {
+    padding-right:5px;
+    text-decoration: none;
+    color: #636b6f;
+}
+
+.container-data-index ul {
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+.container-data-index ul ul {
+    padding-left: 15px;
+}
+
+.container-data-index li {
+    list-style: none;
+}
+
+.container-data-wrapper table {
+    background-color: #f8f9fa;
+}
+
+.container-data-wrapper th {
+    text-align: center;
+    text-decoration: underline;
+}
 
 .table {
     margin-bottom: 0;

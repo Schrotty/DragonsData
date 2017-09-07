@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-
-class Property extends Eloquent
+class Property extends Model
 {
     protected $collection = 'properties';
 

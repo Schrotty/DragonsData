@@ -18,9 +18,28 @@
 
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-3">
-                            <label for="content">Known</label>
-                            <select name="known[]" multiple class="selectpicker show-tick" data-live-search="true">
+                        <div class="col-md-4">
+                            <label for="known">Known</label>
+                            <select id="known" name="known[]" multiple class="selectpicker show-tick" data-live-search="true">
+                                <optgroup label="Single user">
+                                    @foreach(\App\User::all() as $user)
+                                        @if($user->_id != \Illuminate\Support\Facades\Auth::user()->_id)
+                                            <option value="{{ $user->_id }}">{{ $user->username }}</option>
+                                        @endif
+                                    @endforeach
+                                </optgroup>
+
+                                <optgroup label="Parties">
+                                    @foreach(\App\Party::all() as $party)
+                                        <option value="{{ $party->_id }}">{{ $party->name }}</option>
+                                    @endforeach
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="contri">Contributors</label>
+                            <select id="contri" name="contributors[]" multiple class="selectpicker show-tick" data-live-search="true">
                                 @foreach(\App\User::all() as $user)
                                     @if($user->_id != \Illuminate\Support\Facades\Auth::user()->_id)
                                         <option value="{{ $user->_id }}">{{ $user->username }}</option>
@@ -29,35 +48,11 @@
                             </select>
                         </div>
 
-                        <div class="col-md-3">
-                            <label for="content">Contributors</label>
-                            <select name="contributors[]" multiple class="selectpicker show-tick" data-live-search="true">
-                                @foreach(\App\User::all() as $user)
-                                    @if($user->_id != \Illuminate\Support\Facades\Auth::user()->_id)
-                                        <option value="{{ $user->_id }}">{{ $user->username }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label for="content">Category</label>
-                            <select name="category" class="selectpicker" data-live-search="true">
-                                @foreach(\App\Category::all() as $category)
-                                    <option value="{{ $category->_id }}">{{ $category->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label for="content">Tags</label>
-                            <select name="tags[]" multiple class="selectpicker" data-live-search="true">
-                                @foreach(\App\Category::all() as $category)
-                                    <optgroup label="{{ $category->name }}">
-                                        @foreach(\App\Tag::all()->where('category', $category->_id) as $tag)
-                                            <option value="{{ $tag->_id }}">{{ $tag->name }}</option>
-                                        @endforeach
-                                    </optgroup>
+                        <div class="col-md-4">
+                            <label for="party">Party</label>
+                            <select id="party" name="party[]" multiple class="selectpicker show-tick" data-live-search="true">
+                                @foreach(\App\Party::all() as $party)
+                                    <option value="{{ $party->_id }}">{{ $party->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -67,10 +62,36 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-12">
-                            <label for="content">Parents</label>
+                            <label for="content">References</label>
                             <select name="parents[]" multiple class="selectpicker show-tick" data-live-search="true">
                                 @foreach(\App\Item::all() as $item)
                                     <option value="{{ $item->_id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="content">Category</label>
+                            <select name="category" class="selectpicker" data-live-search="true">
+                                @foreach(\App\Category::all() as $category)
+                                    <option value="{{ $category->_id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="content">Tags</label>
+                            <select name="tags[]" multiple class="selectpicker" data-live-search="true">
+                                @foreach(\App\Category::all() as $category)
+                                    <optgroup label="{{ $category->name }}">
+                                        @foreach(\App\Tag::all()->where('category', $category->_id) as $tag)
+                                            <option value="{{ $tag->_id }}">{{ $tag->name }}</option>
+                                        @endforeach
+                                    </optgroup>
                                 @endforeach
                             </select>
                         </div>
@@ -93,7 +114,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="content">Description</label>
+                    <label for="teaser">Teaser</label>
+                    <textarea id="teaser" class="form-control" name="teaser" rows="3">{{ old('content') }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="mce">Description</label>
                     <textarea id="mce" class="form-control" name="content" rows="3">{{ old('content') }}</textarea>
                 </div>
             </div>

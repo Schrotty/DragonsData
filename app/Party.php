@@ -10,15 +10,19 @@ namespace App;
 
 use App\Notifications\PartyEnter;
 use App\Notifications\PartyLeave;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Party extends Eloquent
+class Party extends Model
 {
     protected $collection = 'parties';
 
     protected $dateFormat = 'd.m.Y';
 
     protected $dates = ['created_at', 'updated_at'];
+
+    public function items()
+    {
+        return $this->belongsToMany('App\Item', null, 'party');
+    }
 
     public function createAndNotify()
     {
@@ -58,5 +62,10 @@ class Party extends Eloquent
     public static function partiesWhereMember(Item $character)
     {
         return Party::whereRaw(array('$text'=>array('$search'=> "\"" . $character->_id . "\"")))->get();
+    }
+
+    public function entries()
+    {
+        return $this->belongsToMany('App\Entry', null, 'party');
     }
 }

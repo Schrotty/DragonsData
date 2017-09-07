@@ -33,9 +33,9 @@
             <div class="col-md-2">
                 <label for="maintain-status">Status</label>
                 @if(\Illuminate\Support\Facades\App::isDownForMaintenance() == true)
-                    <span id="maintain-status" class="badge badge-success">Activated</span>
+                    <span id="maintain-status" class="label label-success">Activated</span>
                 @else
-                    <span id="maintain-status" class="badge badge-secondary">Deactivated</span>
+                    <span id="maintain-status" class="label label-secondary">Deactivated</span>
                 @endif
             </div>
 
