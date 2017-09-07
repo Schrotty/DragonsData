@@ -7,14 +7,15 @@
 
         <!-- Heading -->
         <div class="panel-heading">
-            <span class="panel-title">Edit Journal</span>
+            <span class="panel-title">Create Journal Entry</span>
         </div>
 
         <!-- Content -->
-        <form action="{{ '/journal/' . $journal->_id }}" method="POST">
+        <form action="{{ '/entry' }}" method="POST">
             <div class="panel-body">
-                {{ method_field('PUT') }}
+                {{ method_field('POST') }}
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="party" value="{{ $party }}">
 
                 <div class="form-group">
                     <div class="row">
@@ -33,8 +34,8 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-12">
-                            <label for="mce">Entry</label>
-                            <textarea id="mce" name="entry"></textarea>
+                            <label for="mce">Content</label>
+                            <textarea id="mce" name="content"></textarea>
                         </div>
                     </div>
                 </div>
@@ -46,7 +47,7 @@
                     <div class="col-md-12 text-right">
                         @include('module.back-button')
                         <button type="submit" class="btn btn-primary">
-                            Update Journal
+                            Create Entry
                         </button>
                     </div>
                 </div>

@@ -54,7 +54,7 @@ class SettingsController extends Controller
         }
 
         $settings = Settings::find($id);
-        $settings->pctag = $request->input('pctag');
+        $settings->playerIdentifier = $request->input('player-identifier');
         $settings->save();
 
         Session::flash('message', 'Settings Updated!');

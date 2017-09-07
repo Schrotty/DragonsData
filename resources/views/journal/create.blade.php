@@ -7,7 +7,7 @@
 
         <!-- Heading -->
         <div class="panel-heading">
-            <span class="panel-title">Edit Journal</span>
+            <span class="panel-title">Create Journal</span>
         </div>
 
         <!-- Content -->

@@ -1,132 +1,121 @@
 @extends('layout.app')
 
 @section('content')
-    <div class="panel panel-default side-panel">
-        <div class="panel-heading">
-            <div class="panel-title">
-                {{ $item->name }}
-                <small class="text-muted"> - {{ \App\Category::find($item->category)->name }}</small>
-            </div>
-        </div>
-
+    <div class="panel panel-default">
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-4">
-                    <div class="realm-player">
-                        <dt>Author</dt>
-                        @php $user = \App\User::find($item->author) @endphp
-                        <dd>{{ $user->username ?? 'Unknown' }}</dd>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="realm-player">
-                        <dt>Contributors</dt>
-                        @if(count($item->contributors) > 0)
-                            {{ app('debugbar')->info($item->contributors) }}
-                            @foreach($item->contributors as $id)
-
-                                @php $user = \App\User::find($id) @endphp
-                                @if(!$loop->last)
-                                    <dd>{{ $user->username }},</dd>
-                                @else
-                                    <dd>{{ $user->username }}</dd>
-                                @endif
-                            @endforeach
-                        @else
-                            <dd>-</dd>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="realm-player">
-                        <dt>Known</dt>
-                        @if($item->known != null)
-                            @foreach($item->known as $id)
-                                @php $user = \App\User::find($id) @endphp
-                                @if(!$loop->last)
-                                    <span>{{ $user->username }},</span>
-                                @else
-                                    <span>{{ $user->username }}</span>
-                                @endif
-                            @endforeach
-                        @else
-                            <dd>-</dd>
-                        @endif
-                    </div>
+                <div class="col-12">
+                    <h2>
+                        {{ $item->name }}
+                        <small class="text-muted"> - {{ \App\Category::byId($item->category)->getValue('name', 'Unknown') }}</small>
+                    </h2>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-4">
-                    <div class="realm-player">
-                        <dt>Parents</dt>
-                        @if($item->parents != null)
-                            @foreach($item->parents as $id)
-                                @php $itm = \App\Item::find($id) @endphp
-                                @if(!$loop->last)
-                                    <dd><a href="{{ url('item/' . $itm->_id) }}">{{ $itm->name }},</a></dd>
-                                @else
-                                    <dd><a href="{{ url('item/' . $itm->_id) }}">{{ $itm->name }}</a></dd>
+                <div class="col-12">
+
+                    <!-- DATA PANEL -->
+                    <div class="float-right container-data-wrapper">
+                        <table class="table table-bordered">
+                            <tbody>
+
+                            <!-- USER INFO -->
+                                <tr>
+                                    <th colspan="2">User info</th>
+                                </tr>
+
+                                <tr>
+                                    <td>Author</td>
+                                    <td>
+                                        <span>{{ \App\User::byId($item->author)->getValue('username') }}</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Known</td>
+                                    <td>
+                                        @if($item->hasValues('known'))
+                                            @foreach($item->known as $id)
+                                                <span>{{ \App\User::byId($id)->username }}</span><br>
+                                            @endforeach
+                                        @else None @endif
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Contributors</td>
+                                    <td>
+                                        @if($item->hasValues('contributors'))
+                                            @foreach($item->contributors as $id)
+                                                <span>{{ \App\User::byId($id)->username }}</span><br>
+                                            @endforeach
+                                        @else None @endif
+                                    </td>
+                                </tr>
+
+                                <!-- CONTAINER DATA -->
+                                <tr>
+                                    <th colspan="2">Container Data</th>
+                                </tr>
+
+                                <tr>
+                                    <td>Parties</td>
+                                    <td>
+                                        @if($item->hasValues('party'))
+                                            @foreach($item->party as $id)
+                                                <a href="{{ '/party/'.$id }}">{{ \App\Party::byId($id)->name }}<br></a>
+                                            @endforeach
+                                        @else None @endif
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>References</td>
+                                    <td>
+                                        @if($item->hasValues('parents'))
+                                            @foreach($item->parents as $id)
+                                                <a href="{{ '/item/'.$id }}">{{ \App\Item::byId($id)->name }}<br></a>
+                                            @endforeach
+                                        @else None @endif
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Tags</td>
+                                    <td>
+                                        @if($item->hasValues('tags'))
+                                            @foreach($item->tags as $id)
+                                                @if(\App\Tag::exist($id))
+                                                    <span class="label label-{{ \App\Tag::byId($id)->style }}">{{ \App\Tag::byId($id)->name }}</span><br>
+                                                @endif
+                                            @endforeach
+                                        @else None @endif
+                                    </td>
+                                </tr>
+
+                                <!-- PROPERTIES -->
+                                @if($item->hasValues('properties'))
+                                    <tr><th colspan="2">Properties</th></tr>
+
+                                    @foreach($item->properties as $id => $value)
+                                        @if(\App\Property::exist($id))
+                                            <tr>
+                                                <td>{{ \App\Property::byId($id)->getValue('name') }}</td>
+                                                <td>{{ $value }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
                                 @endif
-                            @endforeach
-                        @else
-                            <dd>-</dd>
-                        @endif
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- CONTENT -->
+                    <div class="container-data-content">
+                        {!! $item->description !!}
                     </div>
                 </div>
-
-                <div class="col-md-8">
-                    <div class="realm-player">
-                        <dt>Tags</dt>
-                        @if($item->tags != null)
-                            @foreach($item->tags as $id)
-                                @php $tag = \App\Tag::find($id) @endphp
-                                @if($tag != null)
-                                    <span class="label label-{{ $tag->style }}">{{ $tag->name }}</span>
-                                @endif
-                            @endforeach
-                        @else
-                            <dd>-</dd>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    @if(count($item->properties) > 0)
-                        <dt>Properties</dt>
-                        @php $i = 0; @endphp
-                        @foreach($item->properties as $property => $value)
-                            @if(($i % 3) == 0)
-                                <div class="row">
-                            @endif
-
-                            <div class="realm-player col-md-4">
-                                @php $prop = \App\Property::find($property) @endphp
-                                @if($prop != null)
-                                    <dt>{{ $prop->name }}</dt>
-                                    <dd>{{ $value }}</dd>
-                                @endif
-                            </div>
-
-                            @if($loop->last || ($i % 3) == 2)
-                                </div>
-                            @endif
-
-                            @php $i++; @endphp
-                        @endforeach
-                    @endif
-                </div>
-            </div>
-
-            <div class="description-box">
-                @if($item->description != null)
-                    <dt>Description</dt>
-                    {!! $item->description !!}
-                @endif
             </div>
         </div>
 

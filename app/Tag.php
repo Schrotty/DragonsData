@@ -4,7 +4,7 @@ namespace App;
 
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Tag extends Eloquent
+class Tag extends Model
 {
     protected $collection = 'tags';
 

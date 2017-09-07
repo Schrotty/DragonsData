@@ -25,35 +25,43 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="form-group">
+                    <div class="row">
 
-                    <!-- Members -->
-                    <div class="col-md-4">
-                        <label for="member">Members</label>
-                        <select name="member[]" multiple class="selectpicker show-tick" data-live-search="true">
-                            @foreach(\App\User::all() as $user)
-                                <option value="{{ $user->_id }}">{{ $user->username }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                        <!-- Members -->
+                        <div class="col-md-4">
+                            <label for="member">Members</label>
+                            <select name="member[]" multiple class="selectpicker show-tick" data-live-search="true">
+                                @foreach(\App\User::all() as $user)
+                                    <option value="{{ $user->_id }}">{{ $user->username }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
-                    <!-- Player -->
-                    <div class="col-md-4">
-                        <label for="member">Player</label>
-                        <select id="member" name="player[]" multiple class="selectpicker show-tick" data-live-search="true">
-                            @include('module.item.player-select')
-                        </select>
-                    </div>
+                        <!-- Player -->
+                        <div class="col-md-4">
+                            <label for="member">Player</label>
+                            <select id="member" name="player[]" multiple class="selectpicker show-tick" data-live-search="true">
+                                @include('module.item.player-select')
+                            </select>
+                        </div>
 
-                    <!-- Chronist -->
-                    <div class="col-md-4">
-                        <label for="chronist">Chronist</label>
-                        <select name="chronist" class="selectpicker show-tick" data-live-search="true">
-                            @foreach(\App\User::all() as $user)
-                                <option value="{{ $user->_id }}">{{ $user->username }}</option>
-                            @endforeach
-                        </select>
+                        <!-- Chronist -->
+                        <div class="col-md-4">
+                            <label for="chronist">Chronist</label>
+                            <select id="chronist" name="chronist" class="selectpicker show-tick" data-live-search="true">
+                                @foreach(\App\User::all() as $user)
+                                    <option value="{{ $user->_id }}">{{ $user->username }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="mce">Description</label>
+                    <textarea name="description" id="mce"></textarea>
                 </div>
             </div>
 

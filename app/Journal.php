@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-
-class Journal extends Eloquent
+class Journal extends Model
 {
     protected $collection = 'journal';
     protected $dateFormat = 'd.m.Y';

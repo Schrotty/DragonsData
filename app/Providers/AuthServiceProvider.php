@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Category;
+use App\Entry;
 use App\Item;
 use App\Journal;
 use App\News;
 use App\Party;
+use App\Policies\EntryPolicy;
 use App\Policies\ItemPolicy;
 use App\Policies\JournalPolicy;
 use App\Policies\MetaPolicy;
@@ -35,6 +37,7 @@ class AuthServiceProvider extends ServiceProvider
         Party::class => PartyPolicy::class,
         Journal::class => JournalPolicy::class,
         Settings::class => SettingsPolicy::class,
+        Entry::class => EntryPolicy::class,
 
         /* META POLICIES */
         Category::class => MetaPolicy::class,

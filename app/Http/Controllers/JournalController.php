@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entry;
 use App\Events\NewsPublished;
 use App\Http\Requests\StoreItem;
 use App\Http\Requests\UpdateItem;
@@ -101,6 +102,7 @@ class JournalController extends Controller
         }
 
         $journal->description = $request->input('content');
+        $journal->push('entries', new Entry($request->input('date'), $request->input('title'), $request->input('entry')));
         $journal->save();
 
         Session::flash('message', 'Journal Updated!');

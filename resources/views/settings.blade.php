@@ -11,26 +11,24 @@
                 {{ method_field('PUT') }}
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                <!-- PC TAG AND PROTECTED CATS/TAGS/PROPS -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="player-ident">Player Identifier</label>
+                            <select id="player-ident" name="player-identifier" class="selectpicker">
+                                @foreach(\App\Category::all() as $category)
+                                    <option {{ \App\Settings::playerIdent() == $category->_id ? 'selected' : '' }} value="{{ $category->getValue('_id') }}">{{ $category->getValue('name') }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROTECTED CATS/TAGS/PROPS -->
                 <div class="row">
 
-                    <!-- PLAYER TAG -->
-                    <div class="col-md-3">
-                        <label for="pctag">Player Tag</label>
-                        <select name="pctag" id="pctag" class="selectpicker">
-                            @foreach(\App\Tag::all() as $value)
-                                @if(\App\Settings::playerTag() == $value->_id)
-                                    <option selected value="{{ $value->_id }}">{{ $value->name }}</option>
-                                    @continue
-                                @endif
-
-                                <option value="{{ $value->_id }}">{{ $value->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
                     <!-- PROTECTED CATEGORIES -->
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="cats">Protected categories</label>
                         <select name="categories[]" id="cats" class="selectpicker show-tick" multiple>
                             @foreach(\App\Category::all() as $value)
@@ -45,7 +43,7 @@
                     </div>
 
                     <!-- PROTECTED TAGS -->
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="tags">Protected tags</label>
                         <select name="tags[]" id="tags" class="selectpicker show-tick" multiple>
                             @foreach(\App\Tag::all() as $value)
@@ -60,7 +58,7 @@
                     </div>
 
                     <!-- PROTECTED PROPERTIES -->
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="props">Protected properties</label>
                         <select name="properties[]" id="props" class="selectpicker show-tick" multiple>
                             @foreach(\App\Property::all() as $value)

@@ -4,7 +4,7 @@ namespace App;
 
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Settings extends Eloquent
+class Settings extends Model
 {
     protected $collection = 'settings';
 
@@ -13,9 +13,9 @@ class Settings extends Eloquent
         return Settings::where('type', '=', 'system')->first();
     }
 
-    public static function playerTag()
+    public static function playerIdent()
     {
-        return Settings::getSetings()->pctag;
+        return Settings::getSetings()->playerIdentifier;
     }
 
     public static function maintenanceWhitelist()

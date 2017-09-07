@@ -22,8 +22,8 @@
                         @foreach($items as $item)
                             <tr>
                                 <td><a href="/item/{{ $item->_id }}">{{ $item->name }}</a></td>
-                                <td>{{substr(strip_tags($item->description), 0, 35)}}</td>
-                                <td>{{ \App\Category::find($item->category)->name }}</td>
+                                <td>{{ strip_tags($item->teaser) }}</td>
+                                <td>{{ \App\Category::byId($item->category)->getValue('name', 'Unknown') }}</td>
                                 <td>{{ \App\User::find($item->author)->username ?? 'Unknown' }}</td>
 
                                 <td>
