@@ -11,7 +11,7 @@
         <div class="panel-body">
             @if(!config('app.notifications'))
                 <div class="alert alert-warning" role="alert">
-                    The notification system is currently <strong>disabled</strong> system wide!
+                    Notifications are currently <strong>disabled</strong>!
                 </div>
             @endif
 
