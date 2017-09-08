@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 use Illuminate\Notifications\Notifiable;
@@ -85,7 +84,7 @@ class User extends Model implements Authenticatable
     {
         foreach ($types as $type)
         {
-            if (!in_array($type, $this->attributes['notifications'])) return false;
+            if (!in_array($type, $this->getValue('receiveFrom', array()))) return false;
         }
 
         return true;
@@ -93,8 +92,10 @@ class User extends Model implements Authenticatable
 
     public function notify($instance)
     {
-        foreach($this->attributes['notifications'] as $notify){
-            if ($notify == get_class($instance)) $this->notifyCall($instance);
+        if (config('app.notifications')) {
+            foreach($this->getValue('receiveFrom', array()) as $notify){
+                if ($notify == get_class($instance)) $this->notifyCall($instance);
+            }
         }
     }
 }

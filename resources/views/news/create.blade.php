@@ -19,7 +19,7 @@
 
                     <div class="form-group">
                         <label for="content">Content</label>
-                        <textarea id="mce" class="form-control" name="content" rows="3"></textarea>
+                        <textarea id="content" class="form-control content" name="content" rows="3"></textarea>
                     </div>
                 </div>
 

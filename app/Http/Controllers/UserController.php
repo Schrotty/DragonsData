@@ -81,7 +81,7 @@ class UserController extends Controller
         $user->group = $request->input('group') ?? 2;
         $user->password = bcrypt($request->input('password'));
         $user->chars = $request->input('char');
-        $user->notifications = array(
+        $user->receiveFrom = array(
             AccessLost::class,
             AccessGranted::class,
             ContributorRightsLost::class,
@@ -225,7 +225,7 @@ class UserController extends Controller
 
         $user = User::find($id);
         debugbar()->info($user);
-        $user->notifications = $notifications;
+        $user->receiveFrom = $notifications;
         $user->save();
 
         return redirect('/account');
