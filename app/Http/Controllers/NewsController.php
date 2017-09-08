@@ -54,8 +54,6 @@ class NewsController extends Controller
             abort(403, 'Access Denied!');
         }
 
-        app('debugbar')->info($request);
-
         $news = new News();
         $news->title = $request->input('title');
         $news->content = $request->input('content');
@@ -66,7 +64,7 @@ class NewsController extends Controller
         Session::flash('message', 'News Created!');
         foreach (User::all() as $user) $user->notify(new NewsPublish($news));
 
-        return Redirect::to('/');
+        return Redirect::to('/news/'.$news->_id);
     }
 
     /**
@@ -118,7 +116,7 @@ class NewsController extends Controller
         $news->save();
 
         Session::flash('message', 'News Updated!');
-        return Redirect::to('/');
+        return Redirect::to('/news/'.$news->_id);
     }
 
     /**

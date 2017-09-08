@@ -31,12 +31,12 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        return \view('notifications', ['notifications' => Auth::user()->notifications]);
+        return \view('notifications', ['notifications' => Auth::user()->getValue('unreadNotifications', array())]);
     }
 
     public function show($notification)
     {
-        foreach (Auth::user()->unreadNotifications as $not) {
+        foreach (Auth::user()->getValue('unreadNotifications', array()) as $not) {
             if($notification == $not->id){
                 $not->delete();
             }

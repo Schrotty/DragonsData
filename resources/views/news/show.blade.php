@@ -10,7 +10,8 @@
                     </h2>
 
                     <small class="text-muted"><strong>{{ \App\User::find($news->author)->username }}</strong> - <em>{{$news->date}}</em></small>
-                    {!! $news->content !!}
+                    @php $parsedown = new Parsedown() @endphp
+                    {!! $parsedown->text($news->content) !!}
                 </div>
             @endif
         </div>

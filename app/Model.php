@@ -17,7 +17,7 @@ class Model extends Eloquent
         return $this->getValCount($key) > 0;
     }
 
-    public function getValue(string $key, string $default = null)
+    public function getValue(string $key, $default = null)
     {
         return $this->attributes[$key] ?? $default ?? 'None';
     }

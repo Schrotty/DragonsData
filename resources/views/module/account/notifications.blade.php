@@ -9,6 +9,12 @@
         </div>
 
         <div class="panel-body">
+            @if(!config('app.notifications'))
+                <div class="alert alert-warning" role="alert">
+                    The notification system is currently <strong>disabled</strong> system wide!
+                </div>
+            @endif
+
             <strong>Access Notifications</strong>
             <p>When you’re granted/ lost access to an item, receive notifications about it.</p>
             <div class="form-check form-check-inline">

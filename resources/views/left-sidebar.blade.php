@@ -19,9 +19,9 @@
                 <a href="{{ url('/notifications') }}" class="list-group-item">
                     <span class="oi oi-chat"></span>
                     <span>Notifications
-                        @if(count(\Illuminate\Support\Facades\Auth::user()->notifications) > 0)
+                        @if(\Illuminate\Support\Facades\Auth::user()->hasValues('unreadNotifications'))
                             <span class="badge badge-secondary">
-                                {{ count(\Illuminate\Support\Facades\Auth::user()->notifications) }}
+                                {{ \Illuminate\Support\Facades\Auth::user()->getValCount('unreadNotifications') }}
                             </span>
                         @endif
                     </span>

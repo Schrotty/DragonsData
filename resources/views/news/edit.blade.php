@@ -17,8 +17,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="mce">Content</label>
-                    <textarea id="mce" class="form-control" name="content" rows="3">{{$news->content}}</textarea>
+                    <label for="content">Content</label>
+                    <textarea id="content" class="content form-control" name="content" rows="3">{{$news->content}}</textarea>
                 </div>
             </div>
 
