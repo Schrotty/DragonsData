@@ -177,6 +177,8 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         Jenssegers\Mongodb\Auth\PasswordResetServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Igaster\LaravelTheme\themeServiceProvider::class,
+        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -239,7 +241,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Moloquent' => Jenssegers\Mongodb\Eloquent\Model::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-
+        'Theme' => Igaster\LaravelTheme\Facades\Theme::class,
+        'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
     ],
 
 ];

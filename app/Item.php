@@ -10,6 +10,11 @@ class Item extends Model
         'name', 'author', 'known', 'contributors', 'category', 'description'
     ];
 
+    public function category()
+    {
+        return Category::find($this->getValue('category'));
+    }
+
     public function hasReadPrivileges(User $user)
     {
         return $this->isAuthor($user) || $this->isContributor($user) || $this->knownBy($user) || $user->isAdmin();

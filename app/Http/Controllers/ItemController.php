@@ -38,7 +38,7 @@ class ItemController extends Controller
             abort(403, 'Access Denied!');
         }
 
-        return view('item.index', ['items' => Item::all()]);
+        return view('model.item.index', ['items' => Item::all()]);
     }
 
     /**
@@ -52,7 +52,7 @@ class ItemController extends Controller
             abort(403, 'Access Denied!');
         }
 
-        return view('item.create');
+        return view('model.item.create');
     }
 
     /**
@@ -77,13 +77,13 @@ class ItemController extends Controller
         }
 
         $known = array();
-        foreach ($request->input('known') as $id){
-            if (User::isUser($id)) {
+        foreach ($request->input('known') ?? array() as $id){
+            if (User::exist($id)) {
                 $known[] = $id;
                 continue;
             }
 
-            if (Party::isParty($id)) {
+            if (Party::exist($id)) {
                 $known = array_merge($known, Party::find($id)->member);
             }
         }
@@ -124,7 +124,7 @@ class ItemController extends Controller
             abort(403, 'Access Denied!');
         }
 
-        return view('item.show', ['item' => $item]);
+        return view('model.item.show', ['item' => $item]);
     }
 
     /**
@@ -140,7 +140,7 @@ class ItemController extends Controller
             abort(403, 'Access Denied!');
         }
 
-        return view('item.edit', ['item' => $item]);
+        return view('model.item.edit', ['item' => $item]);
     }
 
     /**

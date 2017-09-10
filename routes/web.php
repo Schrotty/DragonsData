@@ -16,7 +16,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Auth::routes();
+Route::group(['middleware'=>'setTheme:Admin'], function() {
+    Route::get('/', function () {
+        Auth::login(
+            \App\User::all()->where('username', '=', 'Root')->first()
+        );
+
+        return view('index');
+    })->name('home');
+
+    Route::resource('item', 'ItemController');
+});
+
+/*Auth::routes();
 
 Route::get('/notifications', 'NotificationController@index')->name('notifications');
 
@@ -56,5 +68,4 @@ Route::get('/account', function(){
 
 Route::get('/maintenance/edit', 'MaintenanceController@edit');
 Route::get('/maintenance/change', 'MaintenanceController@changeStatus');
-Route::put('/maintenance', 'MaintenanceController@update');
-
+Route::put('/maintenance', 'MaintenanceController@update');*/
