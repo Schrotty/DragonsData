@@ -1,5 +1,5 @@
 $('.selectpicker').selectpicker({
-    iconBase: 'glyphicon',
+    iconBase: 'oi',
     tickIcon: 'oi-check'
 });
 

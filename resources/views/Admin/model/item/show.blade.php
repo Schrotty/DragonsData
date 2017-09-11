@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h2>
                         <span>{{ $item->getValue('name') }}</span>
-                        <small class="text-muted"> - {{ $item->category()->getValue('name') }}</small>
+                        <small class="text-muted"> - {{ $item->category()->getValue('name', 'Unknown') }}</small>
                     </h2>
 
                     <div class="row">

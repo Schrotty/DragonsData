@@ -3,9 +3,17 @@ body {
     background-color: rgba(247,247,249,0.35);
 }
 
+label {
+    font-weight: 600;
+}
+
 #app {
     padding-left:15px;
     padding-right:15px;
+}
+
+#results {
+    width: 100%;
 }
 
 textarea {
@@ -42,6 +50,10 @@ label {
     width: 100%;
 }
 
+.btn {
+    cursor: pointer;
+}
+
 /* NAVIGATION */
 .navbar {
     padding-left:0;
@@ -61,6 +73,17 @@ label {
     padding-top: 0;
     padding-bottom: 0;
     cursor: pointer;
+}
+
+.logout {
+    padding: 0 !important;
+    color: inherit;
+    display: inline;
+    text-decoration: none;
+}
+
+.logout span {
+    color: inherit;
 }
 
 /* HEADER */
@@ -105,10 +128,6 @@ label {
 }
 
 /* ITEM */
-.item-content {
-    padding:0;
-}
-
 .container-data-wrapper {
     margin-left: 15px;
 }
@@ -119,8 +138,38 @@ label {
     background-color: #F5F5F5;
 }
 
-/* BREADCRUMB */
-.breadcrumb {
-    background-color: transparent;
-    padding: 0;
+/* PAGINATON */
+.pager {
+    text-align: center !important;
+    width: 100% ;
+}
+
+/* BOOTSTRAP SELECT */
+.dropdown-toggle,
+.bootstrap-select,
+.bootstrap-select>.dropdown-toggle.bs-placeholder,
+.bootstrap-select>.dropdown-toggle.bs-placeholder:active,
+.bootstrap-select>.dropdown-toggle.bs-placeholder:focus,
+.bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+    background-color: inherit !important;
+    color: inherit;
+    border: 1px solid rgba(0,0,0,.15);
+}
+
+.dropdown-toggle:hover,
+.bootstrap-select:hover {
+    color: inherit;
+    border-color: black;
+}
+
+.dropdown-menu .inner {
+    max-height: 200px !important;
+}
+
+.bootstrap-select.btn-group .dropdown-toggle .filter-option {
+    overflow: hidden;
+}
+
+.bootstrap-select>.dropdown-toggle {
+    width: 100% !important;
 }

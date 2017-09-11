@@ -43,6 +43,11 @@ class LoginController extends Controller
         $this->middleware('guest', ['except' => 'logout']);
     }
 
+    public function showLoginForm()
+    {
+        return \view('auth.login');
+    }
+
     /**
      * Get the login username to be used by the controller.
      *
@@ -69,8 +74,6 @@ class LoginController extends Controller
                 $validator->errors()->add('credentials', 'The entered combination of username/ password is incorrect!');
             }
         });
-
-        debugbar()->info($validator->fails());
 
         if ($validator->fails()) {
             return redirect('/login')

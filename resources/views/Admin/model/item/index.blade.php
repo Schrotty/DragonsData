@@ -2,22 +2,22 @@
 
 @section('content')
     <div class="row">
-        @foreach($items as $item)
-            <div class="col">
-                <div id="{{ $item->getValue('_id') }}" class="card pointer card-clickabe">
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <span>{{ $item->getValue('name') }}</span>
-                            <small class="text-muted">{{ $item->category()->getValue('name') }}</small>
-                        </h4>
+        <div class="col-12">
+            <form id="item-filter" action="{{ url('/item/') }}">
+                <div class="form-group">
+                    <div class="input-group search-group">
+                        <input id="item-search-query" name="q" type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
 
-                        <p>
-                            <i>{{ $item->getValue('teaser') }}</i>
-                        </p>
+                        <span class="input-group-btn">
+                            <button id="item-search-btn" class="btn btn-secondary" type="submit">
+                                <span class="oi oi-magnifying-glass"></span>
+                            </button>
+                        </span>
                     </div>
                 </div>
-            </div>
-            <div class="w-100"></div>
-        @endforeach
+            </form>
+        </div>
+
+        @include('model.item.list')
     </div>
 @endsection

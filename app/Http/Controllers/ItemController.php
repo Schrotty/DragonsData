@@ -21,6 +21,7 @@ use App\Party;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -32,13 +33,17 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if(!Gate::allows('create', Item::class)) {
             abort(403, 'Access Denied!');
         }
 
-        return view('model.item.index', ['items' => Item::all()]);
+        $items = Item::paginate(config('app.pagination'));
+        if ($request->input('q') != null)
+            $items = Item::where('name', 'regexp', '/.*'.$request->input('q').'/i')->paginate(config('app.pagination'));
+
+        return view('model.item.index', ['items' => $items]);
     }
 
     /**
@@ -103,8 +108,8 @@ class ItemController extends Controller
         $item->save();
 
         Session::flash('message', 'Item Created!');
-        if ($item->known != null) foreach ($item->known as $user) User::find($user)->notify(new AccessGranted($item));
-        if ($item->contributors != null) foreach ($item->contributors as $user) User::find($user)->notify(new ContributorRightsGranted($item));
+        /*if ($item->known != null) foreach ($item->known as $user) User::find($user)->notify(new AccessGranted($item));
+        if ($item->contributors != null) foreach ($item->contributors as $user) User::find($user)->notify(new ContributorRightsGranted($item));*/
 
         return Redirect::to('/item/'.$item->_id);
     }

@@ -14,23 +14,29 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'HomeController@index')->name('home');
+//Route::get('/', 'HomeController@index')->name('home');
 
 Route::group(['middleware'=>'setTheme:Admin'], function() {
-    Route::get('/', function () {
-        Auth::login(
-            \App\User::all()->where('username', '=', 'Root')->first()
-        );
+    Auth::routes();
 
-        return view('index');
-    })->name('home');
+    Route::get('/login', function () {
+        return view('auth.login');
+    })->name('login');
 
+    Route::get('/', function (){
+       return view('index');
+    })->middleware('auth')->name('search');
+
+    /* RESORCE ROUTES */
     Route::resource('item', 'ItemController');
+
+    /* FILTER ROUTES */
+    Route::post('/filter/{query}', 'ItemController@filter');
 });
 
-/*Auth::routes();
 
-Route::get('/notifications', 'NotificationController@index')->name('notifications');
+
+/*Route::get('/notifications', 'NotificationController@index')->name('notifications');
 
 Route::post('search', 'SearchController@index');
 Route::post('find', 'SearchController@find');

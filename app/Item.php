@@ -12,7 +12,7 @@ class Item extends Model
 
     public function category()
     {
-        return Category::find($this->getValue('category'));
+        return Category::find($this->getValue('category')) ?? new Model();
     }
 
     public function hasReadPrivileges(User $user)
