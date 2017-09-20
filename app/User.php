@@ -35,21 +35,6 @@ class User extends Model implements Authenticatable
         return $this->group;
     }
 
-    public function isRoot()
-    {
-        return $this->group == Groups::ROOT;
-    }
-
-    public function isAdmin()
-    {
-        return $this->group <= Groups::ADMIN;
-    }
-
-    public function isMember()
-    {
-        return $this->group <= Groups::MEMBER;
-    }
-
     public function known()
     {
         return $this->belongsToMany('App\Item', null, 'known');
@@ -57,7 +42,7 @@ class User extends Model implements Authenticatable
 
     public function parties()
     {
-        return $this->belongsToMany('App\Party', null, 'member')->get();
+        return $this->belongsToMany('App\Party', null, 'member');
     }
 
     public function characters()
@@ -78,6 +63,22 @@ class User extends Model implements Authenticatable
     public function accessible()
     {
         return $this->known()->get()->merge($this->contributor()->get())->merge($this->author()->get());
+    }
+
+    /* DEPRECATED */
+    public function isRoot()
+    {
+        return $this->group == Groups::ROOT;
+    }
+
+    public function isAdmin()
+    {
+        return $this->group <= Groups::ADMIN;
+    }
+
+    public function isMember()
+    {
+        return $this->group <= Groups::MEMBER;
     }
 
     public function receiveNotifications($types)

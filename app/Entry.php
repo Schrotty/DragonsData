@@ -15,4 +15,9 @@ class Entry extends Model
     {
         return $this->belongsTo('App\Party', '_id', 'entries');
     }
+
+    public function getTeaser()
+    {
+        return substr($this->getValue('content'), 0, 50);
+    }
 }

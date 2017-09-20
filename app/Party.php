@@ -24,6 +24,15 @@ class Party extends Model
         return $this->belongsToMany('App\Item', null, 'party');
     }
 
+    public function entries()
+    {
+        return $this->belongsToMany('App\Entry', null, 'party');
+    }
+    public function hasEntries()
+    {
+        return count($this->entries) >= 1;
+    }
+
     public function createAndNotify()
     {
         $this->save();
@@ -62,10 +71,5 @@ class Party extends Model
     public static function partiesWhereMember(Item $character)
     {
         return Party::whereRaw(array('$text'=>array('$search'=> "\"" . $character->_id . "\"")))->get();
-    }
-
-    public function entries()
-    {
-        return $this->belongsToMany('App\Entry', null, 'party');
     }
 }

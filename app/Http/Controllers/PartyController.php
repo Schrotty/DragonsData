@@ -21,15 +21,21 @@ class PartyController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        if(!Gate::allows('create', Party::class)) {
-            abort(403, 'Access Denied!');
+        if(Auth::guest()) abort(403, 'Access Denied!');
+
+        if (is_null($request->input('q'))) {
+            return view('model.party.index', ['parties' => Auth::user()->parties()->paginate(config('app.pagination'))]);
         }
 
-        return view('party.index', ['parties' => Party::all()]);
+        return view('model.party.index', [
+            'parties' => Auth()->user()->parties()->where('name', 'regexp', '/.*'.$request->input('q').'/i')->paginate(config('app.pagination')),
+            'q' => $request->input('q')
+        ]);
     }
 
     /**
@@ -94,7 +100,7 @@ class PartyController extends Controller
             abort(403, 'Access Denied!');
         }
 
-        return view('party.show', ['party' => $party]);
+        return view('model.party.show', ['party' => $party]);
     }
 
     /**
@@ -110,7 +116,7 @@ class PartyController extends Controller
             abort(403, 'Access Denied!');
         }
 
-        return view('party.edit', ['party' => $party]);
+        return view('model.party.edit', ['party' => $party]);
     }
 
     /**

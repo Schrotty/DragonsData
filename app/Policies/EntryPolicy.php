@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 
+use App\Entry;
 use App\Journal;
 use App\Party;
 use App\User;
@@ -39,9 +40,10 @@ class EntryPolicy
         //
     }
 
-    public function update(User $user, Journal $journal)
+    public function update(User $user, Entry $entry)
     {
-        return Party::find($journal->party)->first()->chronist == $user->_id;
+        return $entry->getValue('author') == $user->getValue('_id') ||
+            Party::find($entry->getValue('party'))->getValue('chronist') == $user->getValue('_id');
     }
 
     public function delete(User $user, Journal $journal)

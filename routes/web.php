@@ -14,24 +14,47 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-//Route::get('/', 'HomeController@index')->name('home');
+Route::group(['middleware'=>'setTheme:Lore'], function() {
 
-Route::group(['middleware'=>'setTheme:Admin'], function() {
+    /* AUTH ROUTES */
     Auth::routes();
-
     Route::get('/login', function () {
         return view('auth.login');
     })->name('login');
+
+    /* MAIN ROUTES */
+    Route::get('/search', 'SearchController@search');
 
     Route::get('/', function (){
        return view('index');
     })->middleware('auth')->name('search');
 
-    /* RESORCE ROUTES */
-    Route::resource('item', 'ItemController');
+    Route::get('/blog', function (){
+        return view('blog', ['posts' => \App\News::all()]);
+    })->middleware('auth')->name('blog');
 
-    /* FILTER ROUTES */
-    Route::post('/filter/{query}', 'ItemController@filter');
+    /* RESOURCE ROUTES */
+    Route::resource('item', 'ItemController');
+    Route::resource('party', 'PartyController');
+
+    /* SUB-RESOURCE ROUTES */
+    Route::get('/entry/create/{party}', 'EntryController@create');
+    Route::get('/entry/{entry}/edit', 'EntryController@edit');
+    Route::post('/entry', 'EntryController@store');
+    Route::put('/entry/{id}', 'EntryController@update');
+    Route::delete('/entry/{id}', 'EntryController@destroy');
+
+    /* ADMIN ROUTES */
+    Route::group(['prefix' => 'admin', 'name' => 'admin', 'middleware' => 'adminAuth'], function() {
+        Route::get('/', function (){
+           return view('admin.index');
+        });
+
+        Route::get('/items', 'Admin\AdminController@items');
+    });
+
+    /* LIVE MARKDOWN */
+    Route::post('/lmark', 'Util\LiveMarkdown@toMarkdown');
 });
 
 
@@ -41,13 +64,10 @@ Route::group(['middleware'=>'setTheme:Admin'], function() {
 Route::post('search', 'SearchController@index');
 Route::post('find', 'SearchController@find');
 
-Route::resource('item', 'ItemController');
+
 Route::resource('journal', 'JournalController');
 
-Route::get('/entry/create/{party}', 'EntryController@create');
-Route::get('/entry/{entry}/edit', 'EntryController@edit');
-Route::post('/entry', 'EntryController@store');
-Route::put('/entry/{id}', 'EntryController@update');
+
 
 Route::resource('category', 'CategoryController');
 Route::resource('tag', 'TagController');
@@ -55,7 +75,7 @@ Route::resource('property', 'PropertyController');
 
 Route::resource('news', 'NewsController');
 Route::resource('user', 'UserController');
-Route::resource('party', 'PartyController');
+
 
 Route::resource('notification', 'NotificationController');
 Route::resource('settings', 'SettingsController');

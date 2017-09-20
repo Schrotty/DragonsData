@@ -73,8 +73,8 @@
                                 <tr>
                                     <td>References</td>
                                     <td>
-                                        @if($item->hasValues('parents'))
-                                            @foreach($item->parents as $id)
+                                        @if($item->hasValues('references'))
+                                            @foreach($item->getValue('references') as $id)
                                                 <a href="{{ '/item/'.$id }}">{{ \App\Item::byId($id)->name }}<br></a>
                                             @endforeach
                                         @else None @endif
@@ -113,7 +113,7 @@
 
                     <!-- CONTENT -->
                     <div class="container-data-content">
-                        {!! $item->description !!}
+                        {!! $item->toMarkdown('description') !!}
                     </div>
                 </div>
             </div>

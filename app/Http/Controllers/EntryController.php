@@ -11,20 +11,24 @@ class EntryController extends Controller
 {
     public function create(Party $party)
     {
-        if(!Gate::allows('create', $party)) {
+        if(!Gate::allows('writeDown', $party)) {
             abort(403, 'Access Denied!');
         }
 
-        return view('entry.create', ['party' => $party->_id]);
+        return view('model.party.journal.entry.create', [
+            'party' => $party->_id
+        ]);
     }
 
     public function edit(Entry $entry)
     {
-        if(!Gate::allows('update', $entry)) {
+        if(!Gate::allows('writeDown', Party::find($entry->getValue('party')))) {
             abort(403, 'Access Denied!');
         }
 
-        return view('entry.edit', ['entry' => $entry]);
+        return view('model.party.journal.entry.edit', [
+            'entry' => $entry
+        ]);
     }
 
     public function store(Request $request)
@@ -59,5 +63,25 @@ class EntryController extends Controller
 
         $entry->save();
         return redirect('/party/'.$entry->party);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param $id
+     * @return \Illuminate\Http\Response
+     * @internal param Request $request
+     * @internal param int $id
+     */
+    public function destroy($id)
+    {
+        $entry = Entry::find($id);
+        if(!Gate::allows('delete', $entry)) {
+            abort(403, 'Access Denied!');
+        }
+
+        $entry->delete();
+
+        return redirect('/party/' . $entry->getValue('party') . '/edit');
     }
 }

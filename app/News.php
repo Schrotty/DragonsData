@@ -3,9 +3,9 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use GrahamCampbell\Markdown\Facades\Markdown;
 
-class News extends Eloquent
+class News extends Model
 {
     use Notifiable;
 
@@ -14,4 +14,9 @@ class News extends Eloquent
     protected $fillable = [
         'title', 'content', 'author', 'date'
     ];
+
+    public function post()
+    {
+        return Markdown::convertToHTML($this->getValue('content'));
+    }
 }

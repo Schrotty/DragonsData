@@ -8,29 +8,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\AccessGrantedEvent;
-use App\Events\AccessLostEvent;
-use App\Events\NewsPublished;
-use App\Item;
-use App\News;
-use App\Notifications\AccessGranted;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 
 class SearchController extends Controller
 {
-    public function index(Request $request)
+    public function search(Request $request)
     {
-        $query = $request->input('query');
+        $model = "Item";
+        $value = "";
 
-        return view('seach-result', ['result' => Item::whereRaw(array('$text'=>array('$search'=> "\"" . $query . "\"")))->get()]);
-    }
+        $params = explode(' ', $request->input('q'));
 
-    public function find(Request $request)
-    {
-        return view('item.show', ['item' => Item::find($request->input('target'))]);
+        foreach($params as $param) {
+            if (str_contains($param, ':')) {
+                $filter = explode(':', $param);
+
+                if ($filter[0] == 'collection') {
+                    $model = ucfirst($filter[1]);
+                }
+
+                continue;
+            }
+
+            $value .= $param.' ';
+        }
+
+        $collection = 'App\\'.$model;
+
+        //db.posts.find({post_text:{$regex:"tutorialspoint"}})
+        //$result = $collection::all()->where('name', 'like', trim($value, ' '))->all();
+        $result = $collection::where('name', 'regexp', '/.*'.trim($value, ' ').'/i')->get();
+
+        if ($value == '' || $value == null) {
+            $result = $collection::all();
+        }
+
+        return view('search', ['result' => $result]);
     }
 }

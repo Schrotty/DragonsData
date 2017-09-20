@@ -47,4 +47,9 @@ class PartyPolicy
     public function delete(User $user, Party $party) {
         return $party->creator == $user->_id;
     }
+
+    public function writeDown(User $user, Party $party)
+    {
+        return $party->chronist == $user->_id;
+    }
 }
