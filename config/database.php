@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mongodb'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -76,29 +76,7 @@ return [
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
-        ],
-
-        'couchdb' => [
-            'driver'   => 'couchdb',
-            'host'     => env('DB_HOST', 'localhost'),
-            'port'     => env('DB_PORT', 5984),
-            'dbname' => env('DB_DATABASE', 'item'),
-            //'database'   => env('DB_DATABASE', 'item'),
-            'username' => env('DB_USERNAME', 'dragon'),
-            'password' => env('DB_PASSWORD', '')
-        ],
-
-        'mongodb' => [
-            'driver'   => 'mongodb',
-            'host'     => env('DB_HOST', 'localhost'),
-            'port'     => env('DB_PORT', 27017),
-            'database' => env('DB_DATABASE'),
-            //'username' => env('DB_USERNAME'),
-            //'password' => env('DB_PASSWORD'),
-            'options'  => [
-                'database' => 'admin' // sets the authentication database required by mongo 3
-            ]
-        ],
+        ]
     ],
 
     /*

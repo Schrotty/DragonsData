@@ -10,8 +10,6 @@ class User extends Model implements Authenticatable
 {
     use AuthenticableTrait;
 
-    protected $primaryKey = '_id';
-
     protected $collection = 'users';
 
     protected $dateFormat = 'd.m.Y';
@@ -19,7 +17,7 @@ class User extends Model implements Authenticatable
     protected $dates = ['created_at', 'updated_at'];
 
     protected $fillable = [
-        'username', 'group'
+        'username', 'auth', 'password'
     ];
 
     protected $hidden = [
@@ -42,7 +40,7 @@ class User extends Model implements Authenticatable
 
     public function parties()
     {
-        return $this->belongsToMany('App\Party', null, 'member');
+        return $this->belongsToMany('App\Party', 'party_access', 'user_id');
     }
 
     public function characters()

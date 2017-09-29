@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\News;
-use App\Providers\MongoUserProvider;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
@@ -36,7 +34,6 @@ class LoginController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
      */
     public function __construct()
     {
@@ -58,9 +55,14 @@ class LoginController extends Controller
         return 'username';
     }
 
-    public function login(Request $request)
+    /*public function login(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $user = User::all()->where('username', $request->input('username'))->first();
+        Debugbar()->info($user);
+
+        //Auth::login($user);
+
+        /*$validator = Validator::make($request->all(), [
             'username' => 'required',
             'password' => 'required',
         ]);
@@ -68,6 +70,8 @@ class LoginController extends Controller
         $credentials = array();
         $credentials['username'] = $request->input('username');
         $credentials['password'] = $request->input('password');
+
+        Debugbar()->info($credentials);
 
         $validator->after(function ($validator) use ($credentials) {
             if (!Auth::attempt($credentials, false)) {
@@ -81,6 +85,7 @@ class LoginController extends Controller
                 ->withInput();
         }
 
+        Debugbar()->info(Auth::user());
         return redirect('/');
-    }
+    }*/
 }

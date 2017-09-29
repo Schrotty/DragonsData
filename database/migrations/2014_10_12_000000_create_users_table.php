@@ -13,14 +13,22 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        //Create the users schema
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('username')->unique();
+            $table->string('auth');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
+
+        //Create Root user
+        $flight = App\User::create([
+            'username'  => 'Root',
+            'auth'      =>  '0',
+            'password'  =>  \Illuminate\Support\Facades\Hash::make('RomeoTango')
+        ]);
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Jenssegers\Mongodb\Eloquent\Builder;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,8 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Builder::macro('getName', function() {
-            return 'mongodb';
-        });
+        //
     }
 }

@@ -170,14 +170,11 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Jenssegers\Mongodb\Auth\PasswordResetServiceProvider::class,
-        Moloquent\MongodbServiceProvider::class,
 
         /*
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
-        Jenssegers\Mongodb\Auth\PasswordResetServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Igaster\LaravelTheme\themeServiceProvider::class,
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
@@ -190,8 +187,6 @@ return [
         //App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-        Jenssegers\Mongodb\MongodbServiceProvider::class,
     ],
 
     /*
@@ -240,7 +235,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Moloquent' => Jenssegers\Mongodb\Eloquent\Model::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Theme' => Igaster\LaravelTheme\Facades\Theme::class,
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
