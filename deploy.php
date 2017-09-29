@@ -40,10 +40,6 @@ before('deploy:symlink', 'artisan:migrate');
 
 /* DEPLOY TASK */
 task('deploy', function() {
-    writeln('Deploy start!');
-    write('Run phpunit: ');
-    'phpunit';
-
     'artisan:down';
 });
 

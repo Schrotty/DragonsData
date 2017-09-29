@@ -95,6 +95,8 @@ class PartyController extends Controller
      */
     public function show($id)
     {
+        $this->exists(Party::class, $id);
+
         $party = Party::find($id);
         if(!Gate::allows('view', $party)) {
             abort(403, 'Access Denied!');
