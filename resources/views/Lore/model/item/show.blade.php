@@ -60,9 +60,9 @@
                                     <tr>
                                         <td>Parties</td>
                                         <td>
-                                            @if($item->hasValues('party'))
-                                                @foreach($item->party as $id)
-                                                    <a href="{{ '/party/'.$id }}">{{ \App\Party::byId($id)->name }}<br></a>
+                                            @if($item->hasParties())
+                                                @foreach($item->parties as $party)
+                                                    <a href="{{ '/party/'.$party->id }}">{{ $party->name }}<br></a>
                                                 @endforeach
                                             @else None @endif
                                         </td>

@@ -33,7 +33,9 @@ class ItemController extends Controller
         if(Auth::guest()) abort(403, 'Access Denied!');
 
         if (is_null($request->input('q'))) {
-            return view('model.item.index', ['items' => Item::paginate(config('app.pagination'))]);
+            return view('model.item.index', [
+                'items' => Item::paginate(config('app.pagination'))
+            ]);
         }
 
         return view('model.item.index', [
@@ -77,8 +79,11 @@ class ItemController extends Controller
 
         /*
             $item->properties = empty($properties) ? null : $properties;
-            $item->party = $request->input('parties');
         */
+
+        Debugbar()->info($properties);
+        Debugbar()->info($request->input('key'));
+        Debugbar()->info($request->input('value'));
 
         $item = new Item();
         $item->name = $request->input('name');
@@ -90,6 +95,8 @@ class ItemController extends Controller
 
         foreach ($request->input('references', array()) as $ref) $item->references()->save(Item::find($ref));
         foreach ($request->input('tags', array()) as $tag) $item->tags()->save(Tag::find($tag));
+        foreach ($request->input('parties', array()) as $party) $item->parties()->save(Party::find($party));
+        foreach ($properties as $party) $item->properties()->save(Property::find($party));
 
         $userWithAccess = array_unique(array_merge($request->input('writeAccess', array()), $request->input('readAccess', array())));
         foreach ($userWithAccess as $withAccess) {

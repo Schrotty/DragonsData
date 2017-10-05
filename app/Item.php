@@ -24,6 +24,16 @@ class Item extends Model
         return $this->belongsToMany('App\Item', 'item_references', 'source_item_id', 'target_item_id');
     }
 
+    public function parties()
+    {
+        return $this->belongsToMany('App\Party', 'item_parties', 'item_id', 'party_id');
+    }
+
+    public function properties()
+    {
+        return $this->hasMany('App\Property', 'item_id');
+    }
+
     public function userWithReadAccess()
     {
         return $this->belongsToMany('App\User', 'item_access', 'item_id', 'user_id');
@@ -43,6 +53,16 @@ class Item extends Model
     public function hasReferences()
     {
         return $this->references()->count() > 0;
+    }
+
+    public function hasParties()
+    {
+        return $this->parties()->count() > 0;
+    }
+
+    public function hasProperties()
+    {
+        return $this->properties()->count() > 0;
     }
 
     public function hasUserWithReadAccess()

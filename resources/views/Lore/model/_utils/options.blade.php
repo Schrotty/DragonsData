@@ -1,3 +1,3 @@
 @foreach($objects as $object)
-    <option value="{{ $object->getValue('id') }}">{{ $object->getValue($key) }}</option>
+    <option value="{{ $object->id }}">{{ $object->getValue($key) }}</option>
 @endforeach

@@ -91,8 +91,8 @@
                                             <select name="key[]" class="selectpicker" multiple data-max-options="1" data-live-search="true">
                                                 @foreach(\App\Category::all() as $category)
                                                     <optgroup label="{{ $category->name }}">
-                                                        @foreach(\App\Property::all()->where('category', $category->_id) as $property)
-                                                            <option value="{{ $property->_id }}">{{ $property->name }}</option>
+                                                        @foreach(\App\Property::all()->where('category_id', '=', $category->id) as $property)
+                                                            <option value="{{ $property->id }}">{{ $property->name }}</option>
                                                         @endforeach
                                                     </optgroup>
                                                 @endforeach
@@ -111,8 +111,8 @@
                                             <select name="key[]" class="selectpicker" multiple data-max-options="1" data-live-search="true">
                                                 @foreach(\App\Category::all() as $category)
                                                     <optgroup label="{{ $category->name }}">
-                                                        @foreach(\App\Property::all()->where('category', $category->_id) as $property)
-                                                            <option value="{{ $property->_id }}">{{ $property->name }}</option>
+                                                        @foreach(\App\Property::all()->where('category_id', '=', $category->id) as $property)
+                                                            <option value="{{ $property->id }}">{{ $property->name }}</option>
                                                         @endforeach
                                                     </optgroup>
                                                 @endforeach
