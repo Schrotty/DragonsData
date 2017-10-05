@@ -165,13 +165,12 @@ textarea {
 .bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
     background-color: inherit !important;
     color: inherit;
-    border: 1px solid rgba(0,0,0,.15);
+    /*border: 1px solid rgba(0,0,0,.15);*/
 }
 
 .dropdown-toggle:hover,
 .bootstrap-select:hover {
     color: inherit;
-    border-color: black;
 }
 
 .dropdown-menu .inner {

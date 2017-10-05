@@ -51,6 +51,7 @@ Route::group(['middleware'=>'setTheme:Lore'], function() {
         });
 
         Route::get('/items', 'Admin\AdminController@items');
+        Route::get('/meta', 'Admin\AdminController@meta');
     });
 
     /* LIVE MARKDOWN */

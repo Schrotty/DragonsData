@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h2>
                         <span>{{ $item->getValue('name') }}</span>
-                        <small class="text-muted"> - {{ $item->category()->getValue('name', 'Unknown') }}</small>
+                        <small class="text-muted"> - {{ $item->category->getValue('name', 'Unknown') }}</small>
                     </h2>
 
                     <div class="row">
@@ -33,9 +33,9 @@
                                     <tr>
                                         <td>Known</td>
                                         <td>
-                                            @if($item->hasValues('known'))
-                                                @foreach($item->known as $id)
-                                                    <span>{{ \App\User::byId($id)->username }}</span><br>
+                                            @if($item->hasUserWithReadAccess())
+                                                @foreach($item->userWithReadAccess as $user)
+                                                    <span>{{ $user->getValue('username') }}</span><br>
                                                 @endforeach
                                             @else None @endif
                                         </td>
@@ -44,9 +44,9 @@
                                     <tr>
                                         <td>Contributors</td>
                                         <td>
-                                            @if($item->hasValues('contributors'))
-                                                @foreach($item->contributors as $id)
-                                                    <span>{{ \App\User::byId($id)->username }}</span><br>
+                                            @if($item->hasUserWithWriteAccess())
+                                                @foreach($item->userWithWriteAccess as $user)
+                                                    <span>{{ $user->getValue('username') }}</span><br>
                                                 @endforeach
                                             @else None @endif
                                         </td>
@@ -71,9 +71,9 @@
                                     <tr>
                                         <td>References</td>
                                         <td>
-                                            @if($item->hasValues('parents'))
-                                                @foreach($item->parents as $id)
-                                                    <a href="{{ '/item/'.$id }}">{{ \App\Item::byId($id)->name }}<br></a>
+                                            @if($item->hasReferences())
+                                                @foreach($item->references as $reference)
+                                                    <a href="{{ '/item/'.$reference->id }}">{{ $reference->getValue('name') }}<br></a>
                                                 @endforeach
                                             @else None @endif
                                         </td>
@@ -82,11 +82,9 @@
                                     <tr>
                                         <td>Tags</td>
                                         <td>
-                                            @if($item->hasValues('tags'))
-                                                @foreach($item->tags as $id)
-                                                    @if(\App\Tag::exist($id))
-                                                        <span class="label label-{{ \App\Tag::byId($id)->style }}">{{ \App\Tag::byId($id)->name }}</span><br>
-                                                    @endif
+                                            @if($item->hasTags())
+                                                @foreach($item->tags as $tag)
+                                                    <span class="label label-primary">{{ $tag->getValue('name') }}</span><br>
                                                 @endforeach
                                             @else None @endif
                                         </td>
@@ -119,7 +117,7 @@
 
                 @can('edit', $item)
                     <div class="card-footer text-right">
-                        <a href="{{ '/item/' . $item->_id . '/edit' }}">
+                        <a href="{{ '/item/' . $item->id . '/edit' }}">
                             <button type="submit" class="btn btn-primary">Edit Item</button>
                         </a>
                     </div>

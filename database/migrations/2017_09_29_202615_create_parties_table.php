@@ -39,6 +39,7 @@ class CreatePartiesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->boolean('read_access');
             $table->boolean('write_access');
+            $table->timestamps();
 
             //Foreign key
             $table->foreign('party_id')->references('id')->on('parties');
@@ -50,6 +51,7 @@ class CreatePartiesTable extends Migration
             $table->increments('id');
             $table->integer('party_id')->unsigned();
             $table->integer('item_id')->unsigned();
+            $table->timestamps();
 
             //Foreign key
             $table->foreign('party_id')->references('id')->on('party');

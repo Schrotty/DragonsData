@@ -12,7 +12,9 @@ use App\Http\Requests\StoreItem;
 use App\Http\Requests\UpdateItem;
 use App\Item;
 use App\Party;
+use App\Tag;
 use App\User;
+use Barryvdh\Debugbar\Middleware\Debugbar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -73,21 +75,33 @@ class ItemController extends Controller
             }
         }
 
+        /*
+            $item->properties = empty($properties) ? null : $properties;
+            $item->party = $request->input('parties');
+        */
+
         $item = new Item();
         $item->name = $request->input('name');
         $item->description = $request->input('description');
-        $item->teaser = substr($request->input('teaser'), 0, 50);
-        $item->known = $request->input('known');
-        $item->contributors = $request->input('contributors');
-        $item->category = $request->input('category');
-        $item->parents = $request->input('references');
-        $item->tags = $request->input('tags');
-        $item->properties = empty($properties) ? null : $properties;
-        $item->author = Auth::user()->_id;
-        $item->party = $request->input('parties');
+        $item->teaser = $request->input('teaser');
+        $item->author = Auth::id();
+        $item->category_id = $request->input('category');
         $item->save();
 
-        return Redirect::to('/item/'.$item->_id);
+        foreach ($request->input('references', array()) as $ref) $item->references()->save(Item::find($ref));
+        foreach ($request->input('tags', array()) as $tag) $item->tags()->save(Tag::find($tag));
+
+        $userWithAccess = array_unique(array_merge($request->input('writeAccess', array()), $request->input('readAccess', array())));
+        foreach ($userWithAccess as $withAccess) {
+            if (in_array($withAccess, $request->input('writeAccess', array()))) {
+                $item->userWithWriteAccess()->attach($withAccess, ['write_access' => true]);
+                continue;
+            }
+
+            $item->userWithReadAccess()->attach($withAccess, ['write_access' => false]);
+        }
+
+        return Redirect::to('/item/'.$item->id);
     }
 
     /**

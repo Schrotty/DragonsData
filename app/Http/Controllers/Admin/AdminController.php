@@ -19,4 +19,11 @@ class AdminController extends Controller
             'q' => $request->input('q')
         ]);
     }
+
+    public function meta(Request $request)
+    {
+        if (is_null($request->input('q'))) {
+            return view('admin.page.meta');
+        }
+    }
 }

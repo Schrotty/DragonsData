@@ -11,26 +11,35 @@
             </thead>
 
             <tbody>
-                @foreach($items as $item)
-                    <tr id="{{ $item->getValue('_id') }}">
-                        <td>{{ $item->getValue('name') }}</td>
-                        <td>{{ $item->category()->getValue('name') }}</td>
-                        <td>{{ $item->getValue('teaser', 'No teaser found') }}</td>
-                        <td class="text-right">
-                            @include('admin._util.editLink', [
-                                'route' => 'item', 'object' => $item, 'action' => '', 'name' => 'Show', 'style' => 'btn-outline-primary', 'delete' => false
-                            ])
+                @if(count($items) > 0)
+                    @foreach($items as $item)
+                        <tr id="{{ $item->getValue('_id') }}">
+                            <td>{{ $item->getValue('name') }}</td>
+                            <td>{{ $item->category()->getValue('name') }}</td>
+                            <td>{{ $item->getValue('teaser', 'No teaser found') }}</td>
+                            <td class="text-right">
+                                @include('admin._util.editLink', [
+                                    'route' => 'item', 'object' => $item, 'action' => '', 'name' => 'Show', 'style' => 'btn-outline-primary', 'delete' => false
+                                ])
 
-                            @include('admin._util.editLink', [
-                                'route' => 'item', 'object' => $item, 'action' => 'edit', 'name' => 'Edit', 'style' => 'btn-outline-warning', 'delete' => false
-                            ])
+                                @include('admin._util.editLink', [
+                                    'route' => 'item', 'object' => $item, 'action' => 'edit', 'name' => 'Edit', 'style' => 'btn-outline-warning', 'delete' => false
+                                ])
 
-                            <a id="{{ $item->getValue('_id') }}" class="btn btn-sm btn-outline-danger" href="#" data-toggle="modal" data-target=".bd-example-modal-sm">
-                                <span>Delete</span>
-                            </a>
-                        </td>
+                                <a id="{{ $item->getValue('_id') }}" class="btn btn-sm btn-outline-danger" href="#" data-toggle="modal" data-target=".bd-example-modal-sm">
+                                    <span>Delete</span>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td></td>
                     </tr>
-                @endforeach
+                @endif
             </tbody>
         </table>
 

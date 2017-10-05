@@ -22,7 +22,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="known">Known</label>
-                            <select id="known" name="known[]" multiple class="selectpicker" data-live-search="true">
+                            <select id="known" name="readAccess[]" multiple class="selectpicker" data-live-search="true">
                                 @include('model._utils.options', ['objects' => \App\User::all(), 'key' => 'username'])
                             </select>
                         </div>
@@ -31,7 +31,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="contributors">Contributors</label>
-                            <select id="contributors" name="contributors[]" multiple class="selectpicker" data-live-search="true">
+                            <select id="contributors" name="writeAccess[]" multiple class="selectpicker" data-live-search="true">
                                 @include('model._utils.options', ['objects' => \App\User::all(), 'key' => 'username'])
                             </select>
                         </div>

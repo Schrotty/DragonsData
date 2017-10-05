@@ -55,14 +55,14 @@ class LoginController extends Controller
         return 'username';
     }
 
-    /*public function login(Request $request)
+    public function login(Request $request)
     {
         $user = User::all()->where('username', $request->input('username'))->first();
         Debugbar()->info($user);
 
         //Auth::login($user);
 
-        /*$validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'username' => 'required',
             'password' => 'required',
         ]);
@@ -87,5 +87,5 @@ class LoginController extends Controller
 
         Debugbar()->info(Auth::user());
         return redirect('/');
-    }*/
+    }
 }

@@ -30,7 +30,9 @@
             <div class='card dash dash-lower box'>
                 <div class='content'>
                     <div class="card-body">
-                        <h3>Meta</h3>
+                        <h3>
+                            <a href="{{ url('/admin/meta') }}">Meta</a>
+                        </h3>
                     </div>
                 </div>
             </div>

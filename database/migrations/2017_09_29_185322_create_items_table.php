@@ -39,6 +39,7 @@ class CreateItemsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->boolean('read_access');
             $table->boolean('write_access');
+            $table->timestamps();
 
             //Foreign key
             $table->foreign('item_id')->references('id')->on('items');
@@ -50,6 +51,7 @@ class CreateItemsTable extends Migration
             $table->increments('id');
             $table->integer('source_item_id')->unsigned();
             $table->integer('target_item_id')->unsigned();
+            $table->timestamps();
 
             //Foreign key
             $table->foreign('source_item_id')->references('id')->on('items');
@@ -61,6 +63,7 @@ class CreateItemsTable extends Migration
             $table->increments('id');
             $table->integer('item_id')->unsigned();
             $table->integer('tag_id')->unsigned();
+            $table->timestamps();
 
             //Foreign key
             $table->foreign('item_id')->references('id')->on('items');
@@ -72,6 +75,7 @@ class CreateItemsTable extends Migration
             $table->increments('id');
             $table->integer('item_id')->unsigned();
             $table->integer('property_id')->unsigned();
+            $table->timestamps();
 
             //Foreign key
             $table->foreign('item_id')->references('id')->on('items');
