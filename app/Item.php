@@ -31,7 +31,7 @@ class Item extends Model
 
     public function properties()
     {
-        return $this->hasMany('App\Property', 'item_id');
+        return $this->belongstoMany('App\Property', 'item_properties', 'item_id', 'property_id')->withPivot('value');
     }
 
     public function userWithReadAccess()
@@ -44,7 +44,7 @@ class Item extends Model
         return $this->belongsToMany('App\User', 'item_access', 'item_id', 'user_id')->where('write_access', '=', true);
     }
 
-    /* === HAS VALUES === */
+    /* === HAS METHODS === */
     public function hasTags()
     {
         return $this->tags()->count() > 0;
@@ -75,7 +75,23 @@ class Item extends Model
         return $this->userWithWriteAccess()->count() > 0;
     }
 
-    /* === PRIVILEGES === */
+    /* === HAS FOREIGN KEY === */
+    public function hasParty(Party $party)
+    {
+        return $this->parties->contains($party);
+    }
+
+    public function hasTag(Tag $tag)
+    {
+        return $this->tags->contains($tag);
+    }
+
+    public function hasReference(Item $item)
+    {
+        return $this->references->contains($item);
+    }
+
+    /* === PRIVILEGES/ LEGACY === */
     public function hasReadPrivileges(User $user)
     {
         return $this->isAuthor($user) || $this->isContributor($user) || $this->knownBy($user) || $user->isAdmin();

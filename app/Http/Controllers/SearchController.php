@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Item;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -37,7 +38,7 @@ class SearchController extends Controller
 
         //db.posts.find({post_text:{$regex:"tutorialspoint"}})
         //$result = $collection::all()->where('name', 'like', trim($value, ' '))->all();
-        $result = $collection::where('name', 'regexp', '/.*'.trim($value, ' ').'/i')->get();
+        $result = Item::all()->where('name', 'like', $value);
 
         if ($value == '' || $value == null) {
             $result = $collection::all();

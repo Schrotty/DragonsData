@@ -26,7 +26,7 @@
                                     <tr>
                                         <td>Author</td>
                                         <td>
-                                            <span>{{ \App\User::byId($item->author)->getValue('username') }}</span>
+                                            <span>{{ \App\User::byId($item->author)->username }}</span>
                                         </td>
                                     </tr>
 
@@ -91,16 +91,14 @@
                                     </tr>
 
                                     <!-- PROPERTIES -->
-                                    @if($item->hasValues('properties'))
+                                    @if($item->hasProperties())
                                         <tr><th colspan="2">Properties</th></tr>
 
-                                        @foreach($item->properties as $id => $value)
-                                            @if(\App\Property::exist($id))
-                                                <tr>
-                                                    <td>{{ \App\Property::byId($id)->getValue('name') }}</td>
-                                                    <td>{{ $value }}</td>
-                                                </tr>
-                                            @endif
+                                        @foreach($item->properties as $property)
+                                            <tr>
+                                                <td>{{ $property->name }}</td>
+                                                <td>{{ $property->pivot->value }}</td>
+                                            </tr>
                                         @endforeach
                                     @endif
                                     </tbody>

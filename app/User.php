@@ -33,6 +33,16 @@ class User extends Model implements Authenticatable
         return $this->group;
     }
 
+    public function hasReadAccess(Item $item)
+    {
+        return $item->userWithReadAccess->contains($this);
+    }
+
+    public function hasWriteAccess(Item $item)
+    {
+        return $item->userWithWriteAccess->contains($this);
+    }
+
     public function known()
     {
         return $this->belongsToMany('App\Item', null, 'known');
