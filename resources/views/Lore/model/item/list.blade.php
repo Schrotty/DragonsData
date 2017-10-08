@@ -17,5 +17,5 @@
         <div class="w-100"></div>
     @endforeach
 
-    {{ $items->links('vendor.pagination.pagination') }}
+    {{ $items->links('vendor.pagination.pagination', ['q' => $q ?? ""]) }}
 </div>

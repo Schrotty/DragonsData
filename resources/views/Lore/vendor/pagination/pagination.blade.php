@@ -7,7 +7,7 @@
                 @if ($paginator->onFirstPage())
                     <div class="page-item disabled"><span class="page-link">@lang('pagination.previous')</span></div>
                 @else
-                    <div class="page-item"><a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev">@lang('pagination.previous')</a></div>
+                    <div class="page-item"><a class="page-link" href="{{ $paginator->previousPageUrl() }}@if(isset($q))&q={{ $q }}@endif" rel="prev">@lang('pagination.previous')</a></div>
                 @endif
             </div>
 
@@ -15,7 +15,7 @@
 
                 {{-- Next Page Link --}}
                 @if ($paginator->hasMorePages())
-                    <div class="page-item"><a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next">@lang('pagination.next')</a></div>
+                    <div class="page-item"><a class="page-link" href="{{ $paginator->nextPageUrl() }}@if(isset($q))&q={{ $q }}@endif" rel="next">@lang('pagination.next')</a></div>
                 @else
                     <div class="page-item disabled"><span class="page-link">@lang('pagination.next')</span></div>
                 @endif

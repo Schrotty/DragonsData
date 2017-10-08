@@ -41,7 +41,7 @@ class ItemController extends Controller
         }
 
         return view('model.item.index', [
-            'items' => Item::where('name', 'regexp', '/.*'.$request->input('q').'/i')->paginate(config('app.pagination')),
+            'items' => Item::where('name', 'like', '%'.$request->input('q').'%')->paginate(config('app.pagination')),
             'q' => $request->input('q')
         ]);
     }

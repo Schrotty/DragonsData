@@ -38,7 +38,7 @@ class SearchController extends Controller
 
         //db.posts.find({post_text:{$regex:"tutorialspoint"}})
         //$result = $collection::all()->where('name', 'like', trim($value, ' '))->all();
-        $result = Item::all()->where('name', 'like', $value);
+        $result = Item::where('name', 'like', '%'.trim($value).'%')->get();
 
         if ($value == '' || $value == null) {
             $result = $collection::all();
