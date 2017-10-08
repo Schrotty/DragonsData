@@ -30,7 +30,7 @@ Route::group(['middleware'=>'setTheme:Lore'], function() {
     })->middleware('auth')->name('search');
 
     Route::get('/blog', function (){
-        return view('blog', ['posts' => \App\News::all()]);
+        return view('blog', ['posts' => News::all()]);
     })->middleware('auth')->name('blog');
 
     /* RESOURCE ROUTES */
