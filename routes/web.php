@@ -14,13 +14,18 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+/* AUTH */
 Route::group(['middleware'=>'setTheme:Lore'], function() {
+    Auth::routes();
 
     /* AUTH ROUTES */
-    Auth::routes();
     Route::get('/login', function () {
         return view('auth.login');
     })->name('login');
+});
+
+/* ALL OTHER */
+Route::group(['middleware'=>['setTheme:Lore', 'auth']], function() {
 
     /* MAIN ROUTES */
     Route::get('/search', 'SearchController@search');
