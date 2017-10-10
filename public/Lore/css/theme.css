@@ -66,6 +66,10 @@ textarea {
     cursor: pointer;
 }
 
+.error {
+    border: 1px solid #dc3545 !important;
+}
+
 /* NAVIGATION */
 .navbar {
     padding-left:0;

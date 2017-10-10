@@ -65,15 +65,8 @@ Route::group(['middleware'=>['setTheme:Lore', 'auth']], function() {
 
 
 
-/*Route::get('/notifications', 'NotificationController@index')->name('notifications');
-
-Route::post('search', 'SearchController@index');
-Route::post('find', 'SearchController@find');
-
-
-Route::resource('journal', 'JournalController');
-
-
+/*
+Route::get('/notifications', 'NotificationController@index')->name('notifications');
 
 Route::resource('category', 'CategoryController');
 Route::resource('tag', 'TagController');
@@ -81,7 +74,6 @@ Route::resource('property', 'PropertyController');
 
 Route::resource('news', 'NewsController');
 Route::resource('user', 'UserController');
-
 
 Route::resource('notification', 'NotificationController');
 Route::resource('settings', 'SettingsController');
@@ -100,4 +92,5 @@ Route::get('/account', function(){
 
 Route::get('/maintenance/edit', 'MaintenanceController@edit');
 Route::get('/maintenance/change', 'MaintenanceController@changeStatus');
-Route::put('/maintenance', 'MaintenanceController@update');*/
+Route::put('/maintenance', 'MaintenanceController@update');
+*/

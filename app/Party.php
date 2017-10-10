@@ -29,17 +29,38 @@ class Party extends Model
         return $this->hasMany('App\Entry', 'party_id');
     }
 
+    public function member()
+    {
+        return $this->belongsToMany('App\User', 'party_access', 'party_id', 'user_id');
+    }
+
+    public function chronist()
+    {
+        return $this->hasOne('App\User', 'id', 'chronist_id');
+    }
+
+    public function characters()
+    {
+        return $this->belongsToMany('App\Item', 'party_characters', 'party_id', 'item_id');
+    }
+
     public function hasEntries()
     {
         return count($this->entries) >= 1;
     }
 
-    /**
-     * @param Item $character
-     * @return mixed
-     */
-    public static function partiesWhereMember(Item $character)
+    public function hasMember()
     {
-        return Party::whereRaw(array('$text'=>array('$search'=> "\"" . $character->_id . "\"")))->get();
+        return count($this->member) >= 1;
+    }
+
+    public function hasChronist()
+    {
+        return $this->chronist != null;
+    }
+
+    public function hasCharacters()
+    {
+        return count($this->characters) >= 1;
     }
 }

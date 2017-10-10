@@ -73,6 +73,16 @@ class User extends Model implements Authenticatable
         return $this->known()->get()->merge($this->contributor()->get())->merge($this->author()->get());
     }
 
+    public function isPartyMember(Party $party)
+    {
+        return $party->member->contains($this);
+    }
+
+    public function isChronist(Party $party)
+    {
+        return $party->chronist->id == $this->id;
+    }
+
     /* DEPRECATED */
     public function isRoot()
     {

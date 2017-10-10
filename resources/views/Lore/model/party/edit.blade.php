@@ -5,7 +5,7 @@
     <div class="card">
 
         <!-- Content -->
-        <form action="{{ '/party/' . $party->_id }}" method="POST">
+        <form action="{{ '/party/' . $party->id }}" method="POST">
             <div class="card-body">
                 <h2>
                     <span>Edit Party</span>
@@ -31,21 +31,21 @@
                             <label for="member">Members</label>
                             <select id="member" name="member[]" multiple class="selectpicker show-tick" data-live-search="true">
                                 @foreach(\App\User::all() as $user)
-                                    @if(in_array($user->_id, (array)$party->member))
-                                        <option selected value="{{ $user->_id }}">{{ $user->username }}</option>
+                                    @if($user->isPartyMember($party))
+                                        <option selected value="{{ $user->id }}">{{ $user->username }}</option>
                                         @continue
                                     @endif
 
-                                    <option value="{{ $user->_id }}">{{ $user->username }}</option>
+                                    <option value="{{ $user->id }}">{{ $user->username }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <!-- Player -->
                         <div class="col-md-4">
-                            <label for="member">Player</label>
-                            <select id="member" name="player[]" multiple class="selectpicker show-tick" data-live-search="true">
-
+                            <label for="character">Player</label>
+                            <select id="character" name="character[]" multiple class="selectpicker show-tick" data-live-search="true">
+                                <!-- === CHARACTERS === -->
                             </select>
                         </div>
 
@@ -54,12 +54,12 @@
                             <label for="chronist">Chronist</label>
                             <select id="chronist" name="chronist" class="selectpicker show-tick" data-live-search="true">
                                 @foreach(\App\User::all() as $user)
-                                    @if($user->_id == $party->chronist)
-                                        <option selected value="{{ $user->_id }}">{{ $user->username }}</option>
+                                    @if($user->isChronist($party))
+                                        <option selected value="{{ $user->id }}">{{ $user->username }}</option>
                                         @continue
                                     @endif
 
-                                    <option value="{{ $user->_id }}">{{ $user->username }}</option>
+                                    <option value="{{ $user->id }}">{{ $user->username }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -91,9 +91,9 @@
                                         <td>{{ $entry->getValue('date') }}</td>
                                         <td>{{ $entry->getTeaser() }}</td>
                                         <td class="text-right">
-                                            <a class="btn btn-sm btn-outline-primary" href="{{ url('/party/' . $party->getValue('_id')) . '#' . strtolower($entry->getValue('title')) }}">Show</a>
-                                            <a class="btn btn-sm btn-outline-warning" href="{{ url('/entry/' . $entry->getValue('_id')) . '/edit' }}">Edit</a>
-                                            <a id="{{ $entry->getValue('_id') }}" class="btn btn-sm btn-outline-danger" href="#" data-toggle="modal" data-target=".bd-example-modal-sm">Delete</a>
+                                            <a class="btn btn-sm btn-outline-primary" href="{{ url('/party/' . $party->id) . '#' . strtolower($entry->getValue('title')) }}">Show</a>
+                                            <a class="btn btn-sm btn-outline-warning" href="{{ url('/entry/' . $entry->id) . '/edit' }}">Edit</a>
+                                            <a id="{{ $entry->id }}" class="btn btn-sm btn-outline-danger" href="#" data-toggle="modal" data-target=".bd-example-modal-sm">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

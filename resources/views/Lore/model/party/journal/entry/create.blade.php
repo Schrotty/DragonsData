@@ -22,12 +22,12 @@
                     <div class="row">
                         <div class="col-6">
                             <label for="title">Title</label>
-                            <input id="title" class="form-control" name="title">
+                            <input id="title" class="form-control @if($errors->has('title')) error @endif" name="title" value="{{ old('title') }}">
                         </div>
 
                         <div class="col-6">
                             <label for="date">Date</label>
-                            <input id="date" class="form-control" name="date">
+                            <input id="date" class="form-control @if($errors->has('date')) error @endif" name="date" value="{{ old('date') }}">
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-12">
                             <label for="mce">Content</label>
-                            <textarea id="mce" name="content"></textarea>
+                            <textarea id="mce" class="@if($errors->has('content')) error @endif" name="content">{{ old('content') }}</textarea>
                         </div>
                     </div>
                 </div>

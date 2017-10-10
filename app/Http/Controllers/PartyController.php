@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\Events\NewsPublished;
+use App\Http\Requests\Store\StoreParty;
+use App\Http\Requests\Update\UpdateParty;
 use App\Item;
-use App\Journal;
-use App\News;
 use App\Party;
-use App\Policies\PartyPolicy;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 
 class PartyController extends Controller
 {
@@ -27,15 +23,7 @@ class PartyController extends Controller
     public function index(Request $request)
     {
         if(Auth::guest()) abort(403, 'Access Denied!');
-
-        if (is_null($request->input('q'))) {
-            return view('model.party.index', ['parties' => Auth::user()->parties()->paginate(config('app.pagination'))]);
-        }
-
-        return view('model.party.index', [
-            'parties' => Auth()->user()->parties()->where('name', 'regexp', '/.*'.$request->input('q').'/i')->paginate(config('app.pagination')),
-            'q' => $request->input('q')
-        ]);
+        return view('model.party.index', ['parties' => Auth::user()->parties()->paginate(config('app.pagination'))]);
     }
 
     /**
@@ -49,42 +37,30 @@ class PartyController extends Controller
             abort(403, 'Access Denied!');
         }
 
-        return view('party.create');
+        return view('model.party.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreParty|Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreParty $request)
     {
-        if(!Gate::allows('create', Party::class)) {
-            abort(403, 'Access Denied!');
-        }
+        if(!Gate::allows('create', Party::class)) abort(403, 'Access Denied!');
 
         $party = new Party();
         $party->name = $request->input('name');
-        $party->member = $request->input('member');
-        $party->player = $request->input('player');
-        $party->chronist = $request->input('chronist');
-        $party->creator = Auth::user()->_id;
         $party->description = $request->input('description');
-        $party->date = date("d.m.Y");
+        $party->author_id = Auth::id();
+        $party->chronist_id = $request->input('chronist');
+        $party->save();
 
-        $journal = new Journal();
-        $journal->description = null;
-        $journal->save();
+        foreach ($request->input('member', array()) as $member) $party->member()->save(User::find($member));
+        foreach ($request->input('character', array()) as $char) $party->characters()->save(Item::find($char));
 
-        $party->journal = $journal->_id;
-        $party->createAndNotify();
-
-        $journal->party = $party->id;
-        $journal->save();
-
-        Session::flash('message', 'Party Created!');
-        return Redirect::to('/party/'.$party->_id);
+        return Redirect::to('/party/'.$party->id);
     }
 
     /**
@@ -124,27 +100,26 @@ class PartyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param UpdateParty $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateParty $request, $id)
     {
-        $old = Party::find($id);
-        if(!Gate::allows('update', $old)) {
-            abort(403, 'Access Denied!');
-        }
-
         $party = Party::find($id);
-        $party->name = $request->input('name');
-        $party->member = $request->input('member');
-        $party->player = $request->input('player');
-        $party->chronist = $request->input('chronist');
-        $party->description = $request->input('description');
-        $party->updateAndNotify($old);
 
-        Session::flash('message', 'Party Updated!');
-        return Redirect::to('/party/' . $party->_id);
+        if(!Gate::allows('update', $party)) abort(403, 'Access Denied!');
+
+        $party->name = $request->input('name');
+        $party->description = $request->input('description');
+        $party->author_id = Auth::id();
+        $party->chronist_id = $request->input('chronist');
+        $party->save();
+
+        foreach ($request->input('member', array()) as $member) $party->member()->save(User::find($member));
+        foreach ($request->input('character', array()) as $char) $party->characters()->save(Item::find($char));
+
+        return Redirect::to('/party/' . $party->id);
     }
 
     /**

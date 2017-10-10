@@ -11,9 +11,9 @@ class Entry extends Model
         'date', 'title', 'content', 'party', 'author'
     ];
 
-    public function journal()
+    public function party()
     {
-        return $this->belongsTo('App\Party', '_id', 'entries');
+        return $this->hasOne('App\Party', 'id', 'party_id');
     }
 
     public function getTeaser()

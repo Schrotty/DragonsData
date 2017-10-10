@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Entry;
+use App\Http\Requests\Store\StoreEntry;
+use App\Http\Requests\Update\UpdateEntry;
 use App\Party;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class EntryController extends Controller
@@ -16,13 +18,13 @@ class EntryController extends Controller
         }
 
         return view('model.party.journal.entry.create', [
-            'party' => $party->_id
+            'party' => $party->id
         ]);
     }
 
     public function edit(Entry $entry)
     {
-        if(!Gate::allows('writeDown', Party::find($entry->getValue('party')))) {
+        if(!Gate::allows('writeDown', $entry->party)) {
             abort(403, 'Access Denied!');
         }
 
@@ -31,28 +33,24 @@ class EntryController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreEntry $request)
     {
-        if(!Gate::allows('create', Party::class)) {
-            abort(403, 'Access Denied!');
-        }
+        if(!Gate::allows('create', Party::class)) abort(403, 'Access Denied!');
 
-        $entry = Entry::create([
-            'author' => \Illuminate\Support\Facades\Auth::id(),
-            'party' => $request->input('party'),
-            'date' => $request->input('date'),
-            'title' => $request->input('title'),
-            'content' => $request->input('content'),
-        ]);
+        $entry = new Entry();
+        $entry->author_id = Auth::id();
+        $entry->party_id = $request->input('party');
+        $entry->date = $request->input('date');
+        $entry->title = $request->input('title');
+        $entry->content = $request->input('content');
+        $entry->save();
 
-        return redirect('/party/'.$entry->party);
+        return redirect('/party/'.$entry->party_id);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateEntry $request, $id)
     {
-        if(!Gate::allows('update', Entry::class)) {
-            abort(403, 'Access Denied!');
-        }
+        if(!Gate::allows('update', Entry::class)) abort(403, 'Access Denied!');
 
         $entry = Entry::find($id);
         $entry->fill([
@@ -62,7 +60,7 @@ class EntryController extends Controller
         ]);
 
         $entry->save();
-        return redirect('/party/'.$entry->party);
+        return redirect('/party/'.$entry->party_id);
     }
 
     /**
@@ -82,6 +80,6 @@ class EntryController extends Controller
 
         $entry->delete();
 
-        return redirect('/party/' . $entry->getValue('party') . '/edit');
+        return redirect('/party/' . $entry->party->id . '/edit');
     }
 }

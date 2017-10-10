@@ -28,7 +28,8 @@
             </div>
 
             <main class="row">
-                <div class="col-md-8 ml-md-auto">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 ml-md-auto mb-3">
                     <div class="row">
                         <div class="col">
                             @yield('content')
@@ -37,7 +38,17 @@
                 </div>
 
                 <!-- Keep last col empty -->
-                <div class="ml-md-auto"></div>
+                <div class="col-md-2">
+                    @if($errors->any())
+                        <div class="card text-white bg-danger">
+                            <div class="card-body">
+                                @foreach($errors->all() as $error)
+                                    <div>{{ $error }}</div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                </div>
             </main>
 
             <footer class="row">

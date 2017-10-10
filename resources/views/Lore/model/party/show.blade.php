@@ -25,9 +25,9 @@
                                     <tr>
                                         <td>User</td>
                                         <td>
-                                            @if($party->hasValues('member'))
-                                                @foreach($party->member as $id)
-                                                    <span>{{ \App\User::byId($id)->getValue('username') }}</span><br>
+                                            @if($party->hasMember())
+                                                @foreach($party->member as $member)
+                                                    <span>{{ $member->username }}</span><br>
                                                 @endforeach
                                             @else None @endif
                                         </td>
@@ -36,8 +36,8 @@
                                     <tr>
                                         <td>Chronist</td>
                                         <td>
-                                            @if($party->hasValues('chronist'))
-                                                <span>{{ \App\User::byId($party->chronist)->getValue('username') }}</span><br>
+                                            @if($party->hasChronist())
+                                                <span>{{ $party->chronist->username }}</span><br>
                                             @else None @endif
                                         </td>
                                     </tr>
@@ -45,9 +45,9 @@
                                     <tr>
                                         <td>Character</td>
                                         <td>
-                                            @if($party->hasValues('player'))
-                                                @foreach($party->player as $id)
-                                                    <a href="{{ url('/item/' . $id) }}"><span>{{ \App\Item::byId($id)->getValue('name') }}</span></a><br>
+                                            @if($party->hasCharacters())
+                                                @foreach($party->characters as $character)
+                                                    <a href="{{ url('/item/' . $character->id) }}"><span>{{ $character->name }}</span></a><br>
                                                 @endforeach
                                             @else None @endif
                                         </td>
@@ -70,7 +70,7 @@
 
                                         @can('update', $entry)
                                             <span class="float-right" style="font-size: small">
-                                            <a href="{{ '/entry/'.$entry->_id.'/edit' }}">
+                                            <a href="{{ '/entry/'.$entry->id.'/edit' }}">
                                                 <span>edit</span>
                                             </a>
                                         </span>
@@ -86,10 +86,10 @@
 
                 @can('writeDown', $party)
                     <div class="card-footer text-right">
-                        <a href="{{ '/entry/create/' . $party->_id }}"><button class="btn btn-primary">Add Journal Entry</button></a>
+                        <a href="{{ '/entry/create/' . $party->id }}"><button class="btn btn-primary">Add Journal Entry</button></a>
 
                         @can('update', $party)
-                            <a href="{{ '/party/' . $party->_id . '/edit' }}">
+                            <a href="{{ '/party/' . $party->id . '/edit' }}">
                                 <button type="submit" class="btn btn-primary">Edit Party</button>
                             </a>
                         @endcan
