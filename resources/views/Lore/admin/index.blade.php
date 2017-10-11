@@ -3,12 +3,10 @@
 @section('content')
     <div class="row">
         <div class="col-md-6">
-            <div class='card dash dash-upper box'>
+            <div id="/admin/items" class='card dash dash-upper box card-clickable pointer'>
                 <div class='content'>
                     <div class="card-body">
-                        <h3>
-                            <a href="{{ url('/admin/items') }}">Items</a>
-                        </h3>
+                        <h3 class="card-title">Items</h3>
                     </div>
                 </div>
             </div>

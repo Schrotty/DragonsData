@@ -4,7 +4,7 @@ $('.selectpicker').selectpicker({
 });
 
 $( document ).ready(function() {
-    $(".card-clickabe").click(function () {
+    $(".card-clickable").click(function () {
         window.location.href = this.id;
     });
 

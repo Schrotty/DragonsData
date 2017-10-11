@@ -1,7 +1,7 @@
 <div id="results">
     @foreach($items as $item)
         <div class="col">
-            <div id="{{ '/item/' . $item->id }}" class="card pointer card-clickabe">
+            <div id="{{ '/item/' . $item->id }}" class="card pointer card-clickable">
                 <div class="card-body">
                     <h4 class="card-title">
                         <span>{{ $item->getValue('name') }}</span>

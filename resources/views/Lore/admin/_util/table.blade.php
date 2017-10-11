@@ -1,5 +1,9 @@
 <div class="card">
     <div id="item-table" class="card-body">
+        <div class="text-right mb-3">
+            <a class="btn btn-sn btn-primary" href="{{ url('item/create') }}"><span>Create new Item</span></a>
+        </div>
+
         <table class="table table-hover table-responsive table-sm">
             <thead>
                 <tr>

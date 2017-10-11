@@ -2,7 +2,7 @@
 
 @section('content')
     @foreach($parties as $party)
-        <div id="{{ '/party/' . $party->id }}" class="card mb-3 pointer card-clickabe">
+        <div id="{{ '/party/' . $party->id }}" class="card mb-3 pointer card-clickable">
             <div class="card-body">
                 <h4>
                     <span>{{ $party->getValue('name') }}</span>
