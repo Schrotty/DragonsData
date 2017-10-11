@@ -8,9 +8,6 @@
 
 namespace App;
 
-use App\Notifications\PartyEnter;
-use App\Notifications\PartyLeave;
-
 class Party extends Model
 {
     protected $collection = 'parties';
