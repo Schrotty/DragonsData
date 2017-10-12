@@ -2,45 +2,42 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-6">
-            <div id="/admin/items" class='card dash dash-upper box card-clickable pointer'>
+        <div class="col-md-3">
+
+            <!-- ITEMS -->
+            <div class='card mb-3'>
                 <div class='content'>
-                    <div class="card-body">
-                        <h3 class="card-title">Items</h3>
+                    <div class="card-body text-center">
+                        <h4 class="card-title">Items</h4>
+                        <div>
+                            <span><a href="{{ url('/admin/items') }}">Manage</a> | </span>
+                            <span><a href="{{ url('/item/create') }}">Create</a></span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-6">
-            <div class='card dash dash-upper box'>
+            <!-- PARTIES -->
+            <div class='card mb-3'>
                 <div class='content'>
-                    <div class="card-body">
-                        <h3>Parties</h3>
+                    <div class="card-body text-center">
+                        <h4 class="card-title">Parties</h4>
+                        <div>
+                            <span><a href="{{ url('/admin/parties') }}">Manage</a> | </span>
+                            <span><a href="{{ url('/party/create') }}">Create</a></span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="w-100"></div>
-
-        <div class="col-md-6">
-            <div class='card dash dash-lower box'>
+            <!-- META -->
+            <div class='card mb-3'>
                 <div class='content'>
-                    <div class="card-body">
-                        <h3>
-                            <a href="{{ url('/admin/meta') }}">Meta</a>
-                        </h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class='card dash dash-lower box'>
-                <div class='content'>
-                    <div class="card-body">
-                        <h3>Blog</h3>
+                    <div class="card-body text-center">
+                        <h4 class="card-title">Meta</h4>
+                        <div>
+                            <span><a href="{{ url('/admin/meta') }}">Manage</a></span>
+                        </div>
                     </div>
                 </div>
             </div>
