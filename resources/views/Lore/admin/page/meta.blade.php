@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-    <form id="item-filter" action="{{ url('/admin/items/') }}">
+    <form id="item-filter" action="{{ url('/admin/meta/') }}">
         <div class="form-group">
             <div class="input-group search-group">
                 <input value="@if(isset($q)){{ $q }}@endif" id="item-search-query" name="q" type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
@@ -15,7 +15,12 @@
         </div>
     </form>
 
-    @include('admin._util.table')
+    @include('admin._util.table', [
+        'route' => 'category',
+        'header' => [
+            'Name' => 'name'
+        ]
+    ])
 
     <div id="delete-item-modal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="deleteItemModal" aria-hidden="true">
         <div class="modal-dialog modal-sm">

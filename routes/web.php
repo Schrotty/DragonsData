@@ -56,6 +56,7 @@ Route::group(['middleware'=>['setTheme:Lore', 'auth']], function() {
         });
 
         Route::get('/items', 'Admin\AdminController@items');
+        Route::get('/parties', 'Admin\AdminController@parties');
         Route::get('/meta', 'Admin\AdminController@meta');
     });
 

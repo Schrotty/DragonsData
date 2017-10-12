@@ -31,7 +31,7 @@
             </div>
 
             <!-- META -->
-            <div class='card mb-3'>
+            <div class='card'>
                 <div class='content'>
                     <div class="card-body text-center">
                         <h4 class="card-title">Meta</h4>
@@ -39,6 +39,15 @@
                             <span><a href="{{ url('/admin/meta') }}">Manage</a></span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">System Settings</h4>
+                    <span>Soon!</span>
                 </div>
             </div>
         </div>

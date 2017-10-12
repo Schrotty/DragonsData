@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-    <form id="item-filter" action="{{ url('/admin/items/') }}">
+    <form id="item-filter" action="{{ url('/admin/parties/') }}">
         <div class="form-group">
             <div class="input-group search-group">
                 <input value="@if(isset($q)){{ $q }}@endif" id="item-search-query" name="q" type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
@@ -16,13 +16,9 @@
     </form>
 
     @include('admin._util.table', [
-        'route' => 'item',
+        'route' => 'party',
         'header' => [
-            'Name' => 'name',
-            'Category' => [
-                'category' => 'name'
-            ],
-            'Teaser' => 'teaser'
+            'Name' => 'name'
         ]
     ])
 
