@@ -31,32 +31,6 @@ class CreatePartiesTable extends Migration
             $table->foreign('author_id')->references('id')->on('users')->onDelete('restrict');
             $table->foreign('chronist_id')->references('id')->on('users')->onDelete('restrict');
         });
-
-        //Create 'party_access' table
-        Schema::create('party_access', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('party_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->boolean('read_access');
-            $table->boolean('write_access');
-            $table->timestamps();
-
-            //Foreign key
-            $table->foreign('party_id')->references('id')->on('parties');
-            $table->foreign('user_id')->references('id')->on('users');
-        });
-
-        //Create 'party_characters' table
-        Schema::create('party_characters', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('party_id')->unsigned();
-            $table->integer('item_id')->unsigned();
-            $table->timestamps();
-
-            //Foreign key
-            $table->foreign('party_id')->references('id')->on('party');
-            $table->foreign('item_id')->references('id')->on('items');
-        });
     }
 
     /**
@@ -66,8 +40,6 @@ class CreatePartiesTable extends Migration
      */
     public function down()
     {
-        Schema::table('parties', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('parties');
     }
 }

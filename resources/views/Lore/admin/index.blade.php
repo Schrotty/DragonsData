@@ -47,7 +47,14 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">System Settings</h4>
-                    <span>Soon!</span>
+                    <div class="row">
+                        <div class="col">
+                            <label for="player-id">Player Category</label>
+                            <select id="player-id" class="selectpicker">
+                                <option>None</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
