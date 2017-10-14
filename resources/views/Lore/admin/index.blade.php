@@ -30,13 +30,40 @@
                 </div>
             </div>
 
-            <!-- META -->
+            <!-- CATEGORY -->
+            <div class='card mb-3'>
+                <div class='content'>
+                    <div class="card-body text-center">
+                        <h4 class="card-title">Categories</h4>
+                        <div>
+                            <span><a href="{{ url('/admin/categories') }}">Manage</a> | </span>
+                            <span><a href="{{ url('/category/create') }}">Create</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAGS -->
+            <div class='card mb-3'>
+                <div class='content'>
+                    <div class="card-body text-center">
+                        <h4 class="card-title">Tags</h4>
+                        <div>
+                            <span><a href="{{ url('/admin/tags') }}">Manage</a> | </span>
+                            <span><a href="{{ url('/tag/create') }}">Create</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROPERTIES -->
             <div class='card'>
                 <div class='content'>
                     <div class="card-body text-center">
-                        <h4 class="card-title">Meta</h4>
+                        <h4 class="card-title">Property</h4>
                         <div>
-                            <span><a href="{{ url('/admin/meta') }}">Manage</a></span>
+                            <span><a href="{{ url('/admin/properties') }}">Manage</a> | </span>
+                            <span><a href="{{ url('/property/create') }}">Create</a></span>
                         </div>
                     </div>
                 </div>

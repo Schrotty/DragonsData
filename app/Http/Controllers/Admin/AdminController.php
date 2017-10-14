@@ -10,39 +10,40 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function items(Request $request)
+    private function before(Request $request, string $page, string $model)
     {
         if (is_null($request->input('q'))) {
-            return view('admin.page.items', ['objects' => Item::paginate(config('app.pagination'))]);
+            return view('admin.page.' . $page, ['objects' => $model::paginate(config('app.pagination'))]);
         }
 
-        return view('admin.page.items', [
-            'objects' => Item::where('name', 'like', '%'.$request->input('q').'%')->paginate(config('app.pagination')),
+        return view('admin.page.' . $page, [
+            'objects' => $model::where('name', 'like', '%'.$request->input('q').'%')->paginate(config('app.pagination')),
             'q' => $request->input('q')
         ]);
+    }
+
+    public function items(Request $request)
+    {
+        return $this->before($request, 'items', 'App\Item');
     }
 
     public function parties(Request $request)
     {
-        if (is_null($request->input('q'))) {
-            return view('admin.page.parties', ['objects' => Party::paginate(config('app.pagination'))]);
-        }
-
-        return view('admin.page.parties', [
-           'objects' => Party::where('name', 'like', '%'. $request->input('q') .'%')->paginate(config('app.pagination')),
-           'q' => $request->input('q')
-        ]);
+        return $this->before($request, 'parties', 'App\Party');
     }
 
-    public function meta(Request $request)
+    public function categories(Request $request)
     {
-        if (is_null($request->input('q'))) {
-            return view('admin.page.meta', ['objects' => Category::paginate(config('app.pagination'))]);
-        }
+        return $this->before($request, 'categories', 'App\Category');
+    }
 
-        return view('admin.page.meta', [
-            'objects' => Category::where('name', 'like', '%'.$request->input('q').'%')->paginate(config('app.pagination')),
-            'q' => $request->input('q')
-        ]);
+    public function tags(Request $request)
+    {
+        return $this->before($request, 'tags', 'App\Tag');
+    }
+
+    public function properties(Request $request)
+    {
+        return $this->before($request, 'properties', 'App\Property');
     }
 }

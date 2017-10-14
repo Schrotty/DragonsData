@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-    <form id="item-filter" action="{{ url('/admin/meta/') }}">
+    <form id="item-filter" action="{{ url('/admin/categories/') }}">
         <div class="form-group">
             <div class="input-group search-group">
                 <input value="@if(isset($q)){{ $q }}@endif" id="item-search-query" name="q" type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">

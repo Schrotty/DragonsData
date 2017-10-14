@@ -41,6 +41,9 @@ Route::group(['middleware'=>['setTheme:Lore', 'auth']], function() {
     /* RESOURCE ROUTES */
     Route::resource('item', 'ItemController');
     Route::resource('party', 'PartyController');
+    Route::resource('category', 'CategoryController');
+    Route::resource('tag', 'TagController');
+    Route::resource('property', 'PropertyController');
 
     /* SUB-RESOURCE ROUTES */
     Route::get('/entry/create/{party}', 'EntryController@create');
@@ -57,7 +60,9 @@ Route::group(['middleware'=>['setTheme:Lore', 'auth']], function() {
 
         Route::get('/items', 'Admin\AdminController@items');
         Route::get('/parties', 'Admin\AdminController@parties');
-        Route::get('/meta', 'Admin\AdminController@meta');
+        Route::get('/categories', 'Admin\AdminController@categories');
+        Route::get('/tags', 'Admin\AdminController@tags');
+        Route::get('/properties', 'Admin\AdminController@properties');
     });
 
     /* LIVE MARKDOWN */
@@ -68,10 +73,6 @@ Route::group(['middleware'=>['setTheme:Lore', 'auth']], function() {
 
 /*
 Route::get('/notifications', 'NotificationController@index')->name('notifications');
-
-Route::resource('category', 'CategoryController');
-Route::resource('tag', 'TagController');
-Route::resource('property', 'PropertyController');
 
 Route::resource('news', 'NewsController');
 Route::resource('user', 'UserController');
